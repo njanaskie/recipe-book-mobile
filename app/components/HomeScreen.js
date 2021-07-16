@@ -13,15 +13,14 @@ import {
   Button,
   // Modal
   } from "react-native";
-  import { Feather } from "@expo/vector-icons";
-  import Modal from 'react-native-modal';
-  import BottomSheet from 'reanimated-bottom-sheet';
+  import { Feather } from "@expo/vector-icons"
+  import Modal from 'react-native-modal'
+  import BottomSheet from 'reanimated-bottom-sheet'
 // import RecipeList from './RecipeList'
 // import RecipeListFilters from './RecipeListFilters'
 // import { useRecipesContext } from '../context/recipes-context'
 // import { useIngredientsContext } from '../context/ingredients-context'
 import AddRecipe from './AddRecipe';
-import LogoutButton from './LogoutButton'
 import { firebase } from '../firebase/firebase'
 import useAllRecipes from '../hooks/useAllRecipes'
 import useIngredients from '../hooks/useIngredients'
@@ -29,7 +28,7 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
 import RecipeList from './RecipeList'
-import { Title } from 'react-native-paper';
+import BottomSheetHeader from './BottomSheetHeader'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
@@ -51,15 +50,7 @@ export default function HomeScreen() {
     )
   
     renderHeader = () => (
-      <View style={styles.header}>
-        <View style={styles.panelHeader}>
-          <View style={styles.panelHandle} />
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Title>My Recipes</Title>
-              <LogoutButton />
-            </View>
-        </View>
-      </View>
+      <BottomSheetHeader />
     );
   
     const toggleFormModal = () => {
@@ -153,27 +144,6 @@ const styles = StyleSheet.create({
       backgroundColor: colorPack.backgroundColor,
       paddingTop: 20,
       height: height - 120
-    },
-    header: {
-      backgroundColor: colorPack.backgroundColor,
-      shadowColor: '#333333',
-      shadowOffset: {width: -1, height: -3},
-      shadowRadius: 2,
-      shadowOpacity: 0.4,
-      // elevation: 5,
-      paddingTop: 20,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-    },
-    panelHeader: {
-      alignItems: 'center',
-    },
-    panelHandle: {
-      width: 40,
-      height: 8,
-      borderRadius: 4,
-      backgroundColor: '#00000040',
-      marginBottom: 10,
     },
     linearGradient: {
       flex: 1,

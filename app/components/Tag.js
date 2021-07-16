@@ -10,13 +10,12 @@ export default function Tag({ item }) {
             style={[
                 styles.selectedItem,
                 {
-                width: item.length * 6 + 50,
                 justifyContent: 'center',
+                // width: item.length * 8 + 40,
                 height: 30,
                 borderColor: colorPack.lightgrey,
                 borderWidth: 1,
                 backgroundColor: 'white',
-                paddingRight: 5,
                 },
                 // tagContainerStyle || {}
                 ]
@@ -45,11 +44,12 @@ export default function Tag({ item }) {
 
 const styles = StyleSheet.create({
     selectedItem: {
+        flex: -1,
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 15,
         paddingTop: 3,
-        paddingRight: 3,
+        paddingRight: 15,
         paddingBottom: 3,
         margin: 3,
         borderRadius: 20,

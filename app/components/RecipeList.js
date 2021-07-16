@@ -36,7 +36,7 @@ export const RecipeList = () => {
     //     }
     // }, []) 
 
-    console.log('pageState', pageState)
+    // console.log('pageState', pageState)
 
     React.useEffect(() => {
         fetchRecipes()
@@ -127,7 +127,7 @@ export const RecipeList = () => {
     return (
         !pageState.loading ? (
             <FlatList 
-                data={recipes}
+                data={[... new Set(recipes)]}
                 renderItem={({ item }) => <RecipeListItem recipe={item} />}
                 keyExtractor={item => item.id}
                 numColumns={2}
