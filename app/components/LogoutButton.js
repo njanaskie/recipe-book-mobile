@@ -7,12 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useFirebaseContext } from '../context/firebase-context'
 import { colorPack } from '../styles/styles';
 
-export default function LogoutButton() {
-    const navigation = useNavigation(); 
+export default function LogoutButton({toggleLogoutModal}) {
+    const navigation = useNavigation();
     // const { logout } = useFirebaseContext()
 
     const onLogoutPress = () => {
         firebase.auth().signOut().then(() => {
+            toggleLogoutModal
             navigation.navigate('Login')
         });
     }

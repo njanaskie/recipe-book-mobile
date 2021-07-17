@@ -4,10 +4,9 @@ import { colorPack } from '../styles/styles'
 import { Button, Title } from 'react-native-paper';
 import LogoutButton from './LogoutButton';
 
-const SettingsScreen = ({ toggleLogoutModal }) => (
+const FiltersScreen = () => (
     <SafeAreaView style={styles.container}>
-        <Title style={styles.title}>Do you want to log out?</Title>
-        <LogoutButton toggleLogoutModal={toggleLogoutModal}/>
+        <Title>Test</Title>
     </SafeAreaView>
 );
 
@@ -24,4 +23,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SettingsScreen;
+export default FiltersScreen;

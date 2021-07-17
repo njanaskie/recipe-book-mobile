@@ -7,11 +7,14 @@ import LogoutButton from './LogoutButton'
 import Tag from './Tag'
 import { colorPack } from '../styles/styles'
 import SettingsScreen from './SettingsScreen'
+import FiltersScreen from './FiltersScreen'
 
 export const BottomSheetHeader = () => {
-    const [isScreenVisible, setIsScreenVisible] = useState(false);
+    const [isLogoutVisible, setIsLogoutVisible] = useState(false);
+    const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
-    const toggleSettingsScreen = () => setIsScreenVisible(!isScreenVisible);
+    const toggleLogoutModal = () => setIsLogoutVisible(!isLogoutVisible);
+    const toggleFiltersModal = () => setIsFiltersVisible(!isFiltersVisible)
 
     return (
         <View style={styles.header}>
@@ -20,20 +23,32 @@ export const BottomSheetHeader = () => {
                 <View style={styles.headerItems}>
                     <Title>My Recipes</Title>
                     <View style={styles.headerItemsRight}>
-                        <View style={{ width: 85, paddingRight: 5 }} >
-                            <Tag item='Filters' />
-                        </View>
-                        <TouchableOpacity onPress={toggleSettingsScreen}>
+                        <TouchableOpacity onPress={toggleFiltersModal}>
+                            <View style={{ width: 85, paddingRight: 5 }} >
+                                <Tag item='Filters' />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={toggleLogoutModal}>
                             <Feather name="log-out" size={20}/>
                         </TouchableOpacity>
                         <Modal
                             animationIn='fadeIn'
                             animationOut='fadeOut'
-                            isVisible={isScreenVisible}
-                            onBackdropPress={toggleSettingsScreen}
+                            isVisible={isFiltersVisible}
+                            onBackdropPress={toggleFiltersModal}
+                        >
+                            <View style={{ backgroundColor: colorPack.darkgreen, borderRadius: 5 }}>
+                                <FiltersScreen />
+                            </View>
+                        </Modal>
+                        <Modal
+                            animationIn='fadeIn'
+                            animationOut='fadeOut'
+                            isVisible={isLogoutVisible}
+                            onBackdropPress={toggleLogoutModal}
                         >
                             <View style={{ backgroundColor: '#FFFFFF', borderRadius: 5 }}>
-                                <SettingsScreen toggleSettingsScreen={toggleSettingsScreen}/>
+                                <SettingsScreen toggleLogoutModal={toggleLogoutModal}/>
                             </View>
                         </Modal>
                     </View>
