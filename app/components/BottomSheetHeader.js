@@ -24,13 +24,18 @@ export const BottomSheetHeader = () => {
                             <Tag item='Filters' />
                         </View>
                         <TouchableOpacity onPress={toggleSettingsScreen}>
-                            <Feather name="settings" size={20}/>
+                            <Feather name="log-out" size={20}/>
                         </TouchableOpacity>
-                        {/* <Modal isVisible={isScreenVisible} style={{ margin: 0 }}>
-                            <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
-                                <SettingsScreen />
+                        <Modal
+                            animationIn='fadeIn'
+                            animationOut='fadeOut'
+                            isVisible={isScreenVisible}
+                            onBackdropPress={toggleSettingsScreen}
+                        >
+                            <View style={{ backgroundColor: '#FFFFFF', borderRadius: 5 }}>
+                                <SettingsScreen toggleSettingsScreen={toggleSettingsScreen}/>
                             </View>
-                        </Modal> */}
+                        </Modal>
                     </View>
                 </View>
             {/* </View> */}

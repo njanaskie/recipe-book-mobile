@@ -75,6 +75,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
             <View>
                 <FlatList
                     horizontal
+                    numberOfLines={2}
                     data={recipe.ingredients}
                     renderItem={renderItem}
                     keyExtractor={item => item}
