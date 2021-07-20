@@ -168,7 +168,7 @@ export default RecipeForm = (props) => {
             <TextInput
                 style={styles.input}
                 placeholder='Insert URL'
-                // placeholderTextColor="#aaaaaa"
+                placeholderTextColor="#aaaaaa"
                 onChangeText={(url) => setState({ ...state, url })}
                 value={state.url}
                 // underlineColorAndroid="transparent"
