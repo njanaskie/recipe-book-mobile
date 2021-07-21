@@ -36,9 +36,10 @@ export const BottomSheetHeader = () => {
                             animationOut='fadeOut'
                             isVisible={isFiltersVisible}
                             onBackdropPress={toggleFiltersModal}
+                            style={{ margin: 0 }}
                         >
-                            <View style={{ backgroundColor: colorPack.darkgreen, borderRadius: 5 }}>
-                                <FiltersScreen />
+                            <View style={{ flex: 1, backgroundColor: colorPack.darkgreen, borderRadius: 5 }}>
+                                <FiltersScreen toggleFiltersModal={toggleFiltersModal}/>
                             </View>
                         </Modal>
                         <Modal
