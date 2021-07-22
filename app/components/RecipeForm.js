@@ -31,6 +31,7 @@ import { colorPack } from '../styles/styles';
 import Clipboard, { useClipboard } from '@react-native-clipboard/clipboard';
 import Tag from './Tag';
 import {Picker} from '@react-native-picker/picker';
+import MultiSelectDropdownModal from './MultiSelectDropdownModal';
 
 const { width, height } = Dimensions.get("window");
 
@@ -72,6 +73,7 @@ export default RecipeForm = (props) => {
     // };
 
     // console.log('copied', copiedText)
+    // console.log(ingredients)
     console.log(state)
     
     const toggleTagModal = () => {
@@ -228,48 +230,28 @@ export default RecipeForm = (props) => {
                 </View>
                 <Caption style={styles.subtitle}>Add a few key ingredients or all of them. You can use ingredients to find your recipes in the future.</Caption>
             </View>
-            <Modal
+            <MultiSelectDropdownModal
                 isVisible={isIngredientModalVisible}
-                onBackdropPress={toggleIngredientModal}
-                style={styles.modal}
-            >
-                <View style={styles.header}>
-                    <View style={styles.panelHeader}>
-                        <Text style={styles.panelText}>Add Ingredients...</Text>
-                        <Button title='Done' onPress={toggleIngredientModal}/>
-                    </View>
-                </View>
-                <View style={styles.modalView}>
-                    <MultiSelect
-                        items={ingredients || []}
-                        uniqueKey="name"
-                        onSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
-                        selectedItems={state.ingredients}
-                        selectText="Select Ingredients"
-                        searchInputPlaceholderText="Search Ingredients..."
-                        tagRemoveIconColor="#3eb489"
-                        tagBorderColor="#3eb489"
-                        tagTextColor="#3eb489"
-                        selectedItemTextColor="#3eb489"
-                        selectedItemIconColor="#3eb489"
-                        styleMainWrapper={styles.multiSelectContainer}
-                        styleInputGroup={styles.multiSelectInputGroup}
-                        searchInputStyle={styles.multiSelectSearchInputStyle}
-                        styleTextDropdown={styles.multiSelectTextDropdown}
-                        styleListContainer={{ height: height - 200 }}
-                        hideDropdown={true}
-                        textInputProps={{ autoFocus: false }}
-                        fixedHeight
-                        submitButtonColor="#3eb489"
-                    />
-                </View>
-            </Modal>
+                headerText="Add Ingredients..."
+                toggleModal={toggleIngredientModal}
+                itemOptions={ingredients.map(({ id, name }) => {
+                    return {
+                        id: name,
+                        name
+                    }
+                })}
+                handleSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
+                selectedItems={state.ingredients}
+                selectText="Select Ingredients"
+                inputPlaceholderText="Search Ingredients..."
+            />
             <View>
                 <FlatList
                     horizontal
                     data={state.ingredients}
                     renderItem={renderItem}
                     keyExtractor={item => item}
+                    style={styles.tagFlatList}
                 />
             </View>
             <Divider />
@@ -288,55 +270,28 @@ export default RecipeForm = (props) => {
                 </View>
                 <Caption style={styles.subtitle}>Add your own tags to categorize recipes any way you want.</Caption>
             </View>
-            <Modal
+            <MultiSelectDropdownModal
                 isVisible={isTagModalVisible}
-                onBackdropPress={toggleTagModal}
-                style={styles.modal}
-            >
-                <View style={styles.header}>
-                    <View style={styles.panelHeader}>
-                        <Text style={styles.panelText}>Add Tags...</Text>
-                        <Button title='Done' onPress={toggleTagModal}/>
-                    </View>
-                </View>
-                <View style={styles.modalView}>
-                    <MultiSelect
-                        items={state.customTagOptions.map(option => {
-                            return {
-                                id: option,
-                                name: option
-                            }
-                        })}
-                        uniqueKey="id"
-                        onSelectedItemsChange={onAddCustomTag}
-                        selectedItems={state.customTags}
-                        canAddItems={true}
-                        // onAddItem={(newItem) => setState({ ...state, customTagOptions: newItem })}
-                        selectText="Select Custom Tags"
-                        searchInputPlaceholderText="Search Custom Tags..."
-                        tagRemoveIconColor="#3eb489"
-                        tagBorderColor="#3eb489"
-                        tagTextColor="#3eb489"
-                        selectedItemTextColor="#3eb489"
-                        selectedItemIconColor="#3eb489"
-                        styleMainWrapper={styles.multiSelectContainer}
-                        styleInputGroup={styles.multiSelectInputGroup}
-                        searchInputStyle={styles.multiSelectSearchInputStyle}
-                        styleTextDropdown={styles.multiSelectTextDropdown}
-                        styleListContainer={{ height: height - 200 }}
-                        hideDropdown={true}
-                        textInputProps={{ autoFocus: false }}
-                        fixedHeight
-                        submitButtonColor="#3eb489"
-                    />
-                </View>
-            </Modal>
+                headerText="Add Tags..."
+                toggleModal={toggleTagModal}
+                itemOptions={state.customTagOptions.map(elem => {
+                    return {
+                        id: elem,
+                        name: elem
+                    }
+                })}
+                handleSelectedItemsChange={onAddCustomTag}
+                selectedItems={state.customTags}
+                selectText="Select Custom Tags"
+                inputPlaceholderText="Search Custom Tags..."
+            />
             <View>
                 <FlatList
                     horizontal
                     data={state.customTags}
                     renderItem={renderItem}
                     keyExtractor={item => item}
+                    style={styles.tagFlatList}
                 />
             </View>
         </SafeAreaView>
@@ -385,64 +340,10 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         paddingLeft: 16,
     },
-    modal: {
-        margin: 0,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 35,
-    },
-    modalView: {
-        flex: 1,
-        backgroundColor: colorPack.backgroundColor,
-        // borderRadius: 5,
-        paddingTop: 10
-        // // alignItems: 'center',
-        // justifyContent: 'center'
-    },
     closeText: {
         fontSize: 24,
         color: '#00479e',
         textAlign: 'center',
-    },
-    multiSelectContainer: {
-        // borderRadius: 5,
-        // overflow: 'hidden',
-        // backgroundColor: 'black',
-        // marginBottom: 30,
-        paddingRight: 10,
-        paddingLeft: 10,
-        // paddingTop: 10,
-        justifyContent: 'center',
-        // alignItems: 'center',
-    },
-    multiSelectInputGroup: {
-        paddingRight: 10,
-        paddingLeft: 10,
-        paddingTop: 10,
-        justifyContent: 'center',
-        height: 40,
-        // backgroundColor: 'orange',
-    },
-    multiSelectDropdownMenu: {
-        justifyContent: 'center',
-        // alignItems: 'center',
-        // marginRight: 16,
-        // marginLeft: 16,
-        marginTop: 10,
-        marginBottom: 10,
-    },
-    multiSelectSelector: {
-        justifyContent: 'center',
-        marginRight: 16,
-        marginLeft: 16,
-        marginTop: 16,
-    },
-    multiSelectSearchInputStyle: {
-        // fontSize: 16,
-        // lineHeight: 16,
-    },
-    multiSelectTextDropdown: {
-        // fontSize: 16,
-        // lineHeight: 16,
-        // paddingLeft: 8,
     },
     selectedItem: {
         flexDirection: 'row',
@@ -467,27 +368,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingRight: 10
-    },    
-    header: {
-        backgroundColor: colorPack.backgroundColor,
-        shadowColor: '#333333',
-        shadowOffset: {width: -1, height: -3},
-        shadowRadius: 2,
-        shadowOpacity: 0.4,
-        // elevation: 5,
-        paddingTop: 20,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
     },
-    panelHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginRight: 10
-    },
-    panelText: {
-        marginLeft: 10,
-        fontSize: 18
+    tagFlatList: {
+        marginHorizontal: 20
     },
     picker: {
         // flex: 1,

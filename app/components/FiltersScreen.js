@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, TextInput, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { colorPack } from '../styles/styles'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import { Button, IconButton, Subheading, Title } from 'react-native-paper'
 import SelectMultiple from 'react-native-select-multiple'
 import { Feather } from "@expo/vector-icons"
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const FiltersScreen = ({ toggleFiltersModal }) => {
     const initialFormState = {
@@ -21,16 +22,20 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                 <Button color={colorPack.darkgrey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
                 <Button style={styles.applyButton}>Apply</Button>
             </View>
-            <View style={styles.searchSection}>
-                <Feather style={styles.searchIcon} name="search" size={20} color="#000"/>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Ingredient, Author, or Custom Tag'
-                    placeholderTextColor="#aaaaaa"
-                    onChangeText={(search) => setFormState({ ...formState, search })}
-                    value={formState.search}
-                />
-            </View>
+            <TouchableOpacity>
+                <View style={styles.searchSection}>
+                    <Feather style={styles.searchIcon} name="search" size={20} color="#000"/>
+                    <Text
+                        style={styles.placeholderText}
+                        // placeholder='Ingredient, Author, or Custom Tag'
+                        // placeholderTextColor="#aaaaaa"
+                        // onChangeText={(search) => setFormState({ ...formState, search })}
+                        // value={formState.search}
+                    >
+                        Ingredient, Author, or Custom Tag
+                    </Text>
+                </View>
+            </TouchableOpacity>
             <View style={styles.selectGroup}>
                 <Subheading style={styles.subheading}>Cuisines</Subheading>
                 <SelectMultiple
@@ -88,6 +93,10 @@ const styles = StyleSheet.create({
         // paddingLeft: 0,
         // backgroundColor: '#fff',
         color: '#424242',
+    },
+    placeholderText: {
+        color: "#aaaaaa",
+        flex: 1
     },
     searchSection: {
         // flex: 1,
