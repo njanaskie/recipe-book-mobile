@@ -1,20 +1,63 @@
 import React, { useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, SafeAreaView, SectionList, StyleSheet, Text, TextInput, View } from 'react-native'
 import { colorPack } from '../styles/styles'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
-import { Button, IconButton, Subheading, Title } from 'react-native-paper'
+import { Button, Checkbox, IconButton, Subheading, Title } from 'react-native-paper'
 import SelectMultiple from 'react-native-select-multiple'
 import { Feather } from "@expo/vector-icons"
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useIngredientsContext } from '../context/ingredients-context'
+import { useRecipesContext } from '../context/recipes-context'
+import Tag from './Tag'
+import selectCustomTags from '../selectors/custom-tags'
 
 const FiltersScreen = ({ toggleFiltersModal }) => {
     const initialFormState = {
         search: '',
         selectedCuisines: [],
-        selectedTypes: []
+        selectedTypes: [],
+        selectedIngredients: [],
     }
     const [formState, setFormState] = useState(initialFormState)
+    const [checked, setChecked] = useState(false);
+    const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+    const { ingredients } = useIngredientsContext()
+    const { recipes } = useRecipesContext()
+    const customTags = recipes ? selectCustomTags(recipes) : []
+    const sectionData = [
+        {
+            title: 'Cuisine',
+            data: recipeCuisines
+        },
+        {
+            title: 'Meal',
+            data: recipeTypes
+        },
+        {
+            title: 'Custom Tag',
+            data: customTags
+        }
+    ]
+
+    const toggleSearchModal = () => setIsSearchModalVisible(!isSearchModalVisible);
+
+    const renderTag = ({item}) => (
+        <Tag item={item} />
+    )
+
+    const Item = ({ title }) => (
+        <View style={styles.item}>
+            <Checkbox
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={() => {
+                    setChecked(!checked);
+                  }}
+            />
+            <Text style={styles.itemTitle}>{title}</Text>
+        </View>
+      );
+      
 
     return (
         <SafeAreaView style={styles.container}>
@@ -22,21 +65,41 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                 <Button color={colorPack.darkgrey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
                 <Button style={styles.applyButton}>Apply</Button>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={toggleSearchModal}>
                 <View style={styles.searchSection}>
                     <Feather style={styles.searchIcon} name="search" size={20} color="#000"/>
                     <Text
                         style={styles.placeholderText}
-                        // placeholder='Ingredient, Author, or Custom Tag'
-                        // placeholderTextColor="#aaaaaa"
-                        // onChangeText={(search) => setFormState({ ...formState, search })}
-                        // value={formState.search}
                     >
                         Ingredient, Author, or Custom Tag
                     </Text>
                 </View>
             </TouchableOpacity>
-            <View style={styles.selectGroup}>
+            <MultiSelectDropdownModal
+                isVisible={isSearchModalVisible}
+                headerText="Search Ingredients"
+                toggleModal={toggleSearchModal}
+                itemOptions={ingredients.map(({ id, name }) => {
+                    return {
+                        id: name,
+                        name
+                    }
+                })}
+                handleSelectedItemsChange={(selectedItems) => setFormState({ ...formState, selectedIngredients: selectedItems })}
+                selectedItems={formState.selectedIngredients}
+                selectText="Select Ingredients"
+                inputPlaceholderText="Search Ingredients..."
+            />
+            <View>
+                <FlatList
+                    horizontal
+                    data={formState.selectedIngredients}
+                    renderItem={renderTag}
+                    keyExtractor={item => item}
+                    style={styles.tagFlatList}
+                />
+            </View>
+            {/* <View style={styles.selectGroup}>
                 <Subheading style={styles.subheading}>Cuisines</Subheading>
                 <SelectMultiple
                     items={recipeCuisines}
@@ -47,8 +110,18 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     selectedItems={formState.selectedCuisines}
                     onSelectionsChange={(selectedCuisines) => setFormState({ ...formState, selectedCuisines })}
                 />
-            </View>
+            </View> */}
             <View style={styles.selectGroup}>
+                <SectionList
+                    sections={sectionData}
+                    keyExtractor={(item, index) => item + index}
+                    renderItem={({ item }) => <Item title={item} />}
+                    renderSectionHeader={({ section: { title } }) => (
+                        <Text style={styles.subheading}>{title}</Text>
+                    )}
+                />
+            </View>
+            {/* <View style={styles.selectGroup}>
                 <Subheading style={styles.subheading}>Meal</Subheading>
                 <SelectMultiple
                     items={recipeTypes}
@@ -59,7 +132,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     selectedItems={formState.selectedTypes}
                     onSelectionsChange={(selectedTypes) => setFormState({ ...formState, selectedTypes })}
                 />
-            </View>
+            </View> */}
         </SafeAreaView>
     )
 };
@@ -93,6 +166,12 @@ const styles = StyleSheet.create({
         // paddingLeft: 0,
         // backgroundColor: '#fff',
         color: '#424242',
+    },
+    item: {
+        flexDirection: 'row'
+    },
+    itemTitle: {
+        color: 'white',
     },
     placeholderText: {
         color: "#aaaaaa",
@@ -134,9 +213,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10
     },
-    title: {
-        alignSelf: 'center',
-        padding: 5
+    tagFlatList: {
+        margin: 10
     },
     
     
