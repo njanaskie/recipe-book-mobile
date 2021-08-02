@@ -11,6 +11,8 @@ import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
 import Tag from './Tag'
 import selectCustomTags from '../selectors/custom-tags'
+import selectFilterItems from '../selectors/filter-items'
+import FiltersScreenItem from './FiltersScreenItem'
 
 const FiltersScreen = ({ toggleFiltersModal }) => {
     const initialFormState = {
@@ -20,25 +22,27 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         selectedIngredients: [],
     }
     const [formState, setFormState] = useState(initialFormState)
-    const [checked, setChecked] = useState(false);
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const { ingredients } = useIngredientsContext()
     const { recipes } = useRecipesContext()
     const customTags = recipes ? selectCustomTags(recipes) : []
+    const filterItems = selectFilterItems(recipeCuisines, recipeTypes, customTags)
     const sectionData = [
         {
             title: 'Cuisine',
-            data: recipeCuisines
+            data: filterItems.recipeCuisines.map(item => item)
         },
         {
             title: 'Meal',
-            data: recipeTypes
+            data: filterItems.recipeTypes.map(item => item)
         },
         {
             title: 'Custom Tag',
-            data: customTags
+            data: filterItems.customTags.map(item => item)
         }
     ]
+
+    // console.log('filteritems', filterItems)
 
     const toggleSearchModal = () => setIsSearchModalVisible(!isSearchModalVisible);
 
@@ -46,17 +50,11 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         <Tag item={item} />
     )
 
-    const Item = ({ title }) => (
-        <View style={styles.item}>
-            <Checkbox
-                status={checked ? 'checked' : 'unchecked'}
-                onPress={() => {
-                    setChecked(!checked);
-                  }}
-            />
-            <Text style={styles.itemTitle}>{title}</Text>
-        </View>
-      );
+    const Item = ({ item }) => {
+        return (
+            <FiltersScreenItem item={item}/>
+        )
+    }
       
 
     return (
@@ -99,40 +97,16 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     style={styles.tagFlatList}
                 />
             </View>
-            {/* <View style={styles.selectGroup}>
-                <Subheading style={styles.subheading}>Cuisines</Subheading>
-                <SelectMultiple
-                    items={recipeCuisines}
-                    style={styles.selectMultiple}
-                    rowStyle={styles.selectMultipleRow}
-                    labelStyle={styles.selectMultipleLabel}
-                    checkboxStyle={styles.selectMultipleCheckbox}
-                    selectedItems={formState.selectedCuisines}
-                    onSelectionsChange={(selectedCuisines) => setFormState({ ...formState, selectedCuisines })}
-                />
-            </View> */}
             <View style={styles.selectGroup}>
                 <SectionList
                     sections={sectionData}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <Item title={item} />}
+                    renderItem={({item}) => <Item item={item}/>}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.subheading}>{title}</Text>
                     )}
                 />
             </View>
-            {/* <View style={styles.selectGroup}>
-                <Subheading style={styles.subheading}>Meal</Subheading>
-                <SelectMultiple
-                    items={recipeTypes}
-                    style={styles.selectMultiple}
-                    rowStyle={styles.selectMultipleRow}
-                    labelStyle={styles.selectMultipleLabel}
-                    checkboxStyle={styles.selectMultipleCheckbox}
-                    selectedItems={formState.selectedTypes}
-                    onSelectionsChange={(selectedTypes) => setFormState({ ...formState, selectedTypes })}
-                />
-            </View> */}
         </SafeAreaView>
     )
 };
@@ -166,12 +140,6 @@ const styles = StyleSheet.create({
         // paddingLeft: 0,
         // backgroundColor: '#fff',
         color: '#424242',
-    },
-    item: {
-        flexDirection: 'row'
-    },
-    itemTitle: {
-        color: 'white',
     },
     placeholderText: {
         color: "#aaaaaa",

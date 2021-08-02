@@ -45,7 +45,7 @@ export const RecipeList = () => {
     fetchRecipes = async () => {
         // if (isCurrent.current) {
             const fetchedRecipes = await getRecipesService(pageState.page, itemsPerPage)
-            console.log(fetchedRecipes.map(recipe => recipe.url))
+            // console.log(fetchedRecipes.map(recipe => recipe.url))
             if (fetchedRecipes) {
                 recipeDispatch({
                     type: 'SET_RECIPES',
