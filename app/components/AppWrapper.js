@@ -5,7 +5,7 @@ import { FirebaseProvider } from '../context/firebase-context'
 import { IngredientsProvider } from '../context/ingredients-context';
 import { RecipesProvider } from '../context/recipes-context';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-// import { FiltersProvider } from '../context/filters-context';
+import { FiltersProvider } from '../context/filters-context';
 // // import AppWrapper from './AppWrapper_old';
 
 const theme = {
@@ -23,9 +23,11 @@ const AppWrapper = (props) => {
         <FirebaseProvider >
             <RecipesProvider>
                 <IngredientsProvider>
-                    <PaperProvider theme={theme}>
-                        {props.children}
-                    </PaperProvider>
+                    <FiltersProvider>
+                        <PaperProvider theme={theme}>
+                            {props.children}
+                        </PaperProvider>
+                    </FiltersProvider>
                 </IngredientsProvider>
             </RecipesProvider>
         </FirebaseProvider>

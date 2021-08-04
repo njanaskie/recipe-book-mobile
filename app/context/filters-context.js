@@ -8,24 +8,28 @@ export const useFiltersContext = () => useContext(FiltersContext)
 const FiltersProvider = ({ children }) => {
     const [filters, filtersDispatch] = useReducer(filtersReducer, filtersReducerDefaultState)
 
-    const filterIngredients = (ingredients) => {
+    const setFilterIngredients = (ingredients) => {
         filtersDispatch({ type: 'SET_INGREDIENT_FILTER', ingredients })
     }
 
-    const filterCuisine = (cuisine) => {
-        filtersDispatch({ type: 'SET_CUISINE_FILTER', cuisine })
+    const addFilterCuisine = (cuisine) => {
+        filtersDispatch({ type: 'ADD_CUISINE_FILTER', cuisine })
+    }
+    
+    const removeFilterCuisine = (cuisine) => {
+        filtersDispatch({ type: 'REMOVE_CUISINE_FILTER', cuisine })
     }
 
-    const filterType = (recipeType) => {
-        filtersDispatch({ type: 'SET_RECIPE_TYPE_FILTER', recipeType })
+    const setFilterTypes = (type) => {
+        filtersDispatch({ type: 'SET_TYPE_FILTER', type })
     }
 
-    const filterCustomTags = (customTags) => {
+    const setFilterCustomTags = (customTags) => {
         filtersDispatch({ type: 'SET_CUSTOM_TAG_FILTER', customTags })
     }
 
     return (
-        <FiltersContext.Provider value={{ filters, filtersDispatch, filterCuisine, filterIngredients, filterType, filterCustomTags }}>
+        <FiltersContext.Provider value={{ filters, filtersDispatch, addFilterCuisine, removeFilterCuisine, setFilterIngredients, setFilterTypes, setFilterCustomTags }}>
             {children}
         </FiltersContext.Provider>
     )

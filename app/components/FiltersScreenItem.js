@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Checkbox } from 'react-native-paper'
+import { useFiltersContext } from '../context/filters-context'
 
 const FiltersScreenItem = ({ item }) => {
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(item.checked);
+    const { filters, addFilterCuisine, removeFilterCuisine } = useFiltersContext()
 
     const toggleCheckbox = () => {
         setIsChecked(!isChecked);
-        !item.checked
-    }
 
-    console.log(item)
+        if (isChecked) {
+            removeFilterCuisine(item.item)
+        } else {
+            addFilterCuisine(item.item)
+        }
+    }
 
     return (
         // <Text></Text>

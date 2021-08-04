@@ -7,28 +7,28 @@ import selectCustomTags from '../selectors/custom-tags'
 import { useRecipesContext } from '../context/recipes-context'
 
 export const RecipeListFilters = ({ allIngredients }) => {
-    const { filters, filterCuisine, filterIngredients, filterType, filterCustomTags } = useFiltersContext()
+    const { filters, setFilterCuisines, setFilterIngredients, setFilterTypes, setFilterCustomTags } = useFiltersContext()
     const { recipes } = useRecipesContext()
     const allCustomTags = selectCustomTags(recipes)
     
     const onIngredientChange = (e, result) => {
         const { value } = result || e.target
-        filterIngredients(value)
+        setFilterIngredients(value)
     }
 
     const onCuisineChange = (e, result) => {
         const { value } = result || e.target
-        filterCuisine(value)
+        setFilterCuisines(value)
     }
 
     const onTypeChange = (e, result) => {
         const { value } = result || e.target
-        filterType(value)
+        setFilterTypes(value)
     }
 
     const onCustomTagChange = (e, result) => {
         const { value } = result || e.target
-        filterCustomTags(value)
+        setFilterCustomTags(value)
     }
 
     return (

@@ -13,8 +13,10 @@ import Tag from './Tag'
 import selectCustomTags from '../selectors/custom-tags'
 import selectFilterItems from '../selectors/filter-items'
 import FiltersScreenItem from './FiltersScreenItem'
+import { useFiltersContext } from '../context/filters-context'
 
 const FiltersScreen = ({ toggleFiltersModal }) => {
+    const { filters, setFilterIngredients } = useFiltersContext()
     const initialFormState = {
         search: '',
         selectedCuisines: [],
@@ -31,18 +33,25 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         {
             title: 'Cuisine',
             data: filterItems.recipeCuisines.map(item => item)
+            // data: recipeCuisines
         },
         {
             title: 'Meal',
             data: filterItems.recipeTypes.map(item => item)
+            // data: recipeTypes
         },
         {
             title: 'Custom Tag',
             data: filterItems.customTags.map(item => item)
+            // data: customTags
         }
     ]
 
-    // console.log('filteritems', filterItems)
+    console.log('filters', filters)
+
+    const handleFilterIngredientsChange = (selectedIngredients) => {
+        setFilterIngredients(selectedIngredients)
+    }
 
     const toggleSearchModal = () => setIsSearchModalVisible(!isSearchModalVisible);
 
@@ -50,9 +59,9 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         <Tag item={item} />
     )
 
-    const Item = ({ item }) => {
+    const renderItem = ({ item }) => {
         return (
-            <FiltersScreenItem item={item}/>
+            <FiltersScreenItem item={item} />
         )
     }
       
@@ -83,15 +92,15 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                         name
                     }
                 })}
-                handleSelectedItemsChange={(selectedItems) => setFormState({ ...formState, selectedIngredients: selectedItems })}
-                selectedItems={formState.selectedIngredients}
+                handleSelectedItemsChange={handleFilterIngredientsChange}
+                selectedItems={filters.ingredients}
                 selectText="Select Ingredients"
                 inputPlaceholderText="Search Ingredients..."
             />
             <View>
                 <FlatList
                     horizontal
-                    data={formState.selectedIngredients}
+                    data={filters.ingredients}
                     renderItem={renderTag}
                     keyExtractor={item => item}
                     style={styles.tagFlatList}
@@ -101,7 +110,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                 <SectionList
                     sections={sectionData}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({item}) => <Item item={item}/>}
+                    renderItem={renderItem}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.subheading}>{title}</Text>
                     )}
