@@ -32,17 +32,17 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
     const sectionData = [
         {
             title: 'Cuisine',
-            data: filterItems.recipeCuisines.map(item => item)
+            data: filterItems.filter(cuisine => cuisine.group === 'cuisine')
             // data: recipeCuisines
         },
         {
             title: 'Meal',
-            data: filterItems.recipeTypes.map(item => item)
+            data: filterItems.filter(cuisine => cuisine.group === 'type')
             // data: recipeTypes
         },
         {
             title: 'Custom Tag',
-            data: filterItems.customTags.map(item => item)
+            data: filterItems.filter(cuisine => cuisine.group === 'customTags')
             // data: customTags
         }
     ]
@@ -61,7 +61,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <FiltersScreenItem item={item} />
+            <FiltersScreenItem item={item} filters={filters}/>
         )
     }
       

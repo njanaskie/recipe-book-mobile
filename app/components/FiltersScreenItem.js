@@ -3,17 +3,20 @@ import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Checkbox } from 'react-native-paper'
 import { useFiltersContext } from '../context/filters-context'
 
-const FiltersScreenItem = ({ item }) => {
-    const [isChecked, setIsChecked] = useState(item.checked);
-    const { filters, addFilterCuisine, removeFilterCuisine } = useFiltersContext()
+const FiltersScreenItem = ({ item, filters }) => {
+    const [isChecked, setIsChecked] = useState(
+        filters.cuisines.includes(item.item) || 
+        filters.types.includes(item.item) ||
+        filters.customTags.includes(item.item));
+    const { addFilterCheckboxItem, removeFilterCheckboxItem } = useFiltersContext()
 
     const toggleCheckbox = () => {
         setIsChecked(!isChecked);
 
         if (isChecked) {
-            removeFilterCuisine(item.item)
+            removeFilterCheckboxItem(item)
         } else {
-            addFilterCuisine(item.item)
+            addFilterCheckboxItem(item)
         }
     }
 

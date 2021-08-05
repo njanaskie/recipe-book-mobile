@@ -12,24 +12,24 @@ const FiltersProvider = ({ children }) => {
         filtersDispatch({ type: 'SET_INGREDIENT_FILTER', ingredients })
     }
 
-    const addFilterCuisine = (cuisine) => {
-        filtersDispatch({ type: 'ADD_CUISINE_FILTER', cuisine })
+    const addFilterCheckboxItem = (item) => {
+        filtersDispatch({ type: 'ADD_CHECKBOX_ITEM', item })
     }
     
-    const removeFilterCuisine = (cuisine) => {
-        filtersDispatch({ type: 'REMOVE_CUISINE_FILTER', cuisine })
+    const removeFilterCheckboxItem = (item) => {
+        filtersDispatch({ type: 'REMOVE_CHECKBOX_ITEM', item })
     }
 
-    const setFilterTypes = (type) => {
-        filtersDispatch({ type: 'SET_TYPE_FILTER', type })
-    }
+    // const setFilterTypes = (type) => {
+    //     filtersDispatch({ type: 'SET_TYPE_FILTER', type })
+    // }
 
-    const setFilterCustomTags = (customTags) => {
-        filtersDispatch({ type: 'SET_CUSTOM_TAG_FILTER', customTags })
-    }
+    // const setFilterCustomTags = (customTags) => {
+    //     filtersDispatch({ type: 'SET_CUSTOM_TAG_FILTER', customTags })
+    // }
 
     return (
-        <FiltersContext.Provider value={{ filters, filtersDispatch, addFilterCuisine, removeFilterCuisine, setFilterIngredients, setFilterTypes, setFilterCustomTags }}>
+        <FiltersContext.Provider value={{ filters, filtersDispatch, addFilterCheckboxItem, removeFilterCheckboxItem, setFilterIngredients }}>
             {children}
         </FiltersContext.Provider>
     )
