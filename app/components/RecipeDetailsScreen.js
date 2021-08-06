@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dimensions, StyleSheet, Image, Text, TextInput, TouchableOpacity, View, SafeAreaView, FlatList, Linking } from 'react-native'
+import { Dimensions, StyleSheet, Image, Text, TextInput, TouchableOpacity, View, SafeAreaView, FlatList, Linking, ScrollView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/firebase';
 import { colorPack } from '../styles/styles';
@@ -48,6 +48,8 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
         // </View>
     )
 
+    const numColumns = Math.ceil(recipe.ingredients.length / 2)
+
     return (
         <View style={styles.container}>
             <Image source={{ uri: urlData.image }} style={styles.image}/>
@@ -73,16 +75,20 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
             {/* <Divider /> */}
             <Subheading style={styles.subTitle}>Ingredients</Subheading>
             <View>
-                <FlatList
+                <ScrollView
                     horizontal
-                    numberOfLines={2}
-                    data={recipe.ingredients}
-                    renderItem={renderItem}
-                    keyExtractor={item => item}
-                    style={styles.ingredients}
-                    ListFooterComponent={<View style={{width:15}}></View>}
-                    ListEmptyComponent={<Text style={styles.emptyMessage}>No Ingredients</Text>}
-                />
+                >
+                    <FlatList
+                        numColumns={numColumns}
+                        contentContainerStyle={{ alignSelf: 'flex-start' }}
+                        data={recipe.ingredients}
+                        renderItem={renderItem}
+                        keyExtractor={item => item}
+                        style={styles.ingredients}
+                        ListFooterComponent={<View style={{width:15}}></View>}
+                        ListEmptyComponent={<Text style={styles.emptyMessage}>No Ingredients</Text>}
+                    />   
+                </ScrollView>
             </View>
             {/* <Divider /> */}
             <Button icon='open-in-new' mode='outlined' color='white' style={styles.link} onPress={() => Linking.openURL(recipe.url)}>Go To Recipe</Button>
