@@ -28,8 +28,11 @@ const FiltersProvider = ({ children }) => {
     //     filtersDispatch({ type: 'SET_CUSTOM_TAG_FILTER', customTags })
     // }
 
+    const setFilters = (filters) => {
+        filtersDispatch({ type: 'SET_FILTERS', filters })
+    }
     return (
-        <FiltersContext.Provider value={{ filters, filtersDispatch, addFilterCheckboxItem, removeFilterCheckboxItem, setFilterIngredients }}>
+        <FiltersContext.Provider value={{ filters, filtersDispatch, setFilters, addFilterCheckboxItem, removeFilterCheckboxItem, setFilterIngredients }}>
             {children}
         </FiltersContext.Provider>
     )

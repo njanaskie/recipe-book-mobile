@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import RecipeListItem from './RecipeListItem'
-// import { useFiltersContext } from '../context/filters-context'
+import { useFiltersContext } from '../context/filters-context'
 import { config } from '../config/config'
-// import selectRecipes from '../selectors/recipes'
+import selectRecipes from '../selectors/recipes'
 import { useRecipesContext } from '../context/recipes-context'
 import { FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import useAllRecipes from '../hooks/useAllRecipes'
@@ -21,22 +21,17 @@ export const RecipeList = () => {
         error: null
     }
     const [pageState, setPageState] = useState(initialFormState)
-    // const { filters } = useFiltersContext()
+    const { filters } = useFiltersContext()
     const { recipes, recipeDispatch } = useRecipesContext()
-    const isCurrent = useRef(true)
+    const selectedRecipes = selectRecipes(recipes, filters)
     const prevPage = usePrevious(pageState.page)
     const itemsPerPage = config.itemsPerPage
     // const startIndex = (pageState.activePage * config.itemsPerPage) - config.itemsPerPage
     // const endIndex = startIndex + config.itemsPerPage
     // const selectedRecipes = selectRecipes(recipes, filters)
     // const paginatedItems = selectedRecipes && selectedRecipes.slice(startIndex, endIndex)
-    // React.useEffect(() => {
-    //     return () => {
-    //         isCurrent.current = false
-    //     }
-    // }, []) 
 
-    // console.log('pageState', pageState)
+    console.log('selectedrecipes', selectedRecipes)
 
     React.useEffect(() => {
         fetchRecipes()
@@ -120,14 +115,14 @@ export const RecipeList = () => {
         );
       };
 
-    if (!recipes || !recipes.length) {
+    if (!selectedRecipes || !selectedRecipes.length) {
         return <Text>No recipes</Text>
     }
     
     return (
         !pageState.loading ? (
             <FlatList 
-                data={[... new Set(recipes)]}
+                data={[... new Set(selectedRecipes)]}
                 renderItem={({ item }) => <RecipeListItem recipe={item} />}
                 keyExtractor={item => item.id}
                 numColumns={2}

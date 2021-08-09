@@ -3,29 +3,33 @@ import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Checkbox } from 'react-native-paper'
 import { useFiltersContext } from '../context/filters-context'
 
-const FiltersScreenItem = ({ item, filters }) => {
-    const [isChecked, setIsChecked] = useState(
-        filters.cuisines.includes(item.item) || 
-        filters.types.includes(item.item) ||
-        filters.customTags.includes(item.item));
-    const { addFilterCheckboxItem, removeFilterCheckboxItem } = useFiltersContext()
+const FiltersScreenItem = ({ item, filters, formState, toggleCheckbox, handleAddCheckboxItem, handleRemoveCheckboxItem }) => {
+    // const [isChecked, setIsChecked] = useState(false
+        // filters ?
+            // filters.selectedCuisines.includes(item.item) || 
+            // filters.selectedTypes.includes(item.item) ||
+            // filters.selectedCustomTags.includes(item.item)
+        // :
+        //     formState.selectedCuisines.includes(item.item) || 
+        //     formState.selectedTypes.includes(item.item) ||
+        //     formState.selectedCustomTags.includes(item.item)
+        // );
 
-    const toggleCheckbox = () => {
-        setIsChecked(!isChecked);
+    // const toggleCheckbox = () => {
+    //     setIsChecked(!isChecked);
 
-        if (isChecked) {
-            removeFilterCheckboxItem(item)
-        } else {
-            addFilterCheckboxItem(item)
-        }
-    }
+    //     if (isChecked) {
+    //         handleRemoveCheckboxItem(item)
+    //     } else {
+    //         handleAddCheckboxItem(item)
+    //     }
+    // }
 
     return (
-        // <Text></Text>
-        <TouchableOpacity onPress={toggleCheckbox}>
+        <TouchableOpacity onPress={() => toggleCheckbox(item)}>
             <View style={styles.item}>
                 <Checkbox
-                    status={isChecked ? 'checked' : 'unchecked' }
+                    status={item.checked ? 'checked' : 'unchecked' }
                     uncheckedColor='white'
                     style={{ tintColor: 'white' }}
                     color='white'

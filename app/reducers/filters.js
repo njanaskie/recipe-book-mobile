@@ -3,13 +3,14 @@
 
 export const filtersReducerDefaultState = {
     // text: '',
-    ingredients: [],
-    cuisines: [],
-    types: [],
-    customTags: []
+    selectedIngredients: [],
+    selectedCuisines: [],
+    selectedTypes: [],
+    selectedCustomTags: [],
+    checkboxItems: [],
 };
 
-const filtersReducer = (state = filtersReducerDefaultState, action) => {
+const filtersReducer = (state = {}, action) => {
     switch (action.type) {
         // case 'SET_TEXT_FILTER':
         //     return {
@@ -67,6 +68,8 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
         //         ...state,
         //         customTags: action.customTags
         //     }
+        case 'SET_FILTERS':
+            return action.filters
         default:
             return state;
         }

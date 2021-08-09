@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { FlatList, SafeAreaView, SectionList, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Dimensions, FlatList, SafeAreaView, SectionList, StyleSheet, Text, TextInput, View } from 'react-native'
 import { colorPack } from '../styles/styles'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import { Button, Checkbox, IconButton, Subheading, Title } from 'react-native-paper'
 import SelectMultiple from 'react-native-select-multiple'
 import { Feather } from "@expo/vector-icons"
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { State, TouchableOpacity } from 'react-native-gesture-handler'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
 import Tag from './Tag'
@@ -15,42 +15,94 @@ import selectFilterItems from '../selectors/filter-items'
 import FiltersScreenItem from './FiltersScreenItem'
 import { useFiltersContext } from '../context/filters-context'
 
+const { width, height } = Dimensions.get("window");
+
 const FiltersScreen = ({ toggleFiltersModal }) => {
-    const { filters, setFilterIngredients } = useFiltersContext()
     const initialFormState = {
-        search: '',
         selectedCuisines: [],
         selectedTypes: [],
         selectedIngredients: [],
+        selectedCustomTags: [],
+        checkboxItems: [],
     }
     const [formState, setFormState] = useState(initialFormState)
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const { ingredients } = useIngredientsContext()
     const { recipes } = useRecipesContext()
+    const { filters, setFilters } = useFiltersContext()
     const customTags = recipes ? selectCustomTags(recipes) : []
     const filterItems = selectFilterItems(recipeCuisines, recipeTypes, customTags)
     const sectionData = [
         {
             title: 'Cuisine',
-            data: filterItems.filter(cuisine => cuisine.group === 'cuisine')
+            // data: filterItems.filter(cuisine => cuisine.group === 'cuisine')
             // data: recipeCuisines
+            data: formState.checkboxItems.filter(cuisine => cuisine.group === 'cuisine')
         },
         {
             title: 'Meal',
-            data: filterItems.filter(cuisine => cuisine.group === 'type')
+            // data: filterItems.filter(cuisine => cuisine.group === 'type')
             // data: recipeTypes
+            data: formState.checkboxItems.filter(item => item.group === 'type')
         },
         {
             title: 'Custom Tag',
-            data: filterItems.filter(cuisine => cuisine.group === 'customTags')
+            // data: filterItems.filter(cuisine => cuisine.group === 'customTags')
             // data: customTags
+            data: formState.checkboxItems.filter(item => item.group === 'customTags')
         }
     ]
 
+    useEffect(() => {
+        setFormState({
+            ...formState,
+            selectedIngredients: filters.selectedIngredients || [],
+            checkboxItems: filters.checkboxItems || filterItems.map(item => ({...item, checked: false }))
+        })
+    }, [])
+
+    console.log('formState', formState)
     console.log('filters', filters)
 
     const handleFilterIngredientsChange = (selectedIngredients) => {
-        setFilterIngredients(selectedIngredients)
+        // setFilterIngredients(selectedIngredients)
+        setFormState({ ...formState, selectedIngredients })
+    }
+
+    const handleAddCheckboxItem = (item) => {
+        // if (item.group == 'cuisine'){
+        //     setFormState({ ...formState, selectedCuisines: [...formState.selectedCuisines, item.item] })
+        // }else if (item.group == 'type'){
+        //     setFormState({ ...formState, selectedTypes: [...formState.selectedTypes, item.item] })
+        // }else if (item.group == 'customTags'){
+        //     setFormState({ ...formState, selectedCustomTags: [...formState.selectedCustomTags, item.item] })
+        // }
+        setFormState({ ...formState, checkboxItems: [...formState.checkboxItems, item ] })
+    }
+
+    const handleRemoveCheckboxItem = (item) => {
+        // if (item.group == 'cuisine'){
+        //     setFormState({ ...formState, selectedCuisines: formState.selectedCuisines.filter(cuisine => cuisine !== item.item) })
+        // }else if (item.group == 'type'){
+        //     setFormState({ ...formState, selectedTypes: formState.selectedTypes.filter(type => type !== item.item) })
+        // }else if (item.group == 'customTags'){
+        //     setFormState({ ...formState, selectedCustomTags: formState.selectedCustomTags.filter(tag => tag !== item.item) })
+        // }
+        setFormState({ ...formState, checkboxItems: formState.checkboxItems.filter(checkboxItem => checkboxItem !== item) })
+    }
+
+    const toggleCheckbox = (item) => {
+        setFormState({ ...formState,
+            checkboxItems: formState.checkboxItems.map(checkboxItem => {
+                if (checkboxItem.item === item.item){
+                    return {
+                        ...checkboxItem,
+                        checked: !checkboxItem.checked
+                    }
+                }
+                return checkboxItem
+            })
+        })
     }
 
     const toggleSearchModal = () => setIsSearchModalVisible(!isSearchModalVisible);
@@ -61,8 +113,13 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <FiltersScreenItem item={item} filters={filters}/>
+            <FiltersScreenItem item={item} filters={filters} formState={formState} toggleCheckbox={toggleCheckbox} handleAddCheckboxItem={handleAddCheckboxItem} handleRemoveCheckboxItem={handleRemoveCheckboxItem} />
         )
+    }
+
+    const onSubmit = () => {
+        setFilters(formState)
+        toggleFiltersModal()
     }
       
 
@@ -70,7 +127,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
                 <Button color={colorPack.darkgrey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
-                <Button style={styles.applyButton}>Apply</Button>
+                <Button style={styles.applyButton} onPress={onSubmit}>Apply</Button>
             </View>
             <TouchableOpacity onPress={toggleSearchModal}>
                 <View style={styles.searchSection}>
@@ -78,7 +135,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     <Text
                         style={styles.placeholderText}
                     >
-                        Ingredient, Author, or Custom Tag
+                        Select Ingredient
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -93,14 +150,14 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     }
                 })}
                 handleSelectedItemsChange={handleFilterIngredientsChange}
-                selectedItems={filters.ingredients}
+                selectedItems={formState.selectedIngredients}
                 selectText="Select Ingredients"
                 inputPlaceholderText="Search Ingredients..."
             />
             <View>
                 <FlatList
                     horizontal
-                    data={filters.ingredients}
+                    data={formState.selectedIngredients}
                     renderItem={renderTag}
                     keyExtractor={item => item}
                     style={styles.tagFlatList}
@@ -167,8 +224,9 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     selectGroup: {
+        height: height - 200,
+        marginTop: 10,
         padding: 10,
-        marginTop: 10
     },
     selectMultiple: {
         height: 256,
