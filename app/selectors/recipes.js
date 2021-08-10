@@ -1,6 +1,6 @@
 export default (recipes, filters) => {
-    const checkedItems = filters.checkboxItems.length > 0 && filters.checkboxItems.filter(item => item.checked === true)
-    return checkedItems || filters.selectedIngredients.length > 0 ? 
+    const checkedItems = filters.checkboxItems.filter(item => item.checked === true)
+    return checkedItems.length || filters.selectedIngredients.length ? 
         recipes.filter((recipe) => {
             console.log('filtering')
             const ingredientMatch = filters.selectedIngredients.length > 0 ? 

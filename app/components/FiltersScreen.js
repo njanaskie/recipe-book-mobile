@@ -57,10 +57,11 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         setFormState({
             ...formState,
             selectedIngredients: filters.selectedIngredients || [],
-            checkboxItems: filters.checkboxItems || filterItems.map(item => ({...item, checked: false }))
+            checkboxItems: filters.checkboxItems.length > 0 ? filters.checkboxItems : filterItems.map(item => ({...item, checked: false }))
         })
     }, [])
 
+    console.log('filterItems', filterItems)
     console.log('formState', formState)
     console.log('filters', filters)
 

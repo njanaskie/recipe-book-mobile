@@ -22,7 +22,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
     const [isRemoveModalVisible, setIsRemoveModalVisible] = useState(false);
     const { recipeDispatch } = useRecipesContext()
 
-    console.log(recipe)
+    // console.log(recipe)
     const openMenu = () => setIsMenuVisible(true);
   
     const closeMenu = () => setIsMenuVisible(false);
