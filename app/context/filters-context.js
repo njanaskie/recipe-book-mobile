@@ -31,8 +31,17 @@ const FiltersProvider = ({ children }) => {
     const setFilters = (filters) => {
         filtersDispatch({ type: 'SET_FILTERS', filters })
     }
+
+    const clearFilters = () => {
+        filtersDispatch({ type: 'CLEAR_FILTERS' })
+    }
+
+    const toggleFiltersActive = (status) => {
+        filtersDispatch({ type: 'TOGGLE_FILTERS_ACTIVE', filtersActive: status })
+    }
+
     return (
-        <FiltersContext.Provider value={{ filters, filtersDispatch, setFilters, addFilterCheckboxItem, removeFilterCheckboxItem, setFilterIngredients }}>
+        <FiltersContext.Provider value={{ filters, filtersDispatch, setFilters, clearFilters, toggleFiltersActive, addFilterCheckboxItem, removeFilterCheckboxItem, setFilterIngredients }}>
             {children}
         </FiltersContext.Provider>
     )

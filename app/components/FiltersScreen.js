@@ -29,7 +29,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const { ingredients } = useIngredientsContext()
     const { recipes } = useRecipesContext()
-    const { filters, setFilters } = useFiltersContext()
+    const { filters, setFilters, toggleFiltersActive } = useFiltersContext()
     const customTags = recipes ? selectCustomTags(recipes) : []
     const filterItems = selectFilterItems(recipeCuisines, recipeTypes, customTags)
     const sectionData = [
@@ -61,8 +61,8 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         })
     }, [])
 
-    console.log('filterItems', filterItems)
-    console.log('formState', formState)
+    // console.log('filterItems', filterItems)
+    // console.log('formState', formState)
     console.log('filters', filters)
 
     const handleFilterIngredientsChange = (selectedIngredients) => {
@@ -120,6 +120,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
 
     const onSubmit = () => {
         setFilters(formState)
+        toggleFiltersActive(true)
         toggleFiltersModal()
     }
       

@@ -31,7 +31,7 @@ export const RecipeList = () => {
     // const selectedRecipes = selectRecipes(recipes, filters)
     // const paginatedItems = selectedRecipes && selectedRecipes.slice(startIndex, endIndex)
 
-    console.log('selectedrecipes', selectedRecipes)
+    // console.log('selectedrecipes', selectedRecipes)
 
     React.useEffect(() => {
         fetchRecipes()

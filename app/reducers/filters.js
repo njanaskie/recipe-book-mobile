@@ -8,6 +8,7 @@ export const filtersReducerDefaultState = {
     selectedTypes: [],
     selectedCustomTags: [],
     checkboxItems: [],
+    filtersActive: false
 };
 
 const filtersReducer = (state = {}, action) => {
@@ -70,6 +71,13 @@ const filtersReducer = (state = {}, action) => {
         //     }
         case 'SET_FILTERS':
             return action.filters
+        case 'CLEAR_FILTERS':
+            return filtersReducerDefaultState
+        case 'TOGGLE_FILTERS_ACTIVE':
+            return {
+                ...state,
+                filtersActive: action.filtersActive
+            }
         default:
             return state;
         }

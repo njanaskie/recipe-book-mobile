@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { colorPack } from '../styles/styles';
 
-export default function Tag({ item }) {
+export default function Tag({ item, darkMode }) {
     
     return (
         <View
@@ -13,9 +13,9 @@ export default function Tag({ item }) {
                 justifyContent: 'center',
                 // width: item.length * 8 + 40,
                 height: 30,
-                borderColor: colorPack.lightgrey,
+                borderColor: darkMode ? colorPack.darkgreen : colorPack.lightgrey,
                 borderWidth: 1,
-                backgroundColor: 'white',
+                backgroundColor: darkMode ? colorPack.darkgreen : 'white',
                 },
                 // tagContainerStyle || {}
                 ]
@@ -26,9 +26,9 @@ export default function Tag({ item }) {
                     {
                     flex: 1,
                     // color: '#525966',
-                    color: colorPack.darkgrey,
-                    fontSize: 15,
-                    // fontWeight: 'bold'
+                    color: darkMode ? 'white' : colorPack.darkgrey,
+                    fontSize: 13,
+                    fontWeight: 'bold'
                     },
                     // styleTextTag && styleTextTag,
                     // fontFamily ? { fontFamily } : {}
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         paddingBottom: 3,
         margin: 3,
-        borderRadius: 20,
+        borderRadius: 10,
         borderWidth: 2,
     },
 })

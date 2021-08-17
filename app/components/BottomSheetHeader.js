@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { Button, StyleSheet, TouchableOpacity, View } from "react-native"
 import Modal from 'react-native-modal'
 import { Title, IconButton } from 'react-native-paper'
 import { Feather } from "@expo/vector-icons"
@@ -8,10 +8,12 @@ import Tag from './Tag'
 import { colorPack } from '../styles/styles'
 import SettingsScreen from './SettingsScreen'
 import FiltersScreen from './FiltersScreen'
+import { useFiltersContext } from '../context/filters-context'
 
 export const BottomSheetHeader = () => {
     const [isLogoutVisible, setIsLogoutVisible] = useState(false);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+    const { filters, clearFilters } = useFiltersContext();
 
     const toggleLogoutModal = () => setIsLogoutVisible(!isLogoutVisible);
     const toggleFiltersModal = () => setIsFiltersVisible(!isFiltersVisible)
@@ -23,9 +25,14 @@ export const BottomSheetHeader = () => {
                 <View style={styles.headerItems}>
                     <Title>My Recipes</Title>
                     <View style={styles.headerItemsRight}>
+                        {filters.filtersActive && 
+                            <TouchableOpacity onPress={clearFilters}>
+                                <Feather name="x-circle" size={20}/>
+                            </TouchableOpacity>
+                        }
                         <TouchableOpacity onPress={toggleFiltersModal}>
                             <View style={{ width: 85, paddingRight: 5 }} >
-                                <Tag item='Filters' />
+                                <Tag item='Filters' darkMode={true}/>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={toggleLogoutModal}>
