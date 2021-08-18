@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Button } from 'react-native-paper'
 import Modal from 'react-native-modal';
 import MultiSelect from 'react-native-multiple-select';
 import { colorPack } from '../styles/styles';
@@ -17,32 +18,35 @@ export default MultiSelectDropdownModal = (props) => {
             <View style={styles.header}>
                 <View style={styles.panelHeader}>
                     <Text style={styles.panelText}>{props.headerText}</Text>
-                    <Button title='Done' onPress={props.toggleModal}/>
+                    <Button onPress={props.toggleModal}>Done</Button>
                 </View>
             </View>
             <View style={styles.modalView}>
                 <MultiSelect
                     items={props.itemOptions}
-                    uniqueKey="id"
+                    fixedHeight
+                    hideDropdown={true}
+                    hideSubmitButton={true}
                     onSelectedItemsChange={props.handleSelectedItemsChange}
+                    // searchIcon={null}
                     selectedItems={props.selectedItems}
-                    canAddItems={true}
                     selectText={props.selectText}
                     searchInputPlaceholderText={props.inputPlaceholderText}
-                    tagRemoveIconColor="#3eb489"
-                    tagBorderColor="#3eb489"
-                    tagTextColor="#3eb489"
-                    selectedItemTextColor="#3eb489"
-                    selectedItemIconColor="#3eb489"
+                    selectedItemTextColor={colorPack.mint}
+                    selectedItemIconColor={colorPack.mint}
                     styleMainWrapper={styles.multiSelectContainer}
                     styleInputGroup={styles.multiSelectInputGroup}
-                    searchInputStyle={styles.multiSelectSearchInputStyle}
+                    // searchInputStyle={styles.multiSelectSearchInputStyle}
+                    // styleSelectorContainer={{ marginBottom: 30}}
                     styleTextDropdown={styles.multiSelectTextDropdown}
-                    styleListContainer={{ height: height - 200 }}
-                    hideDropdown={true}
+                    styleTextDropdownSelected={styles.multiSelectTextDropdown}
+                    styleListContainer={{ height: height * .75 }}
+                    submitButtonColor={colorPack.mint}
+                    tagRemoveIconColor={colorPack.mint}
+                    tagBorderColor={colorPack.mint}
+                    tagTextColor={colorPack.mint}
                     textInputProps={{ autoFocus: false }}
-                    fixedHeight
-                    submitButtonColor="#3eb489"
+                    uniqueKey="id"
                 />
             </View>
         </Modal>
@@ -83,14 +87,14 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         // paddingTop: 10,
         justifyContent: 'center',
-        // alignItems: 'center',
     },
     multiSelectInputGroup: {
         paddingRight: 10,
         paddingLeft: 10,
-        paddingTop: 10,
+        // paddingBottom: 10,
         justifyContent: 'center',
         height: 40,
+        // fontStyle: colorPack.mint
         // backgroundColor: 'orange',
     },
     multiSelectDropdownMenu: {
@@ -108,13 +112,16 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
     multiSelectSearchInputStyle: {
-        // fontSize: 16,
-        // lineHeight: 16,
+        // fontSize: 14,
+        // position: 'relative',
     },
     multiSelectTextDropdown: {
-        // fontSize: 16,
+        fontSize: 14,
         // lineHeight: 16,
         // paddingLeft: 8,
+        color: colorPack.grey,
+        marginLeft: 10,
+        fontWeight: '500'
     },
     panelHeader: {
         flexDirection: 'row',
@@ -124,6 +131,8 @@ const styles = StyleSheet.create({
     },
     panelText: {
         marginLeft: 10,
-        fontSize: 18
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: colorPack.darkgreen
     },
 })

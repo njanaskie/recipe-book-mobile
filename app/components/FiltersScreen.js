@@ -128,7 +128,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
-                <Button color={colorPack.darkgrey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
+                <Button color={colorPack.grey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
                 <Button style={styles.applyButton} onPress={onSubmit}>Apply</Button>
             </View>
             <TouchableOpacity onPress={toggleSearchModal}>

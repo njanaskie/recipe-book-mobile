@@ -10,9 +10,8 @@ import {
   TextInput,
   Platform,
   StatusBar,
-  Button,
-  // Modal
   } from "react-native";
+  import { Title } from 'react-native-paper'
   import { Feather } from "@expo/vector-icons"
   import Modal from 'react-native-modal'
   import BottomSheet from 'reanimated-bottom-sheet'
@@ -64,14 +63,14 @@ export default function HomeScreen() {
     return (
       <LinearGradient colors={[colorPack.mint, colorPack.backgroundColor, colorPack.mint]} style={styles.linearGradient}>
         <SafeAreaView style={styles.container}>
-          <View>
+          <Title style={styles.buttonText}>Save a recipe!</Title>
+          <View style={{ position: 'absolute' }}>
             <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
               <TouchableOpacity
                   style={{ padding: 20 }}
                   onPress={toggleFormModal}
               >
                 <Feather name="plus-circle" size={150} color={colorPack.mint}/>
-                <Text style={styles.buttonText}>Save a recipe!</Text>
               </TouchableOpacity>
             </Animatable.View>
             <Modal
@@ -125,7 +124,8 @@ const styles = StyleSheet.create({
     buttonText: {
       color: colorPack.darkgreen,
       alignSelf: 'center',
-      paddingTop: 5
+      paddingTop: 5,
+      height: height / 3
     },
     text: {
       fontSize: 18,

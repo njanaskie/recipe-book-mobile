@@ -23,20 +23,21 @@ export const BottomSheetHeader = () => {
             {/* <View style={styles.panelHeader}> */}
             <View style={styles.panelHandle} />
                 <View style={styles.headerItems}>
-                    <Title>My Recipes</Title>
+                    <Title style={styles.title}>My Recipes</Title>
                     <View style={styles.headerItemsRight}>
                         {filters.filtersActive && 
                             <TouchableOpacity onPress={clearFilters}>
-                                <Feather name="x-circle" size={20}/>
+                                <Feather name="x-circle" size={22} />
                             </TouchableOpacity>
                         }
                         <TouchableOpacity onPress={toggleFiltersModal}>
                             <View style={{ width: 85, paddingRight: 5 }} >
                                 <Tag item='Filters' darkMode={true}/>
+                                {/* <Feather name="filter" size={22}/> */}
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={toggleLogoutModal}>
-                            <Feather name="log-out" size={20}/>
+                            <Feather name="log-out" size={22}/>
                         </TouchableOpacity>
                         <Modal
                             animationIn='fadeIn'
@@ -99,6 +100,10 @@ const styles = StyleSheet.create({
     headerItemsRight: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    title: {
+        fontWeight: 'bold',
+        color: colorPack.darkgreen
     }
   });
 
