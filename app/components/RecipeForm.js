@@ -74,7 +74,7 @@ export default RecipeForm = (props) => {
 
     // console.log('copied', copiedText)
     // console.log(ingredients)
-    console.log(state)
+    // console.log(state)
     
     const toggleTagModal = () => {
         setIsTagModalVisible(!isTagModalVisible);
@@ -86,7 +86,7 @@ export default RecipeForm = (props) => {
 
     useEffect(() => {
         setState({
-            url: props.url || 'https://www.gimmesomeoven.com/fried-rice-recipe/',
+            url: props.url || '',
             ingredients: props.ingredients || [],
             type: props.type || '',
             cuisine: props.cuisine || '',
@@ -190,7 +190,7 @@ export default RecipeForm = (props) => {
                 >
                     {recipeTypes.map(recipeType => {
                         return (
-                            <Picker.Item label={recipeType} value={recipeType} />
+                            <Picker.Item key={recipeType} label={recipeType} value={recipeType} />
                         )
                     })}
                 </Picker>
@@ -209,7 +209,7 @@ export default RecipeForm = (props) => {
                 >
                     {recipeCuisines.map(recipeCuisine => {
                         return (
-                            <Picker.Item label={recipeCuisine} value={recipeCuisine} />
+                            <Picker.Item key={recipeCuisine} label={recipeCuisine} value={recipeCuisine} />
                         )
                     })}
                 </Picker>

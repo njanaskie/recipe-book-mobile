@@ -37,7 +37,7 @@ export const BottomSheetHeader = () => {
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={toggleLogoutModal}>
-                            <Feather name="log-out" size={22}/>
+                            <Feather name="log-out" size={28}/>
                         </TouchableOpacity>
                         <Modal
                             animationIn='fadeIn'

@@ -63,7 +63,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
 
     // console.log('filterItems', filterItems)
     // console.log('formState', formState)
-    console.log('filters', filters)
+    // console.log('filters', filters)
 
     const handleFilterIngredientsChange = (selectedIngredients) => {
         // setFilterIngredients(selectedIngredients)

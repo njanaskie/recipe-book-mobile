@@ -49,8 +49,20 @@ export const addRecipeService = async (recipe) => {
 export const getRecipesService = async (page, itemsPerPage) => {
     const header = await createToken();
 
+    // return fetch(`/api/recipes?page=${page}&per_page=${itemsPerPage}`, {
+    //     method: 'GET',
+    //     headers: header
+    // })
+    // .then((response) => response.json())
+    // .then((json) => {
+    //     return json.data
+    // })
+    // .catch((error) => {
+    //     console.error(error);
+    //   });
+
     try {
-        const res = await axios.get(`${url}/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)
+        const res = await axios.get(`/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)
         return res.data
     } catch(e) {
         console.log(e)
