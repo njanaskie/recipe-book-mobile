@@ -11,9 +11,9 @@ const AddRecipe = ({ toggleFormModal }) => {
     const onSubmit = async (recipe) => {
         // addRecipe(recipe)
         const scrapedData = await scrapeURLService(recipe)
-        console.log('add recipe scrapedData', scrapedData)
+        // console.log('add recipe scrapedData', scrapedData)
         const fullData = { ...recipe, ...scrapedData}
-        console.log('fullData', fullData)
+        // console.log('fullData', fullData)
         const newRecipe = await addRecipeService(fullData)
         recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...fullData} })
         // history.push('/')

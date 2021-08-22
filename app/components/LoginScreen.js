@@ -24,7 +24,7 @@ export default function LoginScreen({navigation}) {
             .then((response) => {
                 const uid = response.user.uid
                 if (response && uid) {
-                    console.log(response)
+                    // console.log(response)
                     navigation.navigate('Home', {user: response.user})
                 }
             })

@@ -16,7 +16,7 @@ const useAllRecipes = (pageState) => {
     const isCurrent = useRef(true)
     const { user } = useFirebaseContext()
 
-    console.log('useallrecipes', state)
+    // console.log('useallrecipes', state)
 
     React.useEffect(() => {
         return () => {
@@ -28,7 +28,7 @@ const useAllRecipes = (pageState) => {
         const fetchRecipes = async () => {
             if (isCurrent.current) {
                 const fetchedRecipes = await getRecipesService(state.page, state.itemsPerPage)
-                console.log(fetchedRecipes.length)
+                // console.log(fetchedRecipes.length)
                 recipeDispatch({
                     type: 'SET_RECIPES',
                     recipes: state.page === 1

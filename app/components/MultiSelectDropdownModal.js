@@ -26,7 +26,7 @@ export default MultiSelectDropdownModal = (props) => {
                     items={props.itemOptions}
                     fixedHeight
                     hideDropdown={true}
-                    hideSubmitButton={true}
+                    hideSubmitButton={false}
                     onSelectedItemsChange={props.handleSelectedItemsChange}
                     // searchIcon={null}
                     selectedItems={props.selectedItems}
@@ -34,14 +34,14 @@ export default MultiSelectDropdownModal = (props) => {
                     searchInputPlaceholderText={props.inputPlaceholderText}
                     selectedItemTextColor={colorPack.mint}
                     selectedItemIconColor={colorPack.mint}
-                    styleMainWrapper={styles.multiSelectContainer}
-                    styleInputGroup={styles.multiSelectInputGroup}
-                    // searchInputStyle={styles.multiSelectSearchInputStyle}
-                    // styleSelectorContainer={{ marginBottom: 30}}
-                    styleTextDropdown={styles.multiSelectTextDropdown}
-                    styleTextDropdownSelected={styles.multiSelectTextDropdown}
-                    styleListContainer={{ height: height * .75 }}
+                    styleMainWrapper={styles.styleMainWrapper}
+                    styleInputGroup={styles.styleInputGroup}
+                    styleDropdownMenu={styles.styleDropdownMenu}
+                    styleTextDropdown={styles.styleTextDropdown}
+                    styleTextDropdownSelected={styles.styleTextDropdown}
+                    styleListContainer={styles.styleListContainer}
                     submitButtonColor={colorPack.mint}
+                    submitButtonText='Hide'
                     tagRemoveIconColor={colorPack.mint}
                     tagBorderColor={colorPack.mint}
                     tagTextColor={colorPack.mint}
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         shadowOffset: {width: -1, height: -3},
         shadowRadius: 2,
         shadowOpacity: 0.4,
-        // elevation: 5,
         paddingTop: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -73,55 +72,28 @@ const styles = StyleSheet.create({
     modalView: {
         flex: 1,
         backgroundColor: colorPack.backgroundColor,
-        // borderRadius: 5,
         paddingTop: 10
-        // // alignItems: 'center',
-        // justifyContent: 'center'
     },
-    multiSelectContainer: {
-        // borderRadius: 5,
-        // overflow: 'hidden',
-        // backgroundColor: 'black',
-        // marginBottom: 30,
-        paddingRight: 10,
-        paddingLeft: 10,
-        // paddingTop: 10,
-        justifyContent: 'center',
+    styleDropdownMenu: {
+        borderRadius: 5,
+        height: 50,
+        overflow: 'hidden'
     },
-    multiSelectInputGroup: {
-        paddingRight: 10,
-        paddingLeft: 10,
-        // paddingBottom: 10,
-        justifyContent: 'center',
-        height: 40,
-        // fontStyle: colorPack.mint
-        // backgroundColor: 'orange',
+    styleListContainer: {
+        height: height * .75
     },
-    multiSelectDropdownMenu: {
-        justifyContent: 'center',
-        // alignItems: 'center',
-        // marginRight: 16,
-        // marginLeft: 16,
-        marginTop: 10,
-        marginBottom: 10,
+    styleMainWrapper: {
+        marginHorizontal: 10
     },
-    multiSelectSelector: {
-        justifyContent: 'center',
-        marginRight: 16,
-        marginLeft: 16,
-        marginTop: 16,
+    styleInputGroup: {
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
+        height: 50
     },
-    multiSelectSearchInputStyle: {
-        // fontSize: 14,
-        // position: 'relative',
-    },
-    multiSelectTextDropdown: {
-        fontSize: 14,
-        // lineHeight: 16,
-        // paddingLeft: 8,
+    styleTextDropdown: {
         color: colorPack.grey,
         marginLeft: 10,
-        fontWeight: '500'
+        fontWeight: '500',
     },
     panelHeader: {
         flexDirection: 'row',

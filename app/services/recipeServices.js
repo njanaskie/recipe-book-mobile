@@ -59,6 +59,7 @@ export const getRecipesService = async (page, itemsPerPage) => {
     //   });
 
     try {
+        console.log(url)
         const res = await axios.get(`${url}/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)
         return res.data
     } catch(e) {

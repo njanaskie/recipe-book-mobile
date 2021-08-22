@@ -1,12 +1,11 @@
 {
   "scripts": {
+    "start:development": "NODE_ENV=development npx react-native start",
+    "start:production": "NODE_ENV=production npx react-native start",
     "start": "react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+    "ios": "react-native run-ios"
   },
-  "proxy": "http://localhost:3001",
   "dependencies": {
     "@flyerhq/react-native-link-preview": "^1.2.0",
     "@react-native-clipboard/clipboard": "^1.7.0",

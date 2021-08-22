@@ -27,7 +27,6 @@ const config = {
   try {
     firebase.initializeApp(config);
     GoogleSignin.configure();
-    console.log(config.apiKey)
   } catch (err) {
     if (!/already exists/.test(err.message)) {
       console.error('Firebase initialization error', err.stack);

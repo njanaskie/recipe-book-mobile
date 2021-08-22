@@ -70,7 +70,7 @@ export const RecipeList = () => {
     }
 
     handleRefresh = () => {
-        console.log('handle refresh')
+        // console.log('handle refresh')
         setPageState(
           {
             page: 1,
@@ -83,7 +83,7 @@ export const RecipeList = () => {
       };
 
     handleLoadMore = () => {
-       console.log('load more')
+      //  console.log('load more')
        setPageState((prevState) => ({
             // ...pageState,
             page: prevPage + 1,
