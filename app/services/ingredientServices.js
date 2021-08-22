@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { firebase } from '../firebase/firebase';
+import { APP_URL } from '@env'
 
-// const api = axios.create({
-//     baseURL: 'http://localhost:3001/api',
-// })
-
-const url = 'http://localhost:3001';
+const url = APP_URL
 
 const createToken = async () => {
     const user = firebase.auth().currentUser;

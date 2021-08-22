@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { firebase } from '../firebase/firebase';
+import { APP_URL } from '@env'
 
-// const api = axios.create({
-//     baseURL: 'http://localhost:3001/api',
-// })
-
-const url = 'http://localhost:3001';
+const url = APP_URL
 
 const createToken = async () => {
     const user = firebase.auth().currentUser;
@@ -62,7 +59,7 @@ export const getRecipesService = async (page, itemsPerPage) => {
     //   });
 
     try {
-        const res = await axios.get(`/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)
+        const res = await axios.get(`${url}/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)
         return res.data
     } catch(e) {
         console.log(e)
