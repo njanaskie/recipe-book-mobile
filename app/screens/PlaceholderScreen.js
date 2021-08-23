@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import LogoutButton from './LogoutButton'
-import AppWrapper from './AppWrapper'
+import LogoutButton from '../components/LogoutButton'
+import AppWrapper from '../navigation/AppWrapper'
 
 export default function PlaceholderScreen() {
     

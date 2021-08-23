@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useReducer } from 'react';
 import database, { firebase, googleAuthProvider } from '../firebase/firebase';
 // import { history } from '../routers/AppRouter';
 import authReducer from '../reducers/auth'
-import LoadingScreen from '../components/LoadingScreen'
+import LoadingScreen from '../screens/LoadingScreen'
 
 const FirebaseContext = React.createContext()
 

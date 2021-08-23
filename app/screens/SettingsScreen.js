@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { colorPack } from '../styles/styles'
 import { Button, Title } from 'react-native-paper';
-import LogoutButton from './LogoutButton';
+import LogoutButton from '../components/LogoutButton';
 
 const SettingsScreen = ({ toggleLogoutModal }) => (
     <SafeAreaView style={styles.container}>

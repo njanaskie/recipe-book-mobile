@@ -9,7 +9,7 @@ import Modal from 'react-native-modal';
 import RNUrlPreview from 'react-native-url-preview'
 import { LinkPreview, getPreviewData } from '@flyerhq/react-native-link-preview'
 import { database } from 'firebase'
-import RecipeDetailsScreen from './RecipeDetailsScreen'
+import RecipeDetailsScreen from '../screens/RecipeDetailsScreen'
 import { colorPack } from '../styles/styles';
 
 const RecipeListItem = ({ recipe }) => {

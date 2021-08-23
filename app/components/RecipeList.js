@@ -116,7 +116,7 @@ export const RecipeList = () => {
       };
 
     if (!selectedRecipes || !selectedRecipes.length) {
-        return <Text>No recipes</Text>
+        return <Text style={styles.message}>No recipes</Text>
     }
     
     return (
@@ -155,6 +155,9 @@ const styles = StyleSheet.create({
         // flexGrow: 0,
         // minHeight: 100,
     },
+    message: {
+      alignSelf: 'center',
+    }
 })
 
 export default RecipeList

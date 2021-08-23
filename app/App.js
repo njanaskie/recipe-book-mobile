@@ -22,13 +22,13 @@ import * as Linking from "expo-linking";
 import { Feather } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import LoginScreen from './components/LoginScreen'
-import AppWrapper from './components/AppWrapper'
-import RegistrationScreen from './components/RegistrationScreen'
-import PlaceholderScreen from './components/PlaceholderScreen'
-import HomeScreen from './components/HomeScreen'
+import LoginScreen from './screens/LoginScreen'
+import AppWrapper from './navigation/AppWrapper'
+import RegistrationScreen from './screens/RegistrationScreen'
+import PlaceholderScreen from './screens/PlaceholderScreen'
+import HomeScreen from './screens/HomeScreen'
 import { firebase } from './firebase/firebase';
-import AppNavigator from './components/AppNavigator'
+import AppNavigator from './navigation/AppNavigator'
 
 import { useFirebaseContext } from './context/firebase-context'
 

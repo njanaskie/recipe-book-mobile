@@ -22,11 +22,11 @@ import * as Linking from "expo-linking";
 import { Feather } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import LoginScreen from './LoginScreen'
+import LoginScreen from '../screens/LoginScreen'
 import AppWrapper from './AppWrapper'
-import RegistrationScreen from './RegistrationScreen'
-import PlaceholderScreen from './PlaceholderScreen'
-import HomeScreen from './HomeScreen'
+import RegistrationScreen from '../screens/RegistrationScreen'
+import PlaceholderScreen from '../screens/PlaceholderScreen'
+import HomeScreen from '../screens/HomeScreen'
 import { firebase } from '../firebase/firebase';
 
 import { useFirebaseContext } from '../context/firebase-context'

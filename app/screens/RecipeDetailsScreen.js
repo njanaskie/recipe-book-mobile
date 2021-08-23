@@ -3,10 +3,10 @@ import { Dimensions, StyleSheet, Image, Text, TextInput, TouchableOpacity, View,
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/firebase';
 import { colorPack } from '../styles/styles';
-import Tag from './Tag'
+import Tag from '../components/Tag'
 import { Divider, Title, Subheading, Button, Menu, Paragraph, Provider, Portal, Dialog, Card, IconButton } from 'react-native-paper';
 import { Feather } from "@expo/vector-icons";
-import EditRecipe from './EditRecipe';
+import EditRecipe from '../components/EditRecipe';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';

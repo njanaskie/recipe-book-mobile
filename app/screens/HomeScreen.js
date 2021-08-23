@@ -19,15 +19,15 @@ import {
 // import RecipeListFilters from './RecipeListFilters'
 // import { useRecipesContext } from '../context/recipes-context'
 // import { useIngredientsContext } from '../context/ingredients-context'
-import AddRecipe from './AddRecipe';
+import AddRecipe from '../components/AddRecipe';
 import { firebase } from '../firebase/firebase'
 import useAllRecipes from '../hooks/useAllRecipes'
 import useIngredients from '../hooks/useIngredients'
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
-import RecipeList from './RecipeList'
-import BottomSheetHeader from './BottomSheetHeader'
+import RecipeList from '../components/RecipeList'
+import BottomSheetHeader from '../components/BottomSheetHeader'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];

@@ -6,8 +6,8 @@ import { Feather } from "@expo/vector-icons"
 import LogoutButton from './LogoutButton'
 import Tag from './Tag'
 import { colorPack } from '../styles/styles'
-import SettingsScreen from './SettingsScreen'
-import FiltersScreen from './FiltersScreen'
+import SettingsScreen from '../screens/SettingsScreen'
+import FiltersScreen from '../screens/FiltersScreen'
 import { useFiltersContext } from '../context/filters-context'
 
 export const BottomSheetHeader = () => {

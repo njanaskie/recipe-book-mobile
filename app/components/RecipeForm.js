@@ -133,13 +133,13 @@ export default RecipeForm = (props) => {
         }
     }
 
-    clearSelectedTypes = () => {
-        _multiSelectType._removeAllItems();
-    };
+    // clearSelectedTypes = () => {
+    //     _multiSelectType._removeAllItems();
+    // };
 
-    clearSelectedCuisines = () => {
-        _multiSelectCuisine._removeAllItems();
-     };
+    // clearSelectedCuisines = () => {
+    //     _multiSelectCuisine._removeAllItems();
+    //  };
 
     const renderItem = ({item}) => (
         <Tag item={item} />
@@ -234,7 +234,7 @@ export default RecipeForm = (props) => {
                 isVisible={isIngredientModalVisible}
                 headerText="Add Ingredients..."
                 toggleModal={toggleIngredientModal}
-                itemOptions={ingredients.map(({ id, name }) => {
+                itemOptions={ingredients && ingredients.map(({ id, name }) => {
                     return {
                         id: name,
                         name

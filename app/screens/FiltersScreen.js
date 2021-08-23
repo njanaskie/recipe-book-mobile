@@ -9,10 +9,10 @@ import { Feather } from "@expo/vector-icons"
 import { State, TouchableOpacity } from 'react-native-gesture-handler'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
-import Tag from './Tag'
+import Tag from '../components/Tag'
 import selectCustomTags from '../selectors/custom-tags'
 import selectFilterItems from '../selectors/filter-items'
-import FiltersScreenItem from './FiltersScreenItem'
+import FiltersScreenItem from '../components/FiltersScreenItem'
 import { useFiltersContext } from '../context/filters-context'
 
 const { width, height } = Dimensions.get("window");
@@ -145,7 +145,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                 isVisible={isSearchModalVisible}
                 headerText="Search Ingredients"
                 toggleModal={toggleSearchModal}
-                itemOptions={ingredients.map(({ id, name }) => {
+                itemOptions={ingredients && ingredients.map(({ id, name }) => {
                     return {
                         id: name,
                         name
