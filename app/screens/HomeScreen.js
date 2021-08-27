@@ -3,26 +3,17 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
-  Text,
   Dimensions,
   TouchableOpacity,
-  Image,
-  TextInput,
   Platform,
   StatusBar,
   } from "react-native";
-  import { Title } from 'react-native-paper'
-  import { Feather } from "@expo/vector-icons"
-  import Modal from 'react-native-modal'
-  import BottomSheet from 'reanimated-bottom-sheet'
-// import RecipeList from './RecipeList'
-// import RecipeListFilters from './RecipeListFilters'
-// import { useRecipesContext } from '../context/recipes-context'
-// import { useIngredientsContext } from '../context/ingredients-context'
+import { Title } from 'react-native-paper'
+import { Feather } from "@expo/vector-icons"
+import Modal from 'react-native-modal'
+import BottomSheet from 'reanimated-bottom-sheet'
 import AddRecipe from '../components/AddRecipe';
 import { firebase } from '../firebase/firebase'
-import useAllRecipes from '../hooks/useAllRecipes'
-import useIngredients from '../hooks/useIngredients'
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
@@ -33,14 +24,8 @@ const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
 
 export default function HomeScreen() {
-    // const recipes = useAllRecipes()
-    const ingredients = useIngredients()
-    // const { recipes } = useRecipesContext()
-    // const { ingredients } = useIngredientsContext()
     const [isModalVisible, setIsModalVisible] = useState(false);
     const sheetRef = React.useRef(null);
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
   
     renderContent = () => (
       <View style={styles.modal}>
@@ -147,8 +132,6 @@ const styles = StyleSheet.create({
     },
     linearGradient: {
       flex: 1,
-      // paddingLeft: 15,
-      // paddingRight: 15,
       borderRadius: 5
     },
     

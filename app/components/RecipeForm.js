@@ -3,7 +3,6 @@ import {
     StyleSheet,
     View,
     SafeAreaView,
-    Button,
     Dimensions,
     Platform,
     TouchableOpacity,
@@ -18,17 +17,8 @@ import recipeCuisines from '../fixtures/recipeCuisines'
 import selectCustomTags from '../selectors/custom-tags'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
-// import { TextInput } from 'react-native-gesture-handler'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MultiSelect from 'react-native-multiple-select';
-import Modal from 'react-native-modal';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Icon from 'react-native-vector-icons/Feather';
-import { Feather } from "@expo/vector-icons";
 import { Button as PaperButton, Divider, Title, Subheading, Caption } from 'react-native-paper';
-import MultiSelectForm from './MultiSelectForm';
 import { colorPack } from '../styles/styles';
-import Clipboard, { useClipboard } from '@react-native-clipboard/clipboard';
 import Tag from './Tag';
 import {Picker} from '@react-native-picker/picker';
 import MultiSelectDropdownModal from './MultiSelectDropdownModal';

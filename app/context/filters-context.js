@@ -20,14 +20,6 @@ const FiltersProvider = ({ children }) => {
         filtersDispatch({ type: 'REMOVE_CHECKBOX_ITEM', item })
     }
 
-    // const setFilterTypes = (type) => {
-    //     filtersDispatch({ type: 'SET_TYPE_FILTER', type })
-    // }
-
-    // const setFilterCustomTags = (customTags) => {
-    //     filtersDispatch({ type: 'SET_CUSTOM_TAG_FILTER', customTags })
-    // }
-
     const setFilters = (filters) => {
         filtersDispatch({ type: 'SET_FILTERS', filters })
     }

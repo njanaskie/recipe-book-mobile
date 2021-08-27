@@ -4,7 +4,6 @@ import database from '../firebase/firebase'
 import uuid from 'uuid'
 import { useFirebaseContext } from './firebase-context'
 
-
 const RecipesContext = React.createContext()
 
 export const useRecipesContext = () => useContext(RecipesContext)

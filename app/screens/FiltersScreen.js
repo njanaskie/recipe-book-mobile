@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, FlatList, SafeAreaView, SectionList, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Dimensions, FlatList, SafeAreaView, SectionList, StyleSheet, Text, View } from 'react-native'
 import { colorPack } from '../styles/styles'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
-import { Button, Checkbox, IconButton, Subheading, Title } from 'react-native-paper'
-import SelectMultiple from 'react-native-select-multiple'
+import { Button } from 'react-native-paper'
 import { Feather } from "@expo/vector-icons"
 import { State, TouchableOpacity } from 'react-native-gesture-handler'
 import { useIngredientsContext } from '../context/ingredients-context'
@@ -35,20 +34,14 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
     const sectionData = [
         {
             title: 'Cuisine',
-            // data: filterItems.filter(cuisine => cuisine.group === 'cuisine')
-            // data: recipeCuisines
             data: formState.checkboxItems.filter(cuisine => cuisine.group === 'cuisine')
         },
         {
             title: 'Meal',
-            // data: filterItems.filter(cuisine => cuisine.group === 'type')
-            // data: recipeTypes
             data: formState.checkboxItems.filter(item => item.group === 'type')
         },
         {
             title: 'Custom Tag',
-            // data: filterItems.filter(cuisine => cuisine.group === 'customTags')
-            // data: customTags
             data: formState.checkboxItems.filter(item => item.group === 'customTags')
         }
     ]
@@ -61,34 +54,16 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         })
     }, [])
 
-    // console.log('filterItems', filterItems)
-    // console.log('formState', formState)
-    // console.log('filters', filters)
 
     const handleFilterIngredientsChange = (selectedIngredients) => {
-        // setFilterIngredients(selectedIngredients)
         setFormState({ ...formState, selectedIngredients })
     }
 
     const handleAddCheckboxItem = (item) => {
-        // if (item.group == 'cuisine'){
-        //     setFormState({ ...formState, selectedCuisines: [...formState.selectedCuisines, item.item] })
-        // }else if (item.group == 'type'){
-        //     setFormState({ ...formState, selectedTypes: [...formState.selectedTypes, item.item] })
-        // }else if (item.group == 'customTags'){
-        //     setFormState({ ...formState, selectedCustomTags: [...formState.selectedCustomTags, item.item] })
-        // }
         setFormState({ ...formState, checkboxItems: [...formState.checkboxItems, item ] })
     }
 
     const handleRemoveCheckboxItem = (item) => {
-        // if (item.group == 'cuisine'){
-        //     setFormState({ ...formState, selectedCuisines: formState.selectedCuisines.filter(cuisine => cuisine !== item.item) })
-        // }else if (item.group == 'type'){
-        //     setFormState({ ...formState, selectedTypes: formState.selectedTypes.filter(type => type !== item.item) })
-        // }else if (item.group == 'customTags'){
-        //     setFormState({ ...formState, selectedCustomTags: formState.selectedCustomTags.filter(tag => tag !== item.item) })
-        // }
         setFormState({ ...formState, checkboxItems: formState.checkboxItems.filter(checkboxItem => checkboxItem !== item) })
     }
 
@@ -195,18 +170,8 @@ const styles = StyleSheet.create({
         height: 40,
         overflow: 'hidden',
         backgroundColor: 'white',
-        // marginBottom: 10,
         marginRight: 10,
-        // marginLeft: 20,
-        // paddingLeft: 16,
-        // textAlign: 'auto',
-
         flex: 1,
-        // paddingTop: 10,
-        // paddingRight: 10,
-        // paddingBottom: 10,
-        // paddingLeft: 0,
-        // backgroundColor: '#fff',
         color: '#424242',
     },
     placeholderText: {
@@ -214,7 +179,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     searchSection: {
-        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

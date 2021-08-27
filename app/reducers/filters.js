@@ -13,11 +13,6 @@ export const filtersReducerDefaultState = {
 
 const filtersReducer = (state = {}, action) => {
     switch (action.type) {
-        // case 'SET_TEXT_FILTER':
-        //     return {
-        //         ...state,
-        //         text: action.text
-        //     }
         case 'SET_INGREDIENT_FILTER':
             return {
                 ...state,
@@ -59,16 +54,6 @@ const filtersReducer = (state = {}, action) => {
                         customTags: state.customTags.filter(customTag => customTag !== action.item.item)
                     }
             }
-        // case 'SET_TYPE_FILTER':
-        //     return {
-        //         ...state,
-        //         type: action.type
-        //     }
-        // case 'SET_CUSTOM_TAG_FILTER':
-        //     return {
-        //         ...state,
-        //         customTags: action.customTags
-        //     }
         case 'SET_FILTERS':
             return action.filters
         case 'CLEAR_FILTERS':

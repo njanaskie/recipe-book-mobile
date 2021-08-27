@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
-import { Dimensions, StyleSheet, Image, Text, TextInput, TouchableOpacity, View, SafeAreaView, FlatList, Linking, ScrollView } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { firebase } from '../firebase/firebase';
+import { Dimensions, StyleSheet, Image, Text, View, FlatList, Linking, ScrollView } from 'react-native'
 import { colorPack } from '../styles/styles';
 import Tag from '../components/Tag'
-import { Divider, Title, Subheading, Button, Menu, Paragraph, Provider, Portal, Dialog, Card, IconButton } from 'react-native-paper';
+import { Title, Subheading, Button, Menu, Paragraph, Provider, Card, IconButton } from 'react-native-paper';
 import { Feather } from "@expo/vector-icons";
 import EditRecipe from '../components/EditRecipe';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
-import { LinkPreview } from '@flyerhq/react-native-link-preview';
 import { removeRecipeService } from '../services/recipeServices';
 import { useRecipesContext } from '../context/recipes-context';
 
@@ -22,7 +19,6 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
     const [isRemoveModalVisible, setIsRemoveModalVisible] = useState(false);
     const { recipeDispatch } = useRecipesContext()
 
-    // console.log(recipe)
     const openMenu = () => setIsMenuVisible(true);
   
     const closeMenu = () => setIsMenuVisible(false);
@@ -33,7 +29,6 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
 
     const handleRemoveRecipe = () => {
         closeRemoveModal()
-        // removeRecipe(recipe.id)
         removeRecipeService({ id: recipe.id })
         recipeDispatch({ type: 'REMOVE_RECIPE', id: recipe.id })
     }
@@ -43,9 +38,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
       };
 
     const renderItem = ({item}) => (
-        // <View style={{marginRight: 10}}>
-            <Tag item={item}/>
-        // </View>
+        <Tag item={item}/>
     )
 
     const numColumns = Math.ceil(recipe.ingredients.length / 2)
@@ -55,10 +48,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
             <Image source={{ uri: urlData.image }} style={styles.image}/>
             <LinearGradient colors={['white', colorPack.backgroundColor]} style={styles.linearGradient}/>
             <Title style={styles.title} numberOfLines={2}>{urlData.title}</Title>
-            {/* <Divider /> */}
             <View >
-                {/* <Subheading style={styles.subTitle}>Tags</Subheading> */}
-                {/* <View> */}
                     <FlatList
                         horizontal
                         data={topLevelTags}
@@ -70,9 +60,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                         ItemSeparatorComponent={() => <Text> • </Text>}
                         ListEmptyComponent={<Text style={styles.emptyMessage}>No Tags</Text>}
                     />
-                {/* </View> */}
             </View>
-            {/* <Divider /> */}
             <Subheading style={styles.subTitle}>Ingredients</Subheading>
             <View>
                 <ScrollView
@@ -90,7 +78,6 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                     />   
                 </ScrollView>
             </View>
-            {/* <Divider /> */}
             <Button icon='open-in-new' mode='outlined' color='white' style={styles.link} onPress={() => Linking.openURL(recipe.url)}>Go To Recipe</Button>
             <View style={styles.topLeftButton}>
                 <IconButton icon="close" size={24} color={colorPack.darkgrey} onPress={closeModal}/>
@@ -102,9 +89,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                     onDismiss={closeMenu}
                     anchor={
                         <Button onPress={openMenu}>
-                            {/* <View style={styles.topRightButton}> */}
                                 <Feather name="menu" size={24} color={colorPack.darkgrey} />
-                            {/* </View> */}
                         </Button>
                     }
                 >
@@ -150,24 +135,19 @@ const styles = StyleSheet.create({
         height: height,
     },
     image: {
-        // flex: 1,
-        // marginTop: 90,
         height: 400,
         width: width,
         alignSelf: 'center',
-        // opacity: .8,
     },
     imageContainer: {
         shadowColor: 'white',
         shadowOffset: {width: 0, height: 8},
         shadowRadius: 10,
         shadowOpacity: 8,
-        // elevation: 16
     },
     linearGradient: {
         width,
         height: 30,
-        // top: -10,
     },
     topLevelTags: {
         bottom: 10,
@@ -184,7 +164,6 @@ const styles = StyleSheet.create({
     },
     title: {
         paddingTop: 10,
-        // paddingBottom: -10,
         color: colorPack.darkgrey,
         fontWeight: 'bold',
         paddingHorizontal: 10

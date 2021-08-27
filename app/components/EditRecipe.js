@@ -6,10 +6,8 @@ import { View } from 'react-native'
 
 const EditRecipe = ({ recipe, toggleEditModal }) => {
     const { recipes, editRecipe, recipeDispatch } = useRecipesContext()
-    // const history = useHistory()
 
     const onSubmit = (recipeEdits) => {
-        // editRecipe(recipe.id, recipeEdits)
         editRecipeService(recipe.id, recipeEdits)
         recipeDispatch({ type: 'EDIT_RECIPE', id: recipe.id, updates: recipeEdits })
         toggleEditModal()

@@ -3,7 +3,6 @@ import { Button, StyleSheet, TouchableOpacity, View } from "react-native"
 import Modal from 'react-native-modal'
 import { Title, IconButton } from 'react-native-paper'
 import { Feather } from "@expo/vector-icons"
-import LogoutButton from './LogoutButton'
 import Tag from './Tag'
 import { colorPack } from '../styles/styles'
 import SettingsScreen from '../screens/SettingsScreen'

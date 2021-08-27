@@ -25,7 +25,6 @@ export const scrapeURLService = async (recipe) => {
 
     try {
         const res = await api.post('/api/recipes/scrape', payload, header)
-        // console.log('scrape url service', res.data)
         return res.data
     } catch (e) {
         console.log('scraper service error', e)
@@ -34,7 +33,6 @@ export const scrapeURLService = async (recipe) => {
 
 export const addRecipeService = async (recipe) => {
     const header = await createToken();
-    // const scrapedData = await scrapeURLService(recipe)
     const payload = recipe
 
     try {
@@ -48,18 +46,6 @@ export const addRecipeService = async (recipe) => {
 
 export const getRecipesService = async (page, itemsPerPage) => {
     const header = await createToken();
-
-    // return fetch(`/api/recipes?page=${page}&per_page=${itemsPerPage}`, {
-    //     method: 'GET',
-    //     headers: header
-    // })
-    // .then((response) => response.json())
-    // .then((json) => {
-    //     return json.data
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    //   });
 
     try {
         const res = await api.get(`/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)

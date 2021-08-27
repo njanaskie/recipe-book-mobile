@@ -3,14 +3,12 @@ import { StyleSheet, Image, Text, TextInput, TouchableOpacity, View } from 'reac
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase, googleAuthProvider } from '../firebase/firebase';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-// import { useFirebaseContext } from '../context/firebase-context'
 
 
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const { login } = useFirebaseContext()
 
 
     const onFooterLinkPress = () => {
@@ -36,41 +34,15 @@ export default function LoginScreen({navigation}) {
     const onGoogleLoginPress = async () => {
         GoogleSignin.signIn()
         .then((data) => {
-          // Create a new Firebase credential with the token
           const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
-          // Login with the credential
           return firebase.auth().signInWithCredential(credential);
         })
         .then((user) => {
-          // If you need to do anything with the user, do it here
-          // The user will be logged in automatically by the
-          // `onAuthStateChanged` listener we set up in App.js earlier
           navigation.navigate('Home', {user})
         })
         .catch((error) => {
-        //   const { code, message } = error;
-          // For details of error codes, see the docs
-          // The message contains the default Firebase string
-          // representation of the error
           alert(error)
         });
-
-        // try {
-        //     await GoogleSignin.hasPlayServices();
-        //     const userInfo = await GoogleSignin.signIn();
-        //     navigation.navigate('Placeholder', {user: userInfo})
-        //     // this.setState({ userInfo: userInfo, loggedIn: true });
-        // } catch (error) {
-        //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        //       // user cancelled the login flow
-        //     } else if (error.code === statusCodes.IN_PROGRESS) {
-        //       // operation (f.e. sign in) is in progress already
-        //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        //       // play services not available or outdated
-        //     } else {
-        //       // some other error happened
-        //     }
-        // }
     }
     
 
