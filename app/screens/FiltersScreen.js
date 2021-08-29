@@ -117,6 +117,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                 </View>
             </TouchableOpacity>
             <MultiSelectDropdownModal
+                canAddItems={false}
                 isVisible={isSearchModalVisible}
                 headerText="Search Ingredients"
                 toggleModal={toggleSearchModal}

@@ -5,10 +5,8 @@ import {
     SafeAreaView,
     Dimensions,
     Platform,
-    TouchableOpacity,
     FlatList,
     StatusBar,
-    Text,
     TextInput
     } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
@@ -26,7 +24,7 @@ import MultiSelectDropdownModal from './MultiSelectDropdownModal';
 const { width, height } = Dimensions.get("window");
 
 export default RecipeForm = (props) => {
-    const { isGuest, user } = useFirebaseContext()
+    const { user } = useFirebaseContext()
     const { recipes } = useRecipesContext()
     const formResults = props.results ? props.results : recipes
     const initialFormState = {
@@ -34,7 +32,6 @@ export default RecipeForm = (props) => {
         ingredients: [],
         type: '',
         cuisine: '',
-        // createdAt: '',
         customTags: [],
         savedBy: '',
         error: '',
@@ -46,25 +43,6 @@ export default RecipeForm = (props) => {
     const uid = user.uid
     const [isTagModalVisible, setIsTagModalVisible] = useState(false);
     const [isIngredientModalVisible, setIsIngredientTagModalVisible] = useState(false);
-    // const [copiedText, setCopiedText] = useState('');
-    // const [data, setString] = useClipboard();
-
-    // useEffect(() => {
-    //     setString('hello world');
-    //   }, []);
-
-    // const copyToClipboard = () => {
-    //   Clipboard.setString('hello world');
-    // };
-  
-    // const fetchCopiedText = async () => {
-    //   const text = await Clipboard.getString();
-    //   setCopiedText(text);
-    // };
-
-    // console.log('copied', copiedText)
-    // console.log(ingredients)
-    // console.log(state)
     
     const toggleTagModal = () => {
         setIsTagModalVisible(!isTagModalVisible);
@@ -80,7 +58,6 @@ export default RecipeForm = (props) => {
             ingredients: props.ingredients || [],
             type: props.type || '',
             cuisine: props.cuisine || '',
-            // createdAt: moment(props.createdAt) || moment(),
             savedBy: props.savedBy || uid,
             customTags: props.customTags || [],
             customTagOptions: props.customTagOptions || allCustomTags,
@@ -96,7 +73,6 @@ export default RecipeForm = (props) => {
             ingredients: state.ingredients,
             type: state.type.toLocaleString(),
             cuisine: state.cuisine.toLocaleString(),
-            // createdAt: state.createdAt.valueOf(),
             customTags: state.customTags,
             savedBy: state.savedBy
         }
@@ -110,26 +86,15 @@ export default RecipeForm = (props) => {
     }
 
     const onAddCustomTag = (newItem) => {
-        // console.log(newItem, 'vs', state.customTagOptions)
         if (newItem.every(tag => state.customTagOptions.includes(tag))) {
-            // console.log('1')
             setState({ ...state, customTags: newItem })
         } else {
-            // console.log('2')
             setState((prevState) => ({
                 ...state,
                 customTagOptions: [...prevState.customTagOptions, newItem[newItem.length - 1]]
             }))
         }
     }
-
-    // clearSelectedTypes = () => {
-    //     _multiSelectType._removeAllItems();
-    // };
-
-    // clearSelectedCuisines = () => {
-    //     _multiSelectCuisine._removeAllItems();
-    //  };
 
     const renderItem = ({item}) => (
         <Tag item={item} />
@@ -142,17 +107,6 @@ export default RecipeForm = (props) => {
                 <Title style={styles.title}>I want to save...</Title>
                 <PaperButton onPress={onSubmit}>Submit</PaperButton>
             </View>
-            {/* <Text>{data}</Text>
-            <View >
-                <TouchableOpacity onPress={copyToClipboard}>
-                    <Text>Click here to copy to Clipboard</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={fetchCopiedText}>
-                    <Text>View copied text</Text>
-                </TouchableOpacity>
-
-                <Text>{copiedText}</Text>
-            </View> */}
             <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
                 <Title>Recipe URL</Title>
                 <Caption>Copy the recipe URL into the text bar</Caption>
@@ -163,15 +117,10 @@ export default RecipeForm = (props) => {
                 placeholderTextColor="#aaaaaa"
                 onChangeText={(url) => setState({ ...state, url })}
                 value={state.url}
-                // underlineColorAndroid="transparent"
-                // autoCapitalize="none"
             />
             <Divider />
             <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
                 <Title style={{ width: '30%', alignSelf: 'center'}}>Type</Title>
-                {/* <TouchableOpacity onPress={clearSelectedTypes}>
-                    <Text style={styles.clearButton} >Clear selection</Text>
-                </TouchableOpacity> */}
                 <Picker 
                     onValueChange={value => setState({ ...state, type: value })}
                     selectedValue={state.type}
@@ -188,9 +137,6 @@ export default RecipeForm = (props) => {
             <Divider />
             <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
                 <Title style={{ width: '30%', alignSelf: 'center'}}>Cuisine</Title>
-                {/* <TouchableOpacity onPress={clearSelectedCuisines}>
-                    <Text style={styles.clearButton} >Clear selection</Text>
-                </TouchableOpacity> */}
                 <Picker 
                     onValueChange={value => setState({ ...state, cuisine: value })}
                     selectedValue={state.cuisine}
@@ -212,8 +158,6 @@ export default RecipeForm = (props) => {
                         compact
                         uppercase={false}
                         onPress={toggleIngredientModal}
-                        // style={{ right: 40, alignSelf: 'center' }}
-                        // contentStyle={{ height: 100, width: 300 }}
                     >
                         Add ingredients
                     </PaperButton>
@@ -221,6 +165,7 @@ export default RecipeForm = (props) => {
                 <Caption style={styles.subtitle}>Add a few key ingredients or all of them. You can use ingredients to find your recipes in the future.</Caption>
             </View>
             <MultiSelectDropdownModal
+                canAddItems={false}
                 isVisible={isIngredientModalVisible}
                 headerText="Add Ingredients..."
                 toggleModal={toggleIngredientModal}
@@ -252,8 +197,6 @@ export default RecipeForm = (props) => {
                         compact
                         uppercase={false}
                         onPress={toggleTagModal}
-                        // style={{ right: 40, alignSelf: 'center' }}
-                        // contentStyle={{ height: 100, width: 300 }}
                     >
                         Add tags
                     </PaperButton>
@@ -261,6 +204,7 @@ export default RecipeForm = (props) => {
                 <Caption style={styles.subtitle}>Add your own tags to categorize recipes any way you want.</Caption>
             </View>
             <MultiSelectDropdownModal
+                canAddItems={true}
                 isVisible={isTagModalVisible}
                 headerText="Add Tags..."
                 toggleModal={toggleTagModal}
@@ -291,9 +235,7 @@ export default RecipeForm = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
-        // backgroundColor: 'black'
     },
     clearButton: {
         flex: 3,
@@ -349,11 +291,9 @@ const styles = StyleSheet.create({
     subtitle: {
         marginLeft: 20,
         marginRight: 20,
-        // marginTop: 10
         width: 240
     },
     subtitleGroup: {
-        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -363,14 +303,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 20
     },
     picker: {
-        // flex: 1,
-        // paddingRight: 10,
-        // paddingLeft: 10,
         height: 100,
     },
     pickerItem: {
         fontSize: 18,
         height: 100,
-        // width: 200
     }
 })

@@ -2,9 +2,8 @@ import axios from 'axios';
 import { firebase } from '../firebase/firebase';
 import { APP_URL } from '@env'
 
-console.log(APP_URL)
 const api = axios.create({
-    baseURL: APP_URL.slice(0,-1),
+    baseURL: APP_URL,
 })
 
 const createToken = async () => {
