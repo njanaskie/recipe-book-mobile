@@ -19,13 +19,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
 import RecipeList from '../components/RecipeList'
 import BottomSheetHeader from '../components/BottomSheetHeader'
+import useIngredients from '../hooks/useIngredients';
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
 
 export default function HomeScreen() {
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const sheetRef = React.useRef(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const sheetRef = React.useRef(null);
+  useIngredients()
   
     renderContent = () => (
       <View style={styles.modal}>
