@@ -21,7 +21,7 @@ const FiltersScreenItem = ({ item, filters, formState, toggleCheckbox, handleAdd
 const styles = StyleSheet.create({
     item: {
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     itemTitle: {
         color: 'white',

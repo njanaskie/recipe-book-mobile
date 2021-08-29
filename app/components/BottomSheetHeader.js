@@ -30,7 +30,7 @@ export const BottomSheetHeader = () => {
                             </TouchableOpacity>
                         }
                         <TouchableOpacity onPress={toggleFiltersModal}>
-                            <View style={{ width: 85, paddingRight: 5 }} >
+                            <View style={{ width: 85, paddingRight: 6, marginHorizontal: 5 }} >
                                 <Tag item='Filters' darkMode={true}/>
                                 {/* <Feather name="filter" size={22}/> */}
                             </View>

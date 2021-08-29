@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, FlatList, SafeAreaView, SectionList, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, SafeAreaView, SectionList, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Caption, Divider } from 'react-native-paper';
 import { colorPack } from '../styles/styles'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
@@ -99,13 +100,13 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
         toggleFiltersModal()
     }
       
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
                 <Button color={colorPack.grey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
                 <Button style={styles.applyButton} onPress={onSubmit}>Apply</Button>
             </View>
+            <Caption style={styles.subtitle}>Choose ingredients by what you're craving... or by what you have in your pantry!</Caption>
             <TouchableOpacity onPress={toggleSearchModal}>
                 <View style={styles.searchSection}>
                     <Feather style={styles.searchIcon} name="search" size={20} color="#000"/>
@@ -141,7 +142,9 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     style={styles.tagFlatList}
                 />
             </View>
-            <View style={styles.selectGroup}>
+            <Divider style={{ backgroundColor: 'grey'}}/>
+            <Caption style={styles.subtitle}>Narrow your options by cuisine, meal, or a custom tag that you have defined.</Caption>
+            <SafeAreaView style={styles.sectionContainer}>
                 <SectionList
                     sections={sectionData}
                     keyExtractor={(item, index) => item + index}
@@ -150,17 +153,12 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                         <Text style={styles.subheading}>{title}</Text>
                     )}
                 />
-            </View>
+            </SafeAreaView>
         </SafeAreaView>
     )
 };
 
 const styles = StyleSheet.create({
-    applyButton: {
-
-    },
-    closeButton: {
-    },
     containter: {
         height: 200,
         width: 150,
@@ -190,36 +188,26 @@ const styles = StyleSheet.create({
     searchIcon: {
         padding: 10,
     },
-    selectGroup: {
-        height: height - 200,
-        marginTop: 10,
-        padding: 10,
-    },
-    selectMultiple: {
-        height: 256,
-        marginHorizontal: 10
-    },
-    selectMultipleCheckbox: {
-        tintColor: 'white',
-
-    },
-    selectMultipleLabel: {
-        color: 'white'
-    },
-    selectMultipleRow: {
-        backgroundColor: 'transparent'
+    sectionContainer: {
+        maxHeight: height * .62,
+        paddingHorizontal: 10,
     },
     subheading: {
+        backgroundColor: colorPack.darkgreen,
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10
     },
-    tagFlatList: {
-        margin: 10
+    subtitle: {
+        margin: 10,
+        paddingBottom: 5,
+        color: 'white'
     },
-    
-    
+    tagFlatList: {
+        margin: 10,
+        // height: 35
+    },
 })
 
 export default FiltersScreen;
