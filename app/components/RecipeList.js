@@ -4,10 +4,12 @@ import { useFiltersContext } from '../context/filters-context'
 import { config } from '../config/config'
 import selectRecipes from '../selectors/recipes'
 import { useRecipesContext } from '../context/recipes-context'
-import { FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { Dimensions, FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { getRecipesService } from '../services/recipeServices'
 import usePrevious from '../hooks/usePrevious'
+import BannerAd from '../components/BannerAd'
 
+const { width, height } = Dimensions.get("window");
 
 export const RecipeList = () => {
     const initialFormState = {
@@ -98,7 +100,7 @@ export const RecipeList = () => {
                 keyExtractor={item => item.id}
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
-                contentContainerStyle={styles.containter}
+                contentContainerStyle={styles.container}
                 onEndReached={pageState.hasMoreToLoad ? handleLoadMore : null}
                 onEndReachedThreshold={0.5}
                 ListFooterComponent={renderFooter}
@@ -117,8 +119,8 @@ export const RecipeList = () => {
 }
 
 const styles = StyleSheet.create({
-    containter: {
-        marginHorizontal: 10,
+    container: {
+        marginHorizontal: 30,
     },
     message: {
       alignSelf: 'center',

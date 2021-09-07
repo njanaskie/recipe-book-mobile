@@ -20,6 +20,7 @@ import { colorPack } from '../styles/styles';
 import Tag from './Tag';
 import {Picker} from '@react-native-picker/picker';
 import MultiSelectDropdownModal from './MultiSelectDropdownModal';
+import BannerAd from '../components/BannerAd';
 
 const { width, height } = Dimensions.get("window");
 
@@ -101,133 +102,136 @@ export default RecipeForm = (props) => {
     )
 
     return (
-        <SafeAreaView style={styles.container} onSubmit={onSubmit}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
-                <PaperButton color={colorPack.darkgrey} onPress={props.toggleFormModal}>Close</PaperButton>
-                <Title style={styles.title}>I want to save...</Title>
-                <PaperButton onPress={onSubmit}>Submit</PaperButton>
-            </View>
-            <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
-                <Title>Recipe URL</Title>
-                <Caption>Copy the recipe URL into the text bar</Caption>
-            </View>
-            <TextInput
-                style={styles.input}
-                placeholder='Insert URL'
-                placeholderTextColor="#aaaaaa"
-                onChangeText={(url) => setState({ ...state, url })}
-                value={state.url}
-            />
-            <Divider />
-            <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
-                <Title style={{ width: '30%', alignSelf: 'center'}}>Type</Title>
-                <Picker 
-                    onValueChange={value => setState({ ...state, type: value })}
-                    selectedValue={state.type}
-                    style={{...styles.picker, flex: 1}}
-                    itemStyle={styles.pickerItem}
-                >
-                    {recipeTypes.map(recipeType => {
-                        return (
-                            <Picker.Item key={recipeType} label={recipeType} value={recipeType} />
-                        )
-                    })}
-                </Picker>
-            </View>
-            <Divider />
-            <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
-                <Title style={{ width: '30%', alignSelf: 'center'}}>Cuisine</Title>
-                <Picker 
-                    onValueChange={value => setState({ ...state, cuisine: value })}
-                    selectedValue={state.cuisine}
-                    style={{...styles.picker, flex: 1}}
-                    itemStyle={styles.pickerItem}
-                >
-                    {recipeCuisines.map(recipeCuisine => {
-                        return (
-                            <Picker.Item key={recipeCuisine} label={recipeCuisine} value={recipeCuisine} />
-                        )
-                    })}
-                </Picker>
-            </View>
-            <Divider />
-            <View >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10 }}>
-                    <Title>Ingredients</Title>
-                    <PaperButton
-                        compact
-                        uppercase={false}
-                        onPress={toggleIngredientModal}
-                    >
-                        Add ingredients
-                    </PaperButton>
+        <SafeAreaView style={styles.container} >
+            <View onSubmit={onSubmit}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
+                    <PaperButton color={colorPack.darkgrey} onPress={props.toggleFormModal}>Close</PaperButton>
+                    <Title style={styles.title}>I want to save...</Title>
+                    <PaperButton onPress={onSubmit}>Submit</PaperButton>
                 </View>
-                <Caption style={styles.subtitle}>Add a few key ingredients or all of them. You can use ingredients to find your recipes in the future.</Caption>
-            </View>
-            <MultiSelectDropdownModal
-                canAddItems={false}
-                isVisible={isIngredientModalVisible}
-                headerText="Add Ingredients..."
-                toggleModal={toggleIngredientModal}
-                itemOptions={ingredients && ingredients.map(({ id, name }) => {
-                    return {
-                        id: name,
-                        name
-                    }
-                })}
-                handleSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
-                selectedItems={state.ingredients}
-                selectText="Select Ingredients"
-                inputPlaceholderText="Search Ingredients..."
-            />
-            <View>
-                <FlatList
-                    horizontal
-                    data={state.ingredients}
-                    renderItem={renderItem}
-                    keyExtractor={item => item}
-                    style={styles.tagFlatList}
-                />
-            </View>
-            <Divider />
-            <View >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10 }}>
-                    <Title>Custom Tags</Title>
-                    <PaperButton
-                        compact
-                        uppercase={false}
-                        onPress={toggleTagModal}
-                    >
-                        Add tags
-                    </PaperButton>
+                <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
+                    <Title>Recipe URL</Title>
+                    <Caption>Copy the recipe URL into the text bar</Caption>
                 </View>
-                <Caption style={styles.subtitle}>Add your own tags to categorize recipes any way you want.</Caption>
-            </View>
-            <MultiSelectDropdownModal
-                canAddItems={true}
-                isVisible={isTagModalVisible}
-                headerText="Add Tags..."
-                toggleModal={toggleTagModal}
-                itemOptions={state.customTagOptions.map(elem => {
-                    return {
-                        id: elem,
-                        name: elem
-                    }
-                })}
-                handleSelectedItemsChange={onAddCustomTag}
-                selectedItems={state.customTags}
-                selectText="Select Custom Tags"
-                inputPlaceholderText="Search Custom Tags..."
-            />
-            <View>
-                <FlatList
-                    horizontal
-                    data={state.customTags}
-                    renderItem={renderItem}
-                    keyExtractor={item => item}
-                    style={styles.tagFlatList}
+                <TextInput
+                    style={styles.input}
+                    placeholder='Insert URL'
+                    placeholderTextColor="#aaaaaa"
+                    onChangeText={(url) => setState({ ...state, url })}
+                    value={state.url}
                 />
+                <Divider />
+                <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
+                    <Title style={{ width: '30%', alignSelf: 'center'}}>Type</Title>
+                    <Picker 
+                        onValueChange={value => setState({ ...state, type: value })}
+                        selectedValue={state.type}
+                        style={{...styles.picker, flex: 1}}
+                        itemStyle={styles.pickerItem}
+                    >
+                        {recipeTypes.map(recipeType => {
+                            return (
+                                <Picker.Item key={recipeType} label={recipeType} value={recipeType} />
+                            )
+                        })}
+                    </Picker>
+                </View>
+                <Divider />
+                <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
+                    <Title style={{ width: '30%', alignSelf: 'center'}}>Cuisine</Title>
+                    <Picker 
+                        onValueChange={value => setState({ ...state, cuisine: value })}
+                        selectedValue={state.cuisine}
+                        style={{...styles.picker, flex: 1}}
+                        itemStyle={styles.pickerItem}
+                    >
+                        {recipeCuisines.map(recipeCuisine => {
+                            return (
+                                <Picker.Item key={recipeCuisine} label={recipeCuisine} value={recipeCuisine} />
+                            )
+                        })}
+                    </Picker>
+                </View>
+                <Divider />
+                <View >
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10 }}>
+                        <Title>Ingredients</Title>
+                        <PaperButton
+                            compact
+                            uppercase={false}
+                            onPress={toggleIngredientModal}
+                        >
+                            Add ingredients
+                        </PaperButton>
+                    </View>
+                    <Caption style={styles.subtitle}>Add a few key ingredients or all of them. You can use ingredients to find your recipes in the future.</Caption>
+                </View>
+                <MultiSelectDropdownModal
+                    canAddItems={false}
+                    isVisible={isIngredientModalVisible}
+                    headerText="Add Ingredients..."
+                    toggleModal={toggleIngredientModal}
+                    itemOptions={ingredients && ingredients.map(({ id, name }) => {
+                        return {
+                            id: name,
+                            name
+                        }
+                    })}
+                    handleSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
+                    selectedItems={state.ingredients}
+                    selectText="Select Ingredients"
+                    inputPlaceholderText="Search Ingredients..."
+                />
+                <View>
+                    <FlatList
+                        horizontal
+                        data={state.ingredients}
+                        renderItem={renderItem}
+                        keyExtractor={item => item}
+                        style={styles.tagFlatList}
+                    />
+                </View>
+                <Divider />
+                <View >
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10 }}>
+                        <Title>Custom Tags</Title>
+                        <PaperButton
+                            compact
+                            uppercase={false}
+                            onPress={toggleTagModal}
+                        >
+                            Add tags
+                        </PaperButton>
+                    </View>
+                    <Caption style={styles.subtitle}>Add your own tags to categorize recipes any way you want.</Caption>
+                </View>
+                <MultiSelectDropdownModal
+                    canAddItems={true}
+                    isVisible={isTagModalVisible}
+                    headerText="Add Tags..."
+                    toggleModal={toggleTagModal}
+                    itemOptions={state.customTagOptions.map(elem => {
+                        return {
+                            id: elem,
+                            name: elem
+                        }
+                    })}
+                    handleSelectedItemsChange={onAddCustomTag}
+                    selectedItems={state.customTags}
+                    selectText="Select Custom Tags"
+                    inputPlaceholderText="Search Custom Tags..."
+                />
+                <View>
+                    <FlatList
+                        horizontal
+                        data={state.customTags}
+                        renderItem={renderItem}
+                        keyExtractor={item => item}
+                        style={styles.tagFlatList}
+                    />
+                </View>
             </View>
+            <BannerAd />
         </SafeAreaView>
         
     )
@@ -235,7 +239,9 @@ export default RecipeForm = (props) => {
 
 const styles = StyleSheet.create({
     container: {
+        height: height,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
+        justifyContent: 'space-between'
     },
     clearButton: {
         flex: 3,

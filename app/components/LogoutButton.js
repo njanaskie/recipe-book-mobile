@@ -2,16 +2,13 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Subheading } from 'react-native-paper';
 import { firebase } from '../firebase/firebase';
-import { useNavigation } from '@react-navigation/native';
 import { colorPack } from '../styles/styles';
 
 export default function LogoutButton({toggleLogoutModal}) {
-    const navigation = useNavigation();
 
     const onLogoutPress = () => {
         firebase.auth().signOut().then(() => {
             toggleLogoutModal
-            navigation.navigate('Login')
         });
     }
     

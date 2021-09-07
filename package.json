@@ -4,12 +4,14 @@
     "start:production": "NODE_ENV=production react-native start",
     "start": "react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios"
+    "ios": "react-native run-ios",
+    "ios:production": "ENVFILE=.env.production react-native run-ios"
   },
   "dependencies": {
     "@flyerhq/react-native-link-preview": "^1.2.0",
     "@react-native-clipboard/clipboard": "^1.7.0",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-firebase/admob": "^11.5.0",
     "@react-native-firebase/app": "^11.1.2",
     "@react-native-google-signin/google-signin": "^6.0.0",
     "@react-native-picker/picker": "^1.15.0",

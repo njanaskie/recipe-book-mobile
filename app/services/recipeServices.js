@@ -6,6 +6,8 @@ const api = axios.create({
     baseURL: APP_URL,
 })
 
+console.log(APP_URL)
+
 const createToken = async () => {
     const user = firebase.auth().currentUser;
     const token = user && await user.getIdToken();

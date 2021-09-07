@@ -10,7 +10,9 @@ import RegistrationScreen from '../screens/RegistrationScreen'
 import HomeScreen from '../screens/HomeScreen'
 import { useFirebaseContext } from '../context/firebase-context'
 
-LogBox.ignoreAllLogs();
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+ ]);
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = ["10%", "90%"];

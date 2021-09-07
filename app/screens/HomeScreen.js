@@ -17,9 +17,10 @@ import { firebase } from '../firebase/firebase'
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
-import RecipeList from '../components/RecipeList'
+import MyRecipesScreen from '../screens/MyRecipesScreen'
 import BottomSheetHeader from '../components/BottomSheetHeader'
 import useIngredients from '../hooks/useIngredients';
+import BannerAd from '../components/BannerAd'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
@@ -31,7 +32,7 @@ export default function HomeScreen() {
   
     renderContent = () => (
       <View style={styles.modal}>
-        <RecipeList />
+        <MyRecipesScreen />
       </View>
     )
   
@@ -50,8 +51,9 @@ export default function HomeScreen() {
     return (
       <LinearGradient colors={[colorPack.mint, colorPack.backgroundColor, colorPack.mint]} style={styles.linearGradient}>
         <SafeAreaView style={styles.container}>
-          <Title style={styles.buttonText}>Save a recipe!</Title>
-          <View style={{ position: 'absolute' }}>
+          <BannerAd />
+          <Title style={styles.buttonTitle}>Save a recipe!</Title>
+          <View style={styles.buttonContainer}>
             <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
               <TouchableOpacity
                   style={{ padding: 20 }}
@@ -60,26 +62,29 @@ export default function HomeScreen() {
                 <Feather name="plus-circle" size={150} color={colorPack.mint}/>
               </TouchableOpacity>
             </Animatable.View>
-            <Modal
-                isVisible={isModalVisible}
-                style={{ margin: 0 }}
-            >
-              <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
-                <AddRecipe toggleFormModal={toggleFormModal}/>
-              </View>
-            </Modal>
           </View>
         </SafeAreaView>
-          <BottomSheet
-              enabledBottomInitialAnimation={true}
-              // enabledBottomClamp={true}
-              ref={sheetRef}
-              initialSnap={1}
-              snapPoints={snapPoints}
-              // borderRadius={10} 
-              renderContent={renderContent}
-              renderHeader={renderHeader}
-          />
+        <Modal
+            isVisible={isModalVisible}
+            style={{ margin: 0 }}
+        >
+          <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
+            <AddRecipe toggleFormModal={toggleFormModal}/>
+          </View>
+        </Modal>
+        <BottomSheet
+            enabledBottomInitialAnimation={true}
+            // enabledBottomClamp={true}
+            ref={sheetRef}
+            initialSnap={1}
+            snapPoints={snapPoints}
+            // borderRadius={10} 
+            renderContent={renderContent}
+            renderHeader={() => <BottomSheetHeader />}
+        />
+        {/* <SafeAreaView> */}
+          <BannerAd />
+        {/* </SafeAreaView> */}
       </LinearGradient>
     )
 
@@ -89,52 +94,30 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      justifyContent: 'center',
+      // justifyContent: 'flex-start',
       alignItems: 'center',
     },
-    box: {
-      height: 50,
-      width: 50,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "red",
+    buttonContainer: {
+      position: 'absolute',
+      top: 0, 
+      left: 0, 
+      right: 0, 
+      bottom: 0,
+      alignItems: 'center',
+      justifyContent: 'center'
     },
-    boxWrapper: {
-      justifyContent: "space-around",
-      alignItems: "center",
-      flexDirection: "row",
-    },
-    body: {
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    buttonText: {
+    buttonTitle: {
       color: colorPack.darkgreen,
-      alignSelf: 'center',
-      paddingTop: 5,
-      height: height / 3
-    },
-    text: {
-      fontSize: 18,
-    },
-    text2: {
-      fontSize: 21,
-      fontWeight: "bold",
-    },
-    closeText: {
-      fontSize: 24,
-      color: '#00479e',
-      textAlign: 'center',
+      marginTop: height / 5,
     },
     modal: {
-      padding: 20,
       backgroundColor: colorPack.backgroundColor,
+      // alignContent: 'space-around',
       paddingTop: 20,
-      height: height - 120
+      height: height * .81
     },
     linearGradient: {
       flex: 1,
       borderRadius: 5
     },
-    
   });
