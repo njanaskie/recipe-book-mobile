@@ -45,9 +45,9 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
 
     return (
         <View style={styles.container}>
-            <Image source={{ uri: urlData.image }} style={styles.image}/>
+            {urlData.image ? <Image source={{ uri: urlData.image }} style={styles.image}/> : <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
             <LinearGradient colors={['white', colorPack.backgroundColor]} style={styles.linearGradient}/>
-            <Title style={styles.title} numberOfLines={2}>{urlData.title}</Title>
+            <Title style={styles.title} numberOfLines={2}>{urlData.title ? urlData.title : recipe.url}</Title>
             <View >
                     <FlatList
                         horizontal

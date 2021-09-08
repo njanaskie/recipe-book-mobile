@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useFirebaseContext } from '../context/firebase-context'
 import { useRecipesContext } from '../context/recipes-context'
-import { View, StyleSheet } from 'react-native'
+import { Image, View, StyleSheet } from 'react-native'
 import { Card } from 'react-native-paper';
 import Modal from 'react-native-modal';
 import { getPreviewData } from '@flyerhq/react-native-link-preview'
@@ -37,8 +37,8 @@ const RecipeListItem = ({ recipe }) => {
                     <RecipeDetailsScreen recipe={recipe} urlData={urlData} closeModal={closeDetailsModal}/>
                 </View>
             </Modal>
-            <Card.Cover source={{ uri: urlData.image }} style={styles.image}/>
-            <Card.Title title={urlData.title} titleStyle={styles.title} titleNumberOfLines={3}/>
+            {urlData.image ? <Card.Cover source={{ uri: urlData.image }} style={styles.image}/> : <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
+            <Card.Title title={urlData.title ? urlData.title : recipe.url} titleStyle={styles.title} titleNumberOfLines={3}/>
         </Card>
     )
 }
