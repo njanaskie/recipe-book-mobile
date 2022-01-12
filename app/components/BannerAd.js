@@ -4,6 +4,7 @@ import { TestIds, BannerAd as AdmobBannerAd, BannerAdSize} from '@react-native-f
 import { ADMOB_APP_ID } from '@env'
 
 const adUnitId = __DEV__ ? TestIds.BANNER : ADMOB_APP_ID;
+console.log(__DEV__)
 
 export default function BannerAd() {
     
@@ -11,7 +12,7 @@ export default function BannerAd() {
         <View style={styles.container}>
             <AdmobBannerAd
                 unitId={adUnitId}
-                size={BannerAdSize.SMART_BANNER}
+                size={BannerAdSize.ADAPTIVE_BANNER}
                 requestOptions={{
                 requestNonPersonalizedAdsOnly: true,}}
                 // onAdLoaded={() => {

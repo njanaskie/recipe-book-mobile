@@ -81,7 +81,12 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     styleListContainer: {
-        height: height * .75
+        height: height < 700 ? 
+            height * .70 :
+            height >= 700 && height < 750 ? 
+            height * .72
+            :
+            height * .75
     },
     styleMainWrapper: {
         marginHorizontal: 10

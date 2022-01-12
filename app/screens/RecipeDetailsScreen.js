@@ -62,7 +62,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                     />
             </View>
             <Subheading style={styles.subTitle}>Ingredients</Subheading>
-            <View>
+            <View style={styles.ingredientsContainer}>
                 <ScrollView
                     horizontal
                 >
@@ -79,51 +79,53 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                 </ScrollView>
             </View>
             <Button icon='open-in-new' mode='outlined' color='white' style={styles.link} onPress={() => Linking.openURL(recipe.url)}>Go To Recipe</Button>
-            <View style={styles.topLeftButton}>
-                <IconButton icon="close" size={24} color={colorPack.darkgrey} onPress={closeModal}/>
-            </View>
-            <Provider>
-                <View style={styles.topRightButton}>
-                <Menu
-                    visible={isMenuVisible}
-                    onDismiss={closeMenu}
-                    anchor={
-                        <Button onPress={openMenu}>
-                                <Feather name="menu" size={24} color={colorPack.darkgrey} />
-                        </Button>
-                    }
+            {/* <View> */}
+                <View style={styles.topLeftButton}>
+                    <IconButton icon="close" size={24} color={colorPack.darkgrey} onPress={closeModal}/>
+                </View>
+                <Provider>
+                    <View style={styles.topRightButton}>
+                    {/* <IconButton icon="menu" size={24} color={colorPack.darkgrey} onPress={openMenu}/> */}
+                    <Menu
+                        visible={isMenuVisible}
+                        onDismiss={closeMenu}
+                        anchor={
+                            <Button onPress={openMenu}>
+                                    <Feather name="menu" size={24} color={colorPack.darkgrey} />
+                            </Button>
+                        }
+                    >
+                        <Menu.Item onPress={toggleModal} title='Edit Recipe'/>
+                        <Menu.Item onPress={openRemoveModal} title='Remove Recipe' titleStyle={{ color: 'red' }}/>
+                    </Menu>
+                    </View>
+                </Provider>
+                <Modal
+                    isVisible={isRemoveModalVisible}
                 >
-                    <Menu.Item onPress={toggleModal} title='Edit Recipe'/>
-                    <Menu.Item onPress={openRemoveModal} title='Remove Recipe' titleStyle={{ color: 'red' }}/>
-                </Menu>
-
+                    <View>
+                        <Card>
+                            <Card.Title title='Confirm Removal' />
+                            <Card.Content>
+                                <Paragraph>Are you sure you want to remove this recipe?</Paragraph>
+                            </Card.Content>
+                            <Card.Actions>
+                                <Button onPress={closeRemoveModal}>Cancel</Button>
+                                <Button onPress={handleRemoveRecipe}>Remove</Button>
+                            </Card.Actions>
+                        </Card>
+                    </View>
+                </Modal>
+                <Modal
+                    isVisible={isModalVisible}
+                    style={{ margin: 0 }}
+                >
+                <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
+                    <EditRecipe recipe={recipe} toggleEditModal={toggleModal}/>
+                    <Button title="Hide modal" onPress={toggleModal} />
                 </View>
-            </Provider>
-            <Modal
-                isVisible={isRemoveModalVisible}
-            >
-                <View>
-                    <Card>
-                        <Card.Title title='Confirm Removal' />
-                        <Card.Content>
-                            <Paragraph>Are you sure you want to remove this recipe?</Paragraph>
-                        </Card.Content>
-                        <Card.Actions>
-                            <Button onPress={closeRemoveModal}>Cancel</Button>
-                            <Button onPress={handleRemoveRecipe}>Remove</Button>
-                        </Card.Actions>
-                    </Card>
-                </View>
-            </Modal>
-            <Modal
-                isVisible={isModalVisible}
-                style={{ margin: 0 }}
-            >
-              <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
-                <EditRecipe recipe={recipe} toggleEditModal={toggleModal}/>
-                <Button title="Hide modal" onPress={toggleModal} />
-              </View>
-            </Modal>
+                </Modal>
+            {/* </View> */}
         </View>
     )
 }
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
         height: height,
     },
     image: {
-        height: 400,
+        height: height * .45,
         width: width,
         alignSelf: 'center',
     },
@@ -162,6 +164,9 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10
     },
+    ingredientsContainer: {
+        marginBottom: 30
+    },
     title: {
         paddingTop: 10,
         color: colorPack.darkgrey,
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
     },
     topLeftButton: {
         position: 'absolute',
-        bottom: 745,
+        bottom: height * .88,
         left: 15,
         backgroundColor: 'white',
         borderRadius: 40 / 2,
@@ -186,7 +191,7 @@ const styles = StyleSheet.create({
     },
     topRightButton: {
         position: 'absolute',
-        bottom: 745,
+        bottom: height * .88,
         right: 15,
         backgroundColor: 'white',
         borderRadius: 40 / 2,
@@ -196,8 +201,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     link: {
-        position: 'absolute',
-        bottom: '10%',
+        // position: 'absolute',
+        // bottom: '10%',
         width: '50%',
         justifyContent: 'center',
         alignSelf: 'center',

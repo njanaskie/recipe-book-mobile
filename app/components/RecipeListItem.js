@@ -21,7 +21,7 @@ const RecipeListItem = ({ recipe }) => {
     };
 
     useEffect(() => 
-        getPreviewData(recipe.url).then(data => setUrlData({ title: data.title, image: data.image.url }))
+        getPreviewData(recipe.url).then(data => setUrlData({ title: data.title, image: data.image ? data.image.url : null }))
     ,[])
 
     return (

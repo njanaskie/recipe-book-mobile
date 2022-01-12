@@ -24,6 +24,7 @@ import BannerAd from '../components/BannerAd'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
+console.log(height)
 
 export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -108,13 +109,18 @@ const styles = StyleSheet.create({
     },
     buttonTitle: {
       color: colorPack.darkgreen,
-      marginTop: height / 5,
+      marginTop: height / 6,
     },
     modal: {
       backgroundColor: colorPack.backgroundColor,
       // alignContent: 'space-around',
       paddingTop: 20,
-      height: height * .81
+      height: height < 700 ? 
+        height * .75 :
+          height >= 700 && height < 750 ? 
+          height * .77
+        :
+        height * .80
     },
     linearGradient: {
       flex: 1,
