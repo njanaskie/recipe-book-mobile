@@ -24,7 +24,6 @@ import BannerAd from '../components/BannerAd'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
-console.log(height)
 
 export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -83,9 +82,6 @@ export default function HomeScreen() {
             renderContent={renderContent}
             renderHeader={() => <BottomSheetHeader />}
         />
-        {/* <SafeAreaView> */}
-          <BannerAd />
-        {/* </SafeAreaView> */}
       </LinearGradient>
     )
 
@@ -115,12 +111,7 @@ const styles = StyleSheet.create({
       backgroundColor: colorPack.backgroundColor,
       // alignContent: 'space-around',
       paddingTop: 20,
-      height: height < 700 ? 
-        height * .75 :
-          height >= 700 && height < 750 ? 
-          height * .77
-        :
-        height * .80
+      height: height
     },
     linearGradient: {
       flex: 1,

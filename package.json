@@ -4,7 +4,7 @@
     "start:production": "NODE_ENV=production react-native start",
     "start": "react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios ADMOB_APP_ID=${ADMOB_APP_ID}",
     "ios:production": "ENVFILE=.env.production react-native run-ios"
   },
   "dependencies": {

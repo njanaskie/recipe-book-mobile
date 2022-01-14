@@ -120,7 +120,7 @@ export const RecipeList = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 30,
+        marginHorizontal: width > 400 ? 40 : 30,
     },
     message: {
       alignSelf: 'center',

@@ -210,7 +210,7 @@ export default RecipeForm = (props) => {
                     isVisible={isTagModalVisible}
                     headerText="Add Tags..."
                     toggleModal={toggleTagModal}
-                    itemOptions={state.customTagOptions.map(elem => {
+                    itemOptions={state.customTagOptions && state.customTagOptions.map(elem => {
                         return {
                             id: elem,
                             name: elem

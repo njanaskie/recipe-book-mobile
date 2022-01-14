@@ -24,7 +24,7 @@ export default MultiSelectDropdownModal = (props) => {
             <View style={styles.modalView}>
                 <MultiSelect
                     canAddItems={props.canAddItems}
-                    items={props.itemOptions}
+                    items={props.itemOptions || []}
                     fixedHeight
                     hideDropdown={true}
                     hideSubmitButton={false}
