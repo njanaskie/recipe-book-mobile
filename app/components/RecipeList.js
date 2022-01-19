@@ -7,7 +7,6 @@ import { useRecipesContext } from '../context/recipes-context'
 import { Dimensions, FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { getRecipesService } from '../services/recipeServices'
 import usePrevious from '../hooks/usePrevious'
-import BannerAd from '../components/BannerAd'
 
 const { width, height } = Dimensions.get("window");
 
@@ -88,10 +87,10 @@ export const RecipeList = () => {
         );
       };
 
-    if (!selectedRecipes || !selectedRecipes.length) {
+    if ((!selectedRecipes || !selectedRecipes.length) && pageState.loading === false) {
         return <Text style={styles.message}>No recipes</Text>
     }
-    
+
     return (
         !pageState.loading ? (
             <FlatList 
@@ -111,7 +110,6 @@ export const RecipeList = () => {
             />
         ) : (
             <View>
-                <Text>Loading recipes</Text>
                 <ActivityIndicator />
             </View>
         )
