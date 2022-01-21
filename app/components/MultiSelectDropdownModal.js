@@ -8,7 +8,7 @@ import { colorPack } from '../styles/styles';
 const { width, height } = Dimensions.get("window");
 
 export default MultiSelectDropdownModal = (props) => {
-    
+    // console.log(props.itemOptions)
     return (
         <Modal
             isVisible={props.isVisible}
@@ -24,6 +24,7 @@ export default MultiSelectDropdownModal = (props) => {
             <View style={styles.modalView}>
                 <MultiSelect
                     canAddItems={props.canAddItems}
+                    onAddItem={props.onAddItem}
                     items={props.itemOptions || []}
                     fixedHeight
                     hideDropdown={true}

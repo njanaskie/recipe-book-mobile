@@ -7,7 +7,8 @@ import {
     Platform,
     FlatList,
     StatusBar,
-    TextInput
+    TextInput,
+    Text
     } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
@@ -86,21 +87,24 @@ export default RecipeForm = (props) => {
         }
     }
 
-    const onAddCustomTag = (newItem) => {
+    const onSelectCustomTags = (newItem) => {
         if (newItem.every(tag => state.customTagOptions.includes(tag))) {
             setState({ ...state, customTags: newItem })
-        } else {
-            setState((prevState) => ({
-                ...state,
-                customTagOptions: [...prevState.customTagOptions, newItem[newItem.length - 1]]
-            }))
         }
+    }
+
+    const onAddCustomTagOption = (newItem) => {
+        const newItems = newItem.map(item => item.name)
+        setState({...state,
+            customTagOptions: newItems
+        })
     }
 
     const renderItem = ({item}) => (
         <Tag item={item} />
     )
 
+    console.log(state)
     return (
         <SafeAreaView style={styles.container} >
             <View onSubmit={onSubmit}>
@@ -120,6 +124,7 @@ export default RecipeForm = (props) => {
                     onChangeText={(url) => setState({ ...state, url })}
                     value={state.url}
                 />
+                {state.error ? <Text style={styles.error}>{state.error}</Text> : null}
                 <Divider />
                 <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
                     <Title style={{ width: '30%', alignSelf: 'center'}}>Type</Title>
@@ -207,6 +212,7 @@ export default RecipeForm = (props) => {
                 </View>
                 <MultiSelectDropdownModal
                     canAddItems={true}
+                    onAddItem={onAddCustomTagOption}
                     isVisible={isTagModalVisible}
                     headerText="Add Tags..."
                     toggleModal={toggleTagModal}
@@ -216,7 +222,7 @@ export default RecipeForm = (props) => {
                             name: elem
                         }
                     })}
-                    handleSelectedItemsChange={onAddCustomTag}
+                    handleSelectedItemsChange={onSelectCustomTags}
                     selectedItems={state.customTags}
                     selectText="Select Custom Tags"
                     inputPlaceholderText="Search Custom Tags..."
@@ -249,6 +255,11 @@ const styles = StyleSheet.create({
         color: 'darkgrey',
         marginRight: 16,
         marginTop: 10
+    },
+    error: {
+        color: 'red',
+        paddingBottom: 5,
+        textAlign: 'center',
     },
     title: {
         alignSelf: 'center'
