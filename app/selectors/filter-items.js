@@ -4,7 +4,6 @@ export default (recipeCuisines, recipeTypes, customTags) => {
     var tagsObj = customTags.map(tag=> ({ group: 'customTags', item: tag }))
     
     var filterItems = [...cuisinesObj, ...typesObj, ...tagsObj]
-
-    return filterItems
+    return filterItems.filter(item => item.item)
 
 }

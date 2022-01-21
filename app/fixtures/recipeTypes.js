@@ -1,7 +1,11 @@
 export default [
+    "",
+    "Appetizer",
+    "Beverage",
     "Breakfast",
-    "Lunch",
+    "Dessert",
     "Dinner",
+    "Lunch",
+    "Side Dish",
     "Snack",
-    "Dessert"
 ]

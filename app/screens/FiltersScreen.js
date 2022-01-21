@@ -38,11 +38,11 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
             data: formState.checkboxItems.filter(cuisine => cuisine.group === 'cuisine')
         },
         {
-            title: 'Meal',
+            title: 'Meal Type',
             data: formState.checkboxItems.filter(item => item.group === 'type')
         },
         {
-            title: 'Custom Tag',
+            title: 'Tags',
             data: formState.checkboxItems.filter(item => item.group === 'customTags')
         }
     ]

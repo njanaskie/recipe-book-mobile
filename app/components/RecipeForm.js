@@ -104,7 +104,6 @@ export default RecipeForm = (props) => {
         <Tag item={item} />
     )
 
-    console.log(state)
     return (
         <SafeAreaView style={styles.container} >
             <View onSubmit={onSubmit}>
@@ -127,7 +126,7 @@ export default RecipeForm = (props) => {
                 {state.error ? <Text style={styles.error}>{state.error}</Text> : null}
                 <Divider />
                 <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
-                    <Title style={{ width: '30%', alignSelf: 'center'}}>Type</Title>
+                    <Title style={{ width: '30%', alignSelf: 'center'}}>Meal Type</Title>
                     <Picker 
                         onValueChange={value => setState({ ...state, type: value })}
                         selectedValue={state.type}
@@ -136,7 +135,7 @@ export default RecipeForm = (props) => {
                     >
                         {recipeTypes.map(recipeType => {
                             return (
-                                <Picker.Item key={recipeType} label={recipeType} value={recipeType} />
+                                <Picker.Item key={recipeType} label={recipeType === '' ? '-' : recipeType} value={recipeType} />
                             )
                         })}
                     </Picker>
@@ -152,7 +151,7 @@ export default RecipeForm = (props) => {
                     >
                         {recipeCuisines.map(recipeCuisine => {
                             return (
-                                <Picker.Item key={recipeCuisine} label={recipeCuisine} value={recipeCuisine} />
+                                <Picker.Item key={recipeCuisine} label={recipeCuisine === '' ? '-' : recipeCuisine} value={recipeCuisine} />
                             )
                         })}
                     </Picker>
@@ -199,7 +198,7 @@ export default RecipeForm = (props) => {
                 <Divider />
                 <View >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10 }}>
-                        <Title>Custom Tags</Title>
+                        <Title>Tags</Title>
                         <PaperButton
                             compact
                             uppercase={false}
@@ -208,7 +207,7 @@ export default RecipeForm = (props) => {
                             Add tags
                         </PaperButton>
                     </View>
-                    <Caption style={styles.subtitle}>Add your own tags to categorize recipes any way you want.</Caption>
+                    <Caption style={styles.subtitle}>Add custom tags to categorize recipes any way you want.</Caption>
                 </View>
                 <MultiSelectDropdownModal
                     canAddItems={true}
