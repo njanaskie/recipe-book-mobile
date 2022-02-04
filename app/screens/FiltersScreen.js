@@ -19,16 +19,16 @@ const { width, height } = Dimensions.get("window");
 
 const FiltersScreen = ({ toggleFiltersModal }) => {
     const initialFormState = {
-        selectedCuisines: [],
-        selectedTypes: [],
-        selectedIngredients: [],
-        selectedCustomTags: [],
+        // ingredients: [],
+        // selectedCuisines: [],
+        // selectedTypes: [],
+        // selectedCustomTags: [],
         checkboxItems: [],
     }
     const [formState, setFormState] = useState(initialFormState)
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const { ingredients } = useIngredientsContext()
-    const { recipes } = useRecipesContext()
+    const { recipes, filterRecipes } = useRecipesContext()
     const { filters, setFilters, toggleFiltersActive } = useFiltersContext()
     const customTags = recipes ? selectCustomTags(recipes) : []
     const filterItems = selectFilterItems(recipeCuisines, recipeTypes, customTags)
@@ -46,21 +46,39 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
             data: formState.checkboxItems.filter(item => item.group === 'customTags')
         }
     ]
+    const selectedCheckboxItems = getObject(formState.checkboxItems)
+    const selectedFilters = formState.ingredients && formState.ingredients.length > 0 ? {...selectedCheckboxItems, ingredients: formState.ingredients} : selectedCheckboxItems
+
+    function getObject(array) {
+        const obj = {};
+        array.map(item => {
+            if (item.checked) {
+                if (obj[item.group]) {
+                    obj[item.group].push(item.item);
+                } else {
+                    obj[item.group] = [item.item];
+                }
+            }
+        });
+        return { ...obj };
+    }
 
     useEffect(() => {
         setFormState({
             ...formState,
-            selectedIngredients: filters.selectedIngredients || [],
+            ingredients: filters.ingredients || [],
             checkboxItems: filters.checkboxItems.length > 0 ? filters.checkboxItems : filterItems.map(item => ({...item, checked: false }))
         })
     }, [])
 
 
-    const handleFilterIngredientsChange = (selectedIngredients) => {
-        setFormState({ ...formState, selectedIngredients })
+    const handleFilterIngredientsChange = (ingredients) => {
+        console.log('handlingfilteringredientschange')
+        setFormState({ ...formState, ingredients })
     }
 
     const handleAddCheckboxItem = (item) => {
+        console.log('we doing this?')
         setFormState({ ...formState, checkboxItems: [...formState.checkboxItems, item ] })
     }
 
@@ -90,23 +108,36 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <FiltersScreenItem item={item} filters={filters} formState={formState} toggleCheckbox={toggleCheckbox} handleAddCheckboxItem={handleAddCheckboxItem} handleRemoveCheckboxItem={handleRemoveCheckboxItem} />
+            <FiltersScreenItem
+                item={item}
+                filters={filters}
+                formState={formState}
+                toggleCheckbox={toggleCheckbox}
+                // handleAddCheckboxItem={handleAddCheckboxItem}
+                // handleRemoveCheckboxItem={handleRemoveCheckboxItem}
+            />
         )
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
+        console.log('onSubmit')
+        filterRecipes(selectedFilters)
         setFilters(formState)
         toggleFiltersActive(true)
         toggleFiltersModal()
     }
       
+    // console.log('formState', formState)
+    // console.log('filteritems', filterItems)
+    // console.log('selectedCheckboxItems', selectedCheckboxItems)
+    console.log('selectedFilters', selectedFilters)
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
                 <Button color={colorPack.grey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
                 <Button style={styles.applyButton} onPress={onSubmit}>Apply</Button>
             </View>
-            <Caption style={styles.subtitle}>Choose ingredients by what you're craving... or by what you have in your pantry!</Caption>
+            <Caption style={styles.subtitle}>Choose ingredients by what you're craving... or by what is in your pantry!</Caption>
             <TouchableOpacity onPress={toggleSearchModal}>
                 <View style={styles.searchSection}>
                     <Feather style={styles.searchIcon} name="search" size={20} color="#000"/>
@@ -129,14 +160,14 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     }
                 })}
                 handleSelectedItemsChange={handleFilterIngredientsChange}
-                selectedItems={formState.selectedIngredients}
+                selectedItems={formState.ingredients}
                 selectText="Select Ingredients"
                 inputPlaceholderText="Search Ingredients..."
             />
             <View>
                 <FlatList
                     horizontal
-                    data={formState.selectedIngredients}
+                    data={formState.ingredients}
                     renderItem={renderTag}
                     keyExtractor={item => item}
                     style={styles.tagFlatList}

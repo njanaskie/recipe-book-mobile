@@ -8,14 +8,20 @@ import { colorPack } from '../styles/styles'
 import SettingsScreen from '../screens/SettingsScreen'
 import FiltersScreen from '../screens/FiltersScreen'
 import { useFiltersContext } from '../context/filters-context'
+import { useRecipesContext } from '../context/recipes-context'
 
 export const BottomSheetHeader = () => {
     const [isLogoutVisible, setIsLogoutVisible] = useState(false);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const { filters, clearFilters } = useFiltersContext();
+    const { handleRefresh } = useRecipesContext();
 
     const toggleLogoutModal = () => setIsLogoutVisible(!isLogoutVisible);
-    const toggleFiltersModal = () => setIsFiltersVisible(!isFiltersVisible)
+    const toggleFiltersModal = () => setIsFiltersVisible(!isFiltersVisible);
+    const onClearFilters = () => {
+        clearFilters()
+        handleRefresh()
+    }
 
     return (
         <View style={styles.header}>
@@ -25,7 +31,7 @@ export const BottomSheetHeader = () => {
                     <Title style={styles.title}>My Recipes</Title>
                     <View style={styles.headerItemsRight}>
                         {filters.filtersActive && 
-                            <TouchableOpacity onPress={clearFilters}>
+                            <TouchableOpacity onPress={onClearFilters}>
                                 <Feather name="x-circle" size={22} />
                             </TouchableOpacity>
                         }
