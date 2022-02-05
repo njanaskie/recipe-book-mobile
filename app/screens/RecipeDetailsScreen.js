@@ -12,7 +12,7 @@ import { useRecipesContext } from '../context/recipes-context';
 
 const { width, height } = Dimensions.get("window");
 
-export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
+export default function RecipeDetailsScreen ({ recipe, urlData, closeModal, goodTiktokTitle, goodTiktokImage }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const topLevelTags = ([recipe.type, recipe.cuisine].concat(recipe.customTags)).filter(tag => tag);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -33,7 +33,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
         recipeDispatch({ type: 'REMOVE_RECIPE', id: recipe.id })
     }
 
-    const toggleModal = () => {
+    const toggleFormModal = () => {
         setIsModalVisible(!isModalVisible);
       };
 
@@ -45,9 +45,13 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
 
     return (
         <View style={styles.container}>
-            {urlData.image ? <Image source={{ uri: urlData.image }} style={styles.image}/> : <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
+            {goodTiktokImage ? 
+                <Image source={{ uri: recipe.urlImage }} style={styles.image}/> :
+                urlData.image ? 
+                    <Image source={{ uri: urlData.image }} style={styles.image}/> : 
+                    <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
             <LinearGradient colors={['white', colorPack.backgroundColor]} style={styles.linearGradient}/>
-            <Title style={styles.title} numberOfLines={2}>{urlData.title ? urlData.title : recipe.url}</Title>
+            <Title style={styles.title} numberOfLines={2}>{goodTiktokTitle ? recipe.urlTitle : urlData.title ? urlData.title : recipe.url}</Title>
             <View >
                     <FlatList
                         horizontal
@@ -95,7 +99,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                             </Button>
                         }
                     >
-                        <Menu.Item onPress={toggleModal} title='Edit Recipe'/>
+                        <Menu.Item onPress={toggleFormModal} title='Edit Recipe'/>
                         <Menu.Item onPress={openRemoveModal} title='Remove Recipe' titleStyle={{ color: 'red' }}/>
                     </Menu>
                     </View>
@@ -121,8 +125,8 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                     style={{ margin: 0 }}
                 >
                 <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
-                    <EditRecipe recipe={recipe} toggleEditModal={toggleModal}/>
-                    <Button title="Hide modal" onPress={toggleModal} />
+                    <EditRecipe recipe={recipe} toggleFormModal={toggleFormModal}/>
+                    <Button title="Hide modal" onPress={toggleFormModal} />
                 </View>
                 </Modal>
             {/* </View> */}

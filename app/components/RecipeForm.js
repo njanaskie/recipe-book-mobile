@@ -84,6 +84,7 @@ export default RecipeForm = (props) => {
         } else {
             props.onSubmit(recipe)
             setState(initialFormState)
+            props.toggleFormModal()
         }
     }
 
