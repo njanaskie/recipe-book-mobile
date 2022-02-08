@@ -11,8 +11,8 @@ import { colorPack } from '../styles/styles';
 const RecipeListItem = ({ recipe }) => {
     const [urlData, setUrlData] = useState({ title: '', image: null })
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
-    const goodTiktokTitle = recipe.url.includes('tiktok.com') && recipe.urlTitle && !recipe.urlTitle.includes('TikTok')
-    const goodTiktokImage = recipe.url.includes('tiktok.com') && recipe.urlImage
+    const goodTiktokTitle = recipe.url.includes('tiktok.com') && Boolean(recipe.urlTitle) && !recipe.urlTitle.includes('TikTok')
+    const goodTiktokImage = recipe.url.includes('tiktok.com') && Boolean(recipe.urlImage)
 
     const toggleDetailsModal = () => {
         setIsDetailsModalVisible(!isDetailsModalVisible);
@@ -22,9 +22,13 @@ const RecipeListItem = ({ recipe }) => {
         setIsDetailsModalVisible(false);
     };
 
-    useEffect(() => 
-        getPreviewData(recipe.url).then(data => setUrlData({ title: data.title, image: data.image ? data.image.url : null }))
-    ,[])
+    useEffect(() => {
+        if (!recipe.urlTitle || !recipe.urlImage || goodTiktokTitle || goodTiktokImage) {
+            getPreviewData(recipe.url).then(data => setUrlData({ title: data.title, image: data.image ? data.image.url : null }))  
+        } else {
+            setUrlData({ title: recipe.urlTitle, image: recipe.urlImage })
+        }
+    }, [])
 
     return (
         <Card style={styles.containter} onPress={toggleDetailsModal}>
@@ -40,17 +44,13 @@ const RecipeListItem = ({ recipe }) => {
                         recipe={recipe}
                         urlData={urlData}
                         closeModal={closeDetailsModal}
-                        goodTiktokTitle={goodTiktokTitle}
-                        goodTiktokImage={goodTiktokImage}
                     />
                 </View>
             </Modal>
-            {goodTiktokImage ? 
-                <Card.Cover source={{ uri: recipe.urlImage }} style={styles.image}/> : 
-                    urlData.image ?
-                    <Card.Cover source={{ uri: urlData.image }} style={styles.image}/>
-                    : <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
-            <Card.Title title={goodTiktokTitle ? recipe.urlTitle : urlData.title ? urlData.title : recipe.url} titleStyle={styles.title} titleNumberOfLines={3}/>
+            {urlData.image ?
+                <Card.Cover source={{ uri: urlData.image }} style={styles.image}/>
+                : <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
+            <Card.Title title={urlData.title ? urlData.title : recipe.url} titleStyle={styles.title} titleNumberOfLines={3}/>
         </Card>
     )
 }

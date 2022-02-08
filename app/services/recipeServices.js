@@ -20,24 +20,23 @@ const createToken = async () => {
     return payloadHeader;
 }
 
-export const scrapeURLService = async (recipe) => {
-    const header = await createToken();
-    const payload = recipe
+// export const scrapeURLService = async (recipe) => {
+//     const header = await createToken();
+//     const payload = recipe
 
-    try {
-        const res = await api.post('/api/recipes/scrape', payload, header)
-        return res.data
-    } catch (e) {
-        console.log('scraper service error', e)
-    }
-}
+//     try {
+//         const res = await api.post('/api/recipes/scrape', payload, header)
+//         return res.data
+//     } catch (e) {
+//         console.log('scraper service error', e)
+//     }
+// }
 
 export const addRecipeService = async (recipe) => {
     const header = await createToken();
     const payload = recipe
 
     try {
-        console.log('add recipe service', payload);
         const res = await api.post('/api/recipes', payload, header)
         return res.data
     } catch (e) {

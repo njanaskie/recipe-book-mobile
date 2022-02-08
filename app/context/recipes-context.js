@@ -3,10 +3,11 @@ import recipesReducer from '../reducers/recipes'
 import database from '../firebase/firebase'
 import uuid from 'uuid'
 import { useFirebaseContext } from './firebase-context'
-import { getRecipesService, editRecipeService, removeRecipeService, addRecipeService, scrapeURLService } from '../services/recipeServices'
+import { getRecipesService, editRecipeService, removeRecipeService, addRecipeService } from '../services/recipeServices'
 import usePrevious from '../hooks/usePrevious'
 import { config } from '../config/config'
 import { useFiltersContext } from './filters-context';
+import { getPreviewData } from '@flyerhq/react-native-link-preview'
 
 const RecipesContext = React.createContext()
 
@@ -36,8 +37,20 @@ const RecipesProvider = ({ children }) => {
         fetchRecipes(queryItems && queryItems)
     }, [pageState.page, pageState.call])
 
+    const getUrlData = async (recipe) => {
+        if (recipe.url) {
+            try {
+                const res = await getPreviewData(recipe.url)
+                const urlData = { urlTitle: res.title ? res.title : '', urlImage: res.image && res.image.url ? res.image.url : ''}
+                return urlData
+            } catch(e) {
+                alert(e)
+            }
+        }
+    }
+    
     const addRecipe = async (recipe) => {
-        const scrapedData = await scrapeURLService(recipe)
+        const scrapedData = await getUrlData(recipe)
         const fullData = { ...recipe, ...scrapedData}
         const newRecipe = await addRecipeService(fullData)
         recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...fullData} })
