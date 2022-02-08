@@ -12,6 +12,7 @@ import { useRecipesContext } from '../context/recipes-context'
 import Tag from '../components/Tag'
 import selectCustomTags from '../selectors/custom-tags'
 import selectFilterItems from '../selectors/filter-items'
+import getObject from '../selectors/get-object'
 import FiltersScreenItem from '../components/FiltersScreenItem'
 import { useFiltersContext } from '../context/filters-context'
 
@@ -49,20 +50,6 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
     const selectedCheckboxItems = getObject(formState.checkboxItems)
     const selectedFilters = formState.ingredients && formState.ingredients.length > 0 ? {...selectedCheckboxItems, ingredients: formState.ingredients} : selectedCheckboxItems
 
-    function getObject(array) {
-        const obj = {};
-        array.map(item => {
-            if (item.checked) {
-                if (obj[item.group]) {
-                    obj[item.group].push(item.item);
-                } else {
-                    obj[item.group] = [item.item];
-                }
-            }
-        });
-        return { ...obj };
-    }
-
     useEffect(() => {
         setFormState({
             ...formState,
@@ -73,17 +60,7 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
 
 
     const handleFilterIngredientsChange = (ingredients) => {
-        console.log('handlingfilteringredientschange')
         setFormState({ ...formState, ingredients })
-    }
-
-    const handleAddCheckboxItem = (item) => {
-        console.log('we doing this?')
-        setFormState({ ...formState, checkboxItems: [...formState.checkboxItems, item ] })
-    }
-
-    const handleRemoveCheckboxItem = (item) => {
-        setFormState({ ...formState, checkboxItems: formState.checkboxItems.filter(checkboxItem => checkboxItem !== item) })
     }
 
     const toggleCheckbox = (item) => {
@@ -120,17 +97,12 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
     }
 
     const onSubmit = async () => {
-        console.log('onSubmit')
         filterRecipes(selectedFilters)
         setFilters(formState)
         toggleFiltersActive(true)
         toggleFiltersModal()
     }
-      
-    // console.log('formState', formState)
-    // console.log('filteritems', filterItems)
-    // console.log('selectedCheckboxItems', selectedCheckboxItems)
-    console.log('selectedFilters', selectedFilters)
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>

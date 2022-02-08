@@ -3,7 +3,7 @@ import recipesReducer from '../reducers/recipes'
 import database from '../firebase/firebase'
 import uuid from 'uuid'
 import { useFirebaseContext } from './firebase-context'
-import { getRecipesService } from '../services/recipeServices'
+import { getRecipesService, editRecipeService, removeRecipeService, addRecipeService, scrapeURLService } from '../services/recipeServices'
 import usePrevious from '../hooks/usePrevious'
 import { config } from '../config/config'
 import { useFiltersContext } from './filters-context';
@@ -24,7 +24,6 @@ const RecipesProvider = ({ children }) => {
         loadingMore: false,
         refreshing: false,
         hasMoreToLoad: true,
-        isQueried: false,
         call: false,
         error: null
     }
@@ -34,48 +33,41 @@ const RecipesProvider = ({ children }) => {
     const itemsPerPage = config.itemsPerPage
 
     React.useEffect(() => {
-        console.log('recipescontext fetchingrecipes', pageState, 'filters', filters, 'queryitems', queryItems)
         fetchRecipes(queryItems && queryItems)
     }, [pageState.page, pageState.call])
 
-    const addRecipe = (recipe) => {
-        database.collection('users').doc(user.uid).collection('recipes').doc(customId).set(recipe).then(() => {
-            recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: customId, ...recipe} })
-        })
+    const addRecipe = async (recipe) => {
+        const scrapedData = await scrapeURLService(recipe)
+        const fullData = { ...recipe, ...scrapedData}
+        const newRecipe = await addRecipeService(fullData)
+        recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...fullData} })
     }
 
     const editRecipe = (id, updates) => {
-        database.collection('users').doc(user.uid).collection('recipes').doc(id).update(updates).then(() => {
-            recipeDispatch({ type: 'EDIT_RECIPE', id, updates })
-        })
+        editRecipeService(id, updates)
+        recipeDispatch({ type: 'EDIT_RECIPE', id, updates })
     }
 
     const removeRecipe = (id) => {
-        database.collection('users').doc(user.uid).collection('recipes').doc(id).delete().then(() => {
-            recipeDispatch({ type: 'REMOVE_RECIPE', id })
-        })
+        removeRecipeService({ id })
+        recipeDispatch({ type: 'REMOVE_RECIPE', id })
     }
 
     const filterRecipes = (query) => {
-        console.log('filterRecipes')
         setQueryItems(query)
         setPageState({ ...pageState, page: 1, call: !pageState.call })
-
     }
 
     const fetchRecipes = async (query) => {
         if (user) {
             let fetchedRecipes = []
             if (query) {
-                // setPageState({ ...pageState, page: 1 })
                 fetchedRecipes = await getRecipesService(pageState.page, itemsPerPage, query)
             } else {
                 fetchedRecipes = await getRecipesService(pageState.page, itemsPerPage)
             }
             
-
             if (fetchedRecipes) {
-                console.log('fetchRecipes dispatched', 'query', query)
                 recipeDispatch({
                     type: 'SET_RECIPES',
                     recipes: pageState.page === 1
@@ -87,7 +79,6 @@ const RecipesProvider = ({ children }) => {
                     loading: false,
                     loadingMore: false,
                     refreshing: false,
-                    isQueried: query ? true : pageState.isQueried,
                     hasMoreToLoad: fetchedRecipes.length < itemsPerPage ? false : true
                 }))
             }
@@ -95,20 +86,17 @@ const RecipesProvider = ({ children }) => {
     }
 
     const handleRefresh = () => {
-        console.log('handleRefresh')
         setQueryItems(null)
         setPageState({
             ...pageState,
             page: 1,
             refreshing: true,
-            isQueried: false,
             call: !pageState.call,
         })
       };
 
     const handleLoadMore = () => {
         if (pageState.hasMoreToLoad) {
-            console.log('handleLoadMore')
             setPageState((prevState) => ({
                 ...pageState,
                 page: prevPage + 1,
@@ -119,7 +107,7 @@ const RecipesProvider = ({ children }) => {
     }
 
     return (
-        <RecipesContext.Provider value={{ recipes, recipeDispatch, fetchRecipes, filterRecipes, handleRefresh, handleLoadMore, pageState }}>
+        <RecipesContext.Provider value={{ recipes, recipeDispatch, fetchRecipes, filterRecipes, handleRefresh, handleLoadMore, pageState, editRecipe, removeRecipe, addRecipe }}>
             {children}
         </RecipesContext.Provider>
     )

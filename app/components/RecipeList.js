@@ -7,11 +7,8 @@ const { width, height } = Dimensions.get("window");
 
 export const RecipeList = () => {
     const { recipes, pageState, fetchRecipes, handleLoadMore } = useRecipesContext()
-    const selectedRecipes = recipes
-    console.log('recipelist pagestate', pageState)
 
     React.useEffect(() => {
-        console.log('recipelist fetchingrecipes')
         fetchRecipes()
     }, [])
 
@@ -33,14 +30,14 @@ export const RecipeList = () => {
         );
       };
 
-    if ((!selectedRecipes || !selectedRecipes.length) && pageState.loading === false) {
+    if ((!recipes || !recipes.length) && pageState.loading === false) {
         return <Text style={styles.message}>No recipes</Text>
     }
 
     return (
         !pageState.loading ? (
             <FlatList 
-                data={[... new Set(selectedRecipes)]}
+                data={[... new Set(recipes)]}
                 renderItem={({ item }) => <RecipeListItem recipe={item} />}
                 keyExtractor={item => item.id}
                 numColumns={2}

@@ -47,7 +47,6 @@ export const addRecipeService = async (recipe) => {
 
 export const getRecipesService = async (page, itemsPerPage, query) => {
     const header = await createToken();
-    console.log('getRecipesService')
 
     let params = [];
     if (query) {
