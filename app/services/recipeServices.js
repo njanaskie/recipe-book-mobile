@@ -45,11 +45,27 @@ export const addRecipeService = async (recipe) => {
     }
 }
 
-export const getRecipesService = async (page, itemsPerPage) => {
+export const getRecipesService = async (page, itemsPerPage, query) => {
     const header = await createToken();
 
+    let params = [];
+    if (query) {
+        if (query.cuisine && query.cuisine.length > 0) {
+            params.push(`cuisine=${query.cuisine}`)
+        }
+        if (query.type && query.type.length > 0) {
+            params.push(`type=${query.type}`)
+        }
+        if (query.ingredients && query.ingredients.length > 0) {
+            params.push(`ingredients=${query.ingredients}`)
+        }
+        if (query.customTags && query.customTags.length > 0) {
+            params.push(`customTags=${query.customTags}`)
+        }
+    }
+
     try {
-        const res = await api.get(`/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)
+        const res = await api.get(`/api/recipes?page=${page}&per_page=${itemsPerPage}${params.length > 0 ? `&${params.join('&')}` : ''}`, header)
         return res.data
     } catch(e) {
         console.log('get recipes error', e)

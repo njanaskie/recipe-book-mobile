@@ -6,7 +6,7 @@ import { addRecipeService, scrapeURLService } from '../services/recipeServices'
 import { getPreviewData } from '@flyerhq/react-native-link-preview'
 
 const AddRecipe = ({ toggleFormModal }) => {
-    const { recipes, recipeDispatch } = useRecipesContext()
+    const { addRecipe } = useRecipesContext()
 
     const getUrlData = async (recipe) => {
         if (recipe.url) {
@@ -21,11 +21,12 @@ const AddRecipe = ({ toggleFormModal }) => {
         }
     }
 
-    const onSubmit = async (recipe) => {
-        const scrapedDate = await getUrlData(recipe)
-        const fullData = { ...recipe, ...scrapedDate}
-        const newRecipe = await addRecipeService(fullData)
-        recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...fullData} })
+    const onSubmit = (recipe) => {
+        // const scrapedDate = await getUrlData(recipe)
+        // const fullData = { ...recipe, ...scrapedDate}
+        // const newRecipe = await addRecipeService(fullData)
+        // recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...fullData} })
+        addRecipe(recipe)
     }
 
     return (

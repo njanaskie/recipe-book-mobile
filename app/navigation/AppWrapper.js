@@ -18,15 +18,15 @@ const AppWrapper = (props) => {
 
     return (
         <FirebaseProvider >
-            <RecipesProvider>
-                <IngredientsProvider>
-                    <FiltersProvider>
-                        <PaperProvider theme={theme}>
-                            {props.children}
-                        </PaperProvider>
-                    </FiltersProvider>
-                </IngredientsProvider>
-            </RecipesProvider>
+            <FiltersProvider>
+                <RecipesProvider>
+                    <IngredientsProvider>
+                            <PaperProvider theme={theme}>
+                                {props.children}
+                            </PaperProvider>
+                    </IngredientsProvider>
+                </RecipesProvider>
+            </FiltersProvider>
         </FirebaseProvider>
     )
     

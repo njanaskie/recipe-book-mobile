@@ -7,7 +7,6 @@ import { Feather } from "@expo/vector-icons";
 import EditRecipe from '../components/EditRecipe';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
-import { removeRecipeService } from '../services/recipeServices';
 import { useRecipesContext } from '../context/recipes-context';
 
 const { width, height } = Dimensions.get("window");
@@ -17,7 +16,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal, good
     const topLevelTags = ([recipe.type, recipe.cuisine].concat(recipe.customTags)).filter(tag => tag);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [isRemoveModalVisible, setIsRemoveModalVisible] = useState(false);
-    const { recipeDispatch } = useRecipesContext()
+    const { removeRecipe } = useRecipesContext()
 
     const openMenu = () => setIsMenuVisible(true);
   
@@ -29,8 +28,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal, good
 
     const handleRemoveRecipe = () => {
         closeRemoveModal()
-        removeRecipeService({ id: recipe.id })
-        recipeDispatch({ type: 'REMOVE_RECIPE', id: recipe.id })
+        removeRecipe(recipe.id)
     }
 
     const toggleFormModal = () => {

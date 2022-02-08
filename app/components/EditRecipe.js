@@ -5,11 +5,10 @@ import { editRecipeService } from '../services/recipeServices'
 import { View } from 'react-native'
 
 const EditRecipe = ({ recipe, toggleFormModal }) => {
-    const { recipes, editRecipe, recipeDispatch } = useRecipesContext()
+    const { recipes, editRecipe } = useRecipesContext()
 
     const onSubmit = (recipeEdits) => {
-        editRecipeService(recipe.id, recipeEdits)
-        recipeDispatch({ type: 'EDIT_RECIPE', id: recipe.id, updates: recipeEdits })
+        editRecipe(recipe.id, recipeEdits)
     }
 
     return (

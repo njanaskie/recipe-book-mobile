@@ -1,73 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
 import RecipeListItem from './RecipeListItem'
-import { useFiltersContext } from '../context/filters-context'
-import { config } from '../config/config'
-import selectRecipes from '../selectors/recipes'
 import { useRecipesContext } from '../context/recipes-context'
 import { Dimensions, FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
-import { getRecipesService } from '../services/recipeServices'
-import usePrevious from '../hooks/usePrevious'
 
 const { width, height } = Dimensions.get("window");
 
 export const RecipeList = () => {
-    const initialFormState = {
-        isListEnd: false,
-        page: 1,
-        loading: true,
-        loadingMore: false,
-        refreshing: false,
-        hasMoreToLoad: true,
-        error: null
-    }
-    const [pageState, setPageState] = useState(initialFormState)
-    const { filters } = useFiltersContext()
-    const { recipes, recipeDispatch } = useRecipesContext()
-    const selectedRecipes = selectRecipes(recipes, filters)
-    const prevPage = usePrevious(pageState.page)
-    const itemsPerPage = config.itemsPerPage
+    const { recipes, pageState, fetchRecipes, handleLoadMore } = useRecipesContext()
 
     React.useEffect(() => {
         fetchRecipes()
-    }, [pageState.page])
-
-    fetchRecipes = async () => {
-            const fetchedRecipes = await getRecipesService(pageState.page, itemsPerPage)
-            if (fetchedRecipes) {
-                recipeDispatch({
-                    type: 'SET_RECIPES',
-                    recipes: pageState.page === 1
-                        ? fetchedRecipes
-                        : [...recipes, ...fetchedRecipes]
-                })
-                    setPageState((prevState, nextProps) => ({
-                        ...pageState,
-                        loading: false,
-                        loadingMore: false,
-                        refreshing: false,
-                        hasMoreToLoad: fetchedRecipes.length < itemsPerPage ? false : true
-                    }))
-            } 
-    }
-
-    handleRefresh = () => {
-        setPageState(
-          {
-            page: 1,
-            refreshing: true
-          },
-          () => {
-            fetchRecipes();
-          }
-        );
-      };
-
-    handleLoadMore = () => {
-       setPageState((prevState) => ({
-            page: prevPage + 1,
-            loadingMore: true
-        }))
-    }
+    }, [])
 
     renderFooter = () => {
         if (!pageState.loadingMore) return null;
@@ -82,19 +25,19 @@ export const RecipeList = () => {
               marginBottom: 10,
             }}
           >
-            <ActivityIndicator animating size="large" />
+            <ActivityIndicator animating />
           </View>
         );
       };
 
-    if ((!selectedRecipes || !selectedRecipes.length) && pageState.loading === false) {
+    if ((!recipes || !recipes.length) && pageState.loading === false) {
         return <Text style={styles.message}>No recipes</Text>
     }
 
     return (
         !pageState.loading ? (
             <FlatList 
-                data={[... new Set(selectedRecipes)]}
+                data={[... new Set(recipes)]}
                 renderItem={({ item }) => <RecipeListItem recipe={item} />}
                 keyExtractor={item => item.id}
                 numColumns={2}

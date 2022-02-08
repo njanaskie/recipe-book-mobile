@@ -12,6 +12,7 @@ import { useRecipesContext } from '../context/recipes-context'
 import Tag from '../components/Tag'
 import selectCustomTags from '../selectors/custom-tags'
 import selectFilterItems from '../selectors/filter-items'
+import getObject from '../selectors/get-object'
 import FiltersScreenItem from '../components/FiltersScreenItem'
 import { useFiltersContext } from '../context/filters-context'
 
@@ -19,16 +20,16 @@ const { width, height } = Dimensions.get("window");
 
 const FiltersScreen = ({ toggleFiltersModal }) => {
     const initialFormState = {
-        selectedCuisines: [],
-        selectedTypes: [],
-        selectedIngredients: [],
-        selectedCustomTags: [],
+        // ingredients: [],
+        // selectedCuisines: [],
+        // selectedTypes: [],
+        // selectedCustomTags: [],
         checkboxItems: [],
     }
     const [formState, setFormState] = useState(initialFormState)
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const { ingredients } = useIngredientsContext()
-    const { recipes } = useRecipesContext()
+    const { recipes, filterRecipes } = useRecipesContext()
     const { filters, setFilters, toggleFiltersActive } = useFiltersContext()
     const customTags = recipes ? selectCustomTags(recipes) : []
     const filterItems = selectFilterItems(recipeCuisines, recipeTypes, customTags)
@@ -46,26 +47,20 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
             data: formState.checkboxItems.filter(item => item.group === 'customTags')
         }
     ]
+    const selectedCheckboxItems = getObject(formState.checkboxItems)
+    const selectedFilters = formState.ingredients && formState.ingredients.length > 0 ? {...selectedCheckboxItems, ingredients: formState.ingredients} : selectedCheckboxItems
 
     useEffect(() => {
         setFormState({
             ...formState,
-            selectedIngredients: filters.selectedIngredients || [],
+            ingredients: filters.ingredients || [],
             checkboxItems: filters.checkboxItems.length > 0 ? filters.checkboxItems : filterItems.map(item => ({...item, checked: false }))
         })
     }, [])
 
 
-    const handleFilterIngredientsChange = (selectedIngredients) => {
-        setFormState({ ...formState, selectedIngredients })
-    }
-
-    const handleAddCheckboxItem = (item) => {
-        setFormState({ ...formState, checkboxItems: [...formState.checkboxItems, item ] })
-    }
-
-    const handleRemoveCheckboxItem = (item) => {
-        setFormState({ ...formState, checkboxItems: formState.checkboxItems.filter(checkboxItem => checkboxItem !== item) })
+    const handleFilterIngredientsChange = (ingredients) => {
+        setFormState({ ...formState, ingredients })
     }
 
     const toggleCheckbox = (item) => {
@@ -90,23 +85,31 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <FiltersScreenItem item={item} filters={filters} formState={formState} toggleCheckbox={toggleCheckbox} handleAddCheckboxItem={handleAddCheckboxItem} handleRemoveCheckboxItem={handleRemoveCheckboxItem} />
+            <FiltersScreenItem
+                item={item}
+                filters={filters}
+                formState={formState}
+                toggleCheckbox={toggleCheckbox}
+                // handleAddCheckboxItem={handleAddCheckboxItem}
+                // handleRemoveCheckboxItem={handleRemoveCheckboxItem}
+            />
         )
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
+        filterRecipes(selectedFilters)
         setFilters(formState)
         toggleFiltersActive(true)
         toggleFiltersModal()
     }
-      
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
                 <Button color={colorPack.grey} onPress={toggleFiltersModal} style={styles.closeButton}>Close</Button>
                 <Button style={styles.applyButton} onPress={onSubmit}>Apply</Button>
             </View>
-            <Caption style={styles.subtitle}>Choose ingredients by what you're craving... or by what you have in your pantry!</Caption>
+            <Caption style={styles.subtitle}>Choose ingredients by what you're craving... or by what is in your pantry!</Caption>
             <TouchableOpacity onPress={toggleSearchModal}>
                 <View style={styles.searchSection}>
                     <Feather style={styles.searchIcon} name="search" size={20} color="#000"/>
@@ -129,14 +132,14 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                     }
                 })}
                 handleSelectedItemsChange={handleFilterIngredientsChange}
-                selectedItems={formState.selectedIngredients}
+                selectedItems={formState.ingredients}
                 selectText="Select Ingredients"
                 inputPlaceholderText="Search Ingredients..."
             />
             <View>
                 <FlatList
                     horizontal
-                    data={formState.selectedIngredients}
+                    data={formState.ingredients}
                     renderItem={renderTag}
                     keyExtractor={item => item}
                     style={styles.tagFlatList}
