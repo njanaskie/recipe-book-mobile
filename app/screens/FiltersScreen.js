@@ -10,11 +10,11 @@ import { State, TouchableOpacity } from 'react-native-gesture-handler'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
 import Tag from '../components/Tag'
-import selectCustomTags from '../selectors/custom-tags'
 import selectFilterItems from '../selectors/filter-items'
 import getObject from '../selectors/get-object'
 import FiltersScreenItem from '../components/FiltersScreenItem'
 import { useFiltersContext } from '../context/filters-context'
+import { useCustomTagsContext } from '../context/custom-tags-context';
 
 const { width, height } = Dimensions.get("window");
 
@@ -29,9 +29,9 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
     const [formState, setFormState] = useState(initialFormState)
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const { ingredients } = useIngredientsContext()
+    const { customTags } = useCustomTagsContext()
     const { recipes, filterRecipes } = useRecipesContext()
     const { filters, setFilters, toggleFiltersActive } = useFiltersContext()
-    const customTags = recipes ? selectCustomTags(recipes) : []
     const filterItems = selectFilterItems(recipeCuisines, recipeTypes, customTags)
     const sectionData = [
         {

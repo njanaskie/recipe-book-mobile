@@ -71,6 +71,16 @@ export const getRecipesService = async (page, itemsPerPage, query) => {
     }
 }
 
+export const getCustomTagsService = async () => {
+    const header = await createToken();
+
+    try {
+        const res = await api.get('/api/recipes/custom-tags', header)
+        return res.data
+    } catch(e) {
+        console.log('get custom tags error', e)
+    }
+}
 
 export const removeRecipeService = async ({ id }) => {
     const header = await createToken();

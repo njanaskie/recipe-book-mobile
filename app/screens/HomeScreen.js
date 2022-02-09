@@ -20,6 +20,7 @@ import { colorPack } from '../styles/styles'
 import MyRecipesScreen from '../screens/MyRecipesScreen'
 import BottomSheetHeader from '../components/BottomSheetHeader'
 import useIngredients from '../hooks/useIngredients';
+import useCustomTags from '../hooks/useCustomTags';
 import BannerAd from '../components/BannerAd'
 
 const { width, height } = Dimensions.get("window");
@@ -29,6 +30,7 @@ export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const sheetRef = React.useRef(null);
   useIngredients()
+  useCustomTags()
   
     renderContent = () => (
       <View style={styles.modal}>

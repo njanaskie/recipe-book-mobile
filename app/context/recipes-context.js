@@ -16,8 +16,6 @@ export const useRecipesContext = () => useContext(RecipesContext)
 const RecipesProvider = ({ children }) => {
     const [recipes, recipeDispatch] = useReducer(recipesReducer, [])
     const { user } = useFirebaseContext() 
-    const { filters } = useFiltersContext();
-    const customId = uuid()
     const initialFormState = {
         isListEnd: false,
         page: 1,
@@ -120,8 +118,19 @@ const RecipesProvider = ({ children }) => {
     }
 
     return (
-        <RecipesContext.Provider value={{ recipes, recipeDispatch, fetchRecipes, filterRecipes, handleRefresh, handleLoadMore, pageState, editRecipe, removeRecipe, addRecipe }}>
-            {children}
+        <RecipesContext.Provider value={{ 
+            recipes, 
+            pageState, 
+            recipeDispatch, 
+            fetchRecipes, 
+            filterRecipes, 
+            handleRefresh, 
+            handleLoadMore, 
+            editRecipe, 
+            removeRecipe, 
+            addRecipe 
+        }}>
+                {children}
         </RecipesContext.Provider>
     )
 }

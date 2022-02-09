@@ -4,6 +4,7 @@ import { IngredientsProvider } from '../context/ingredients-context';
 import { RecipesProvider } from '../context/recipes-context';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { FiltersProvider } from '../context/filters-context';
+import { CustomTagsProvider } from '../context/custom-tags-context';
 
 const theme = {
     ...DefaultTheme,
@@ -21,9 +22,11 @@ const AppWrapper = (props) => {
             <FiltersProvider>
                 <RecipesProvider>
                     <IngredientsProvider>
+                        <CustomTagsProvider>
                             <PaperProvider theme={theme}>
                                 {props.children}
                             </PaperProvider>
+                        </CustomTagsProvider>
                     </IngredientsProvider>
                 </RecipesProvider>
             </FiltersProvider>

@@ -13,7 +13,6 @@ import {
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
-import selectCustomTags from '../selectors/custom-tags'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
 import { Button as PaperButton, Divider, Title, Subheading, Caption } from 'react-native-paper';
@@ -22,6 +21,7 @@ import Tag from './Tag';
 import {Picker} from '@react-native-picker/picker';
 import MultiSelectDropdownModal from './MultiSelectDropdownModal';
 import BannerAd from '../components/BannerAd';
+import { useCustomTagsContext } from '../context/custom-tags-context';
 
 const { width, height } = Dimensions.get("window");
 
@@ -41,11 +41,11 @@ export default RecipeForm = (props) => {
     }
     const [state, setState] = useState(initialFormState)
     const { ingredients } = useIngredientsContext()
-    const allCustomTags = formResults ? selectCustomTags(formResults) : []
+    const { customTags } = useCustomTagsContext()
     const uid = user.uid
     const [isTagModalVisible, setIsTagModalVisible] = useState(false);
     const [isIngredientModalVisible, setIsIngredientTagModalVisible] = useState(false);
-    
+
     const toggleTagModal = () => {
         setIsTagModalVisible(!isTagModalVisible);
       };
@@ -62,7 +62,7 @@ export default RecipeForm = (props) => {
             cuisine: props.cuisine || '',
             savedBy: props.savedBy || uid,
             customTags: props.customTags || [],
-            customTagOptions: props.customTagOptions || allCustomTags,
+            customTagOptions: props.customTagOptions || customTags,
             error: '',
         })
     }, [props])
