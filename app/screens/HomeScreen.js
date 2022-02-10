@@ -22,9 +22,11 @@ import BottomSheetHeader from '../components/BottomSheetHeader'
 import useIngredients from '../hooks/useIngredients';
 import useCustomTags from '../hooks/useCustomTags';
 import BannerAd from '../components/BannerAd'
+import SplashScreen from 'react-native-splash-screen';
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
+SplashScreen.hide();
 
 export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
