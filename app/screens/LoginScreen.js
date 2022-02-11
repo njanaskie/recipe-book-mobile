@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
     },
     logo: {
         flex: 1,
-        // padding: 20,
         height: 100,
         width: 150,
         alignSelf: "center",
