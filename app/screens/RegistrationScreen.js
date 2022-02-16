@@ -42,7 +42,7 @@ export default function RegistrationScreen({navigation}) {
                 keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
-                    source={require('../assets/app-logo.png')}
+                    source={require('../assets/logo2.png')}
                 />
                 <TextInput
                     style={styles.input}
@@ -105,10 +105,11 @@ const styles = StyleSheet.create({
     },
     logo: {
         flex: 1,
-        height: 120,
-        width: 120,
+        height: 100,
+        width: 150,
         alignSelf: "center",
-        margin: 30
+        margin: 30,
+        marginTop: 100,
     },
     input: {
         height: 48,
