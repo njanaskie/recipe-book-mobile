@@ -8,7 +8,6 @@ import { colorPack } from '../styles/styles';
 const { width, height } = Dimensions.get("window");
 
 export default MultiSelectDropdownModal = (props) => {
-    // console.log(props.itemOptions)
     return (
         <Modal
             isVisible={props.isVisible}

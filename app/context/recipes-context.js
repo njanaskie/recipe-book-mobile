@@ -1,12 +1,9 @@
 import React, { useContext, useReducer, useState, useEffect } from 'react';
 import recipesReducer from '../reducers/recipes'
-import database from '../firebase/firebase'
-import uuid from 'uuid'
 import { useFirebaseContext } from './firebase-context'
 import { getRecipesService, editRecipeService, removeRecipeService, addRecipeService } from '../services/recipeServices'
 import usePrevious from '../hooks/usePrevious'
 import { config } from '../config/config'
-import { useFiltersContext } from './filters-context';
 import { getPreviewData } from '@flyerhq/react-native-link-preview'
 
 const RecipesContext = React.createContext()

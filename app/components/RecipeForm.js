@@ -14,7 +14,6 @@ import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import { useIngredientsContext } from '../context/ingredients-context'
-import { useRecipesContext } from '../context/recipes-context'
 import { Button as PaperButton, Divider, Title, Subheading, Caption } from 'react-native-paper';
 import { colorPack } from '../styles/styles';
 import Tag from './Tag';
@@ -27,8 +26,6 @@ const { width, height } = Dimensions.get("window");
 
 export default RecipeForm = (props) => {
     const { user } = useFirebaseContext()
-    const { recipes } = useRecipesContext()
-    const formResults = props.results ? props.results : recipes
     const initialFormState = {
         url: '',
         ingredients: [],
@@ -183,7 +180,7 @@ export default RecipeForm = (props) => {
                         }
                     })}
                     handleSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
-                    selectedItems={state.ingredients}
+                    selectedItems={state.ingredients.sort()}
                     selectText="Select Ingredients"
                     inputPlaceholderText="Search Ingredients..."
                 />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, TouchableOpacity, View } from "react-native"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
 import Modal from 'react-native-modal'
-import { Title, IconButton } from 'react-native-paper'
+import { Title } from 'react-native-paper'
 import { Feather } from "@expo/vector-icons"
 import Tag from './Tag'
 import { colorPack } from '../styles/styles'
@@ -25,7 +25,6 @@ export const BottomSheetHeader = () => {
 
     return (
         <View style={styles.header}>
-            {/* <View style={styles.panelHeader}> */}
             <View style={styles.panelHandle} />
                 <View style={styles.headerItems}>
                     <Title style={styles.title}>My Recipes</Title>
@@ -38,7 +37,6 @@ export const BottomSheetHeader = () => {
                         <TouchableOpacity onPress={toggleFiltersModal}>
                             <View style={{ width: 85, paddingRight: 6, marginHorizontal: 5 }} >
                                 <Tag item='Filters' darkMode={true}/>
-                                {/* <Feather name="filter" size={22}/> */}
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={toggleLogoutModal}>
@@ -67,7 +65,6 @@ export const BottomSheetHeader = () => {
                         </Modal>
                     </View>
                 </View>
-            {/* </View> */}
         </View>
     )
 }
@@ -79,7 +76,6 @@ const styles = StyleSheet.create({
       shadowOffset: {width: -1, height: -3},
       shadowRadius: 2,
       shadowOpacity: 0.4,
-      // elevation: 5,
       paddingTop: 20,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,

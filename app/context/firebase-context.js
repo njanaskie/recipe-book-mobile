@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useContext, useReducer } from 'react';
 import { firebase } from '../firebase/firebase';
-import authReducer from '../reducers/auth'
 
 const FirebaseContext = React.createContext()
 
 export const useFirebaseContext = () => useContext(FirebaseContext)
 
 const FirebaseProvider = ({ children }) => {
-    const [auth, authDispatch] = useReducer(authReducer, [])
     const [user, setUser] = useState('')
     const [loading, setLoading] = useState(true)
 

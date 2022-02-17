@@ -1,7 +1,6 @@
 import React from 'react'
 import RecipeForm from './RecipeForm'
 import { useRecipesContext } from '../context/recipes-context'
-import { editRecipeService } from '../services/recipeServices'
 import { View } from 'react-native'
 
 const EditRecipe = ({ recipe, toggleFormModal }) => {

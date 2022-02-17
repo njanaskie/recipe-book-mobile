@@ -8,18 +8,6 @@ export const useFiltersContext = () => useContext(FiltersContext)
 const FiltersProvider = ({ children }) => {
     const [filters, filtersDispatch] = useReducer(filtersReducer, filtersReducerDefaultState)
 
-    const setFilterIngredients = (ingredients) => {
-        filtersDispatch({ type: 'SET_INGREDIENT_FILTER', ingredients })
-    }
-
-    const addFilterCheckboxItem = (item) => {
-        filtersDispatch({ type: 'ADD_CHECKBOX_ITEM', item })
-    }
-    
-    const removeFilterCheckboxItem = (item) => {
-        filtersDispatch({ type: 'REMOVE_CHECKBOX_ITEM', item })
-    }
-
     const setFilters = (filters) => {
         filtersDispatch({ type: 'SET_FILTERS', filters })
     }
@@ -33,7 +21,7 @@ const FiltersProvider = ({ children }) => {
     }
 
     return (
-        <FiltersContext.Provider value={{ filters, filtersDispatch, setFilters, clearFilters, toggleFiltersActive, addFilterCheckboxItem, removeFilterCheckboxItem, setFilterIngredients }}>
+        <FiltersContext.Provider value={{ filters, filtersDispatch, setFilters, clearFilters, toggleFiltersActive }}>
             {children}
         </FiltersContext.Provider>
     )

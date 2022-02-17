@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useFirebaseContext } from '../context/firebase-context'
-import { useRecipesContext } from '../context/recipes-context'
 import { Image, View, StyleSheet } from 'react-native'
 import { Card } from 'react-native-paper';
 import Modal from 'react-native-modal';

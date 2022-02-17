@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, FlatList, SafeAreaView, SectionList, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, SafeAreaView, SectionList, StyleSheet, Text, View } from 'react-native'
 import { Caption, Divider } from 'react-native-paper';
 import { colorPack } from '../styles/styles'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import { Button } from 'react-native-paper'
 import { Feather } from "@expo/vector-icons"
-import { State, TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
 import Tag from '../components/Tag'
@@ -20,17 +20,13 @@ const { width, height } = Dimensions.get("window");
 
 const FiltersScreen = ({ toggleFiltersModal }) => {
     const initialFormState = {
-        // ingredients: [],
-        // selectedCuisines: [],
-        // selectedTypes: [],
-        // selectedCustomTags: [],
         checkboxItems: [],
     }
     const [formState, setFormState] = useState(initialFormState)
     const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
     const { ingredients } = useIngredientsContext()
     const { customTags } = useCustomTagsContext()
-    const { recipes, filterRecipes } = useRecipesContext()
+    const { filterRecipes } = useRecipesContext()
     const { filters, setFilters, toggleFiltersActive } = useFiltersContext()
     const filterItems = selectFilterItems(recipeCuisines, recipeTypes, customTags)
     const sectionData = [
@@ -90,8 +86,6 @@ const FiltersScreen = ({ toggleFiltersModal }) => {
                 filters={filters}
                 formState={formState}
                 toggleCheckbox={toggleCheckbox}
-                // handleAddCheckboxItem={handleAddCheckboxItem}
-                // handleRemoveCheckboxItem={handleRemoveCheckboxItem}
             />
         )
     }

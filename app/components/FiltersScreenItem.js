@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 import { Checkbox } from 'react-native-paper'
 
-const FiltersScreenItem = ({ item, filters, formState, toggleCheckbox, handleAddCheckboxItem, handleRemoveCheckboxItem }) => {
+const FiltersScreenItem = ({ item, toggleCheckbox }) => {
     return (
         <TouchableOpacity onPress={() => toggleCheckbox(item)}>
             <View style={styles.item}>

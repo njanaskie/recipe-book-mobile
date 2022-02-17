@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Dimensions,
   LogBox
 } from "react-native";
 import { NavigationContainer } from '@react-navigation/native'
@@ -14,8 +13,6 @@ LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
  ]);
 
-const { width, height } = Dimensions.get("window");
-const snapPoints = ["10%", "90%"];
 const Stack = createStackNavigator();
 
 export default function App() {

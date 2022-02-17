@@ -13,7 +13,6 @@ import { Feather } from "@expo/vector-icons"
 import Modal from 'react-native-modal'
 import BottomSheet from 'reanimated-bottom-sheet'
 import AddRecipe from '../components/AddRecipe';
-import { firebase } from '../firebase/firebase'
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
@@ -93,7 +92,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      // justifyContent: 'flex-start',
       alignItems: 'center',
     },
     buttonContainer: {
@@ -111,7 +109,6 @@ const styles = StyleSheet.create({
     },
     modal: {
       backgroundColor: colorPack.backgroundColor,
-      // alignContent: 'space-around',
       paddingTop: 20,
       height: height
     },

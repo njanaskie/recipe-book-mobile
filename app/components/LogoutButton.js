@@ -8,7 +8,7 @@ export default function LogoutButton({toggleLogoutModal}) {
 
     const onLogoutPress = () => {
         firebase.auth().signOut().then(() => {
-            toggleLogoutModal
+            toggleLogoutModal()
         });
     }
     
@@ -16,7 +16,7 @@ export default function LogoutButton({toggleLogoutModal}) {
         <View>
             <TouchableOpacity
                 style={{ padding: 20 }}
-                onPress={() => onLogoutPress()}
+                onPress={onLogoutPress}
             >
                 <View style={styles.button}>
                     <Subheading style={styles.text}> Log Out</Subheading>

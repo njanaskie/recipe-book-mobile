@@ -9,7 +9,9 @@ export const RecipeList = () => {
     const { recipes, pageState, fetchRecipes, handleLoadMore } = useRecipesContext()
 
     React.useEffect(() => {
+      if (!recipes.length){
         fetchRecipes()
+      }
     }, [])
 
     renderFooter = () => {
