@@ -101,6 +101,7 @@ export default RecipeForm = (props) => {
     const renderItem = ({item}) => (
         <Tag item={item} />
     )
+    console.log(state)
 
     return (
         <SafeAreaView style={styles.container} >
@@ -179,8 +180,8 @@ export default RecipeForm = (props) => {
                             name
                         }
                     })}
-                    handleSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
-                    selectedItems={state.ingredients.sort()}
+                    handleSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems.sort() })}
+                    selectedItems={state.ingredients}
                     selectText="Select Ingredients"
                     inputPlaceholderText="Search Ingredients..."
                 />
