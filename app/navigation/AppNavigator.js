@@ -26,12 +26,12 @@ export default function App() {
           }}
         >
           { user ? (
-              <Stack.Screen name='Home' component={HomeScreen} />
+              <Stack.Screen name="HomeScreen" component={HomeScreen} />
           ) : (
-            <React.Fragment>
-              <Stack.Screen name='Login' component={LoginScreen}/>
-              <Stack.Screen name="Registration" component={RegistrationScreen} />
-            </React.Fragment>
+            <>
+              <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+              <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+            </>
           )}
         
         </Stack.Navigator>

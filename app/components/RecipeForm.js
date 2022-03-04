@@ -101,7 +101,6 @@ export default RecipeForm = (props) => {
     const renderItem = ({item}) => (
         <Tag item={item} />
     )
-    console.log(state)
 
     return (
         <SafeAreaView style={styles.container} >

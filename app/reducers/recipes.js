@@ -25,6 +25,8 @@ const recipesReducer = (state = recipesReducerDefaultState, action) => {
             });
         case 'SET_RECIPES':
             return action.recipes;
+        case 'CLEAR_RECIPES':
+            return [];
         default:
             return state;
     }

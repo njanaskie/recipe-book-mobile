@@ -16,8 +16,8 @@ const useIngredients = () => {
 
     React.useEffect(() => {
         const fetchIngredients = async () => {
+            const fetchedIngredients = await getIngredientsService()
             if (isCurrent.current) {
-                const fetchedIngredients = await getIngredientsService()
                 dispatch({ type: 'SET_INGREDIENTS', ingredients: fetchedIngredients})
             }
         }

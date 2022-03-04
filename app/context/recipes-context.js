@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, useEffect } from 'react';
+import React, { useContext, useReducer, useState, useRef } from 'react';
 import recipesReducer from '../reducers/recipes'
 import { useFirebaseContext } from './firebase-context'
 import { getRecipesService, editRecipeService, removeRecipeService, addRecipeService } from '../services/recipeServices'
@@ -27,10 +27,19 @@ const RecipesProvider = ({ children }) => {
     const [queryItems, setQueryItems] = useState(null)
     const prevPage = usePrevious(pageState.page)
     const itemsPerPage = config.itemsPerPage
+    const isCurrent = useRef(true)
 
     React.useEffect(() => {
-        fetchRecipes(queryItems && queryItems)
-    }, [pageState.page, pageState.call])
+        return () => {
+            isCurrent.current = false
+        }
+    }, [])
+
+    React.useEffect(() => {
+        if (user) {
+            fetchRecipes(queryItems && queryItems)
+        }
+    }, [pageState.page, pageState.call, user])
 
     const getUrlData = async (recipe) => {
         if (recipe.url) {
@@ -67,7 +76,6 @@ const RecipesProvider = ({ children }) => {
     }
 
     const fetchRecipes = async (query) => {
-        if (user) {
             let fetchedRecipes = []
             if (query) {
                 fetchedRecipes = await getRecipesService(pageState.page, itemsPerPage, query)
@@ -75,7 +83,7 @@ const RecipesProvider = ({ children }) => {
                 fetchedRecipes = await getRecipesService(pageState.page, itemsPerPage)
             }
             
-            if (fetchedRecipes) {
+            if (fetchedRecipes && isCurrent.current) {
                 recipeDispatch({
                     type: 'SET_RECIPES',
                     recipes: pageState.page === 1
@@ -90,7 +98,6 @@ const RecipesProvider = ({ children }) => {
                     hasMoreToLoad: fetchedRecipes.length < itemsPerPage ? false : true
                 }))
             }
-        }
     }
 
     const handleRefresh = () => {
@@ -114,6 +121,10 @@ const RecipesProvider = ({ children }) => {
         }
     }
 
+    const clearRecipes = () => {
+        recipeDispatch({ type: 'CLEAR_RECIPES' })
+    }
+
     return (
         <RecipesContext.Provider value={{ 
             recipes, 
@@ -125,7 +136,8 @@ const RecipesProvider = ({ children }) => {
             handleLoadMore, 
             editRecipe, 
             removeRecipe, 
-            addRecipe 
+            addRecipe,
+            clearRecipes
         }}>
                 {children}
         </RecipesContext.Provider>

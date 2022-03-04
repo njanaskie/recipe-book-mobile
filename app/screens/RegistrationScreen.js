@@ -10,7 +10,7 @@ export default function RegistrationScreen({navigation}) {
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const onFooterLinkPress = () => {
-        navigation.navigate('Login')
+        navigation.navigate('LoginScreen')
     }
 
     const onRegisterPress = () => {
@@ -22,13 +22,7 @@ export default function RegistrationScreen({navigation}) {
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then((response) => {
-                const uid = response.user.uid
-                const data = {
-                    id: uid,
-                    email,
-                    fullName,
-                };
-                navigation.navigate('Home', {user: data})
+                //
             })
             .catch((error) => {
                 alert(error)

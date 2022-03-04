@@ -3,12 +3,15 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Subheading } from 'react-native-paper';
 import { firebase } from '../firebase/firebase';
 import { colorPack } from '../styles/styles';
+import { useRecipesContext } from '../context/recipes-context'
 
 export default function LogoutButton({toggleLogoutModal}) {
+    const { clearRecipes } = useRecipesContext();
 
     const onLogoutPress = () => {
         firebase.auth().signOut().then(() => {
             toggleLogoutModal()
+            clearRecipes()
         });
     }
     

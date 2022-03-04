@@ -8,12 +8,6 @@ const { width, height } = Dimensions.get("window");
 export const RecipeList = () => {
     const { recipes, pageState, fetchRecipes, handleLoadMore } = useRecipesContext()
 
-    React.useEffect(() => {
-      if (!recipes.length){
-        fetchRecipes()
-      }
-    }, [])
-
     renderFooter = () => {
         if (!pageState.loadingMore) return null;
     
@@ -37,7 +31,7 @@ export const RecipeList = () => {
     }
 
     return (
-        !pageState.loading ? (
+        !pageState.loading && recipes ? (
             <FlatList 
                 data={[... new Set(recipes)]}
                 renderItem={({ item }) => <RecipeListItem recipe={item} />}

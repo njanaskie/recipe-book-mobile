@@ -12,7 +12,7 @@ export default function LoginScreen({navigation}) {
 
 
     const onFooterLinkPress = () => {
-        navigation.navigate('Registration')
+        navigation.navigate('RegistrationScreen')
     }
 
     const onLoginPress = () => {
@@ -20,11 +20,7 @@ export default function LoginScreen({navigation}) {
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then((response) => {
-                const uid = response.user.uid
-                if (response && uid) {
-                    // console.log(response)
-                    navigation.navigate('Home', {user: response.user})
-                }
+                //
             })
             .catch(error => {
                 alert(error)
@@ -38,7 +34,7 @@ export default function LoginScreen({navigation}) {
           return firebase.auth().signInWithCredential(credential);
         })
         .then((user) => {
-          navigation.navigate('Home', {user})
+            //
         })
         .catch((error) => {
           alert(error)

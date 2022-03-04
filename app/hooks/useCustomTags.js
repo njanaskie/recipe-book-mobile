@@ -16,11 +16,9 @@ const useCustomTags = () => {
 
     React.useEffect(() => {
         const fetchCustomTags = async () => {
-            if (isCurrent.current) {
-                const fetchedCustomTags = await getCustomTagsService()
-                if (fetchedCustomTags) {
-                    customTagsDispatch({ type: 'SET_CUSTOM_TAGS', customTags: fetchedCustomTags})
-                }
+            const fetchedCustomTags = await getCustomTagsService()
+            if (fetchedCustomTags && isCurrent.current) {
+                customTagsDispatch({ type: 'SET_CUSTOM_TAGS', customTags: fetchedCustomTags})
             }
         }
         
