@@ -32,7 +32,7 @@ export default function HomeScreen() {
   useCustomTags()
   
     renderContent = () => (
-      <View style={styles.modal}>
+      <View style={styles.modal} >
         <MyRecipesScreen />
       </View>
     )
@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
     modal: {
       backgroundColor: colorPack.backgroundColor,
       paddingTop: 20,
-      height: height
+      paddingBottom: height < 750 ? 10 : 35,
+      // height: height,
     },
     linearGradient: {
       flex: 1,

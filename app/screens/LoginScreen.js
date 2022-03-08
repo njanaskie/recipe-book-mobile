@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderBottomColor: '#101010',
         borderBottomWidth: StyleSheet.hairlineWidth,
-        paddingTop: 60,
+        paddingTop: 30,
         width: '80%'
     },
     logo: {

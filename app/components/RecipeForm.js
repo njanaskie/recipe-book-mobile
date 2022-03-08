@@ -112,7 +112,7 @@ export default RecipeForm = (props) => {
                 </View>
                 <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
                     <Title>Recipe URL</Title>
-                    <Caption>Copy the recipe URL into the text bar</Caption>
+                    <Caption>(Required) Paste the recipe URL into the text bar</Caption>
                 </View>
                 <TextInput
                     style={styles.input}

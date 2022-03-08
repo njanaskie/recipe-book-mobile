@@ -2,6 +2,7 @@ export default [
     "",
     "American",
     "African",
+    "Asian",
     "Brazilian",
     "Carribbean",
     "Chinese",
