@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Image, View, StyleSheet } from 'react-native'
+import { Dimensions, Image, View, StyleSheet } from 'react-native'
 import { Card } from 'react-native-paper';
 import Modal from 'react-native-modal';
 import { getPreviewData } from '@flyerhq/react-native-link-preview'
 import RecipeDetailsScreen from '../screens/RecipeDetailsScreen'
 import { colorPack } from '../styles/styles';
+
+const { width, height } = Dimensions.get("window");
 
 const RecipeListItem = ({ recipe }) => {
     const [urlData, setUrlData] = useState({ title: '', image: null })
@@ -29,34 +31,36 @@ const RecipeListItem = ({ recipe }) => {
     }, [])
 
     return (
-        <Card style={styles.containter} onPress={toggleDetailsModal}>
-            <Modal
-                isVisible={isDetailsModalVisible}
-                onBackdropPress={toggleDetailsModal}
-                animationIn='fadeIn'
-                animationOut='fadeOut'
-                style={{ margin: 0 }}
-            >
-                <View style={{ flex: 1 }}>
-                    <RecipeDetailsScreen
-                        recipe={recipe}
-                        urlData={urlData}
-                        closeModal={closeDetailsModal}
-                    />
-                </View>
-            </Modal>
-            {urlData.image ?
-                <Card.Cover source={{ uri: urlData.image }} style={styles.image}/>
-                : <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
-            <Card.Title title={urlData.title ? urlData.title : recipe.url} titleStyle={styles.title} titleNumberOfLines={3}/>
-        </Card>
+        <View style={{ paddingHorizontal: width > 600 ? 50 : 15 }}>
+            <Card style={styles.containter} onPress={toggleDetailsModal}>
+                <Modal
+                    isVisible={isDetailsModalVisible}
+                    onBackdropPress={toggleDetailsModal}
+                    animationIn='fadeIn'
+                    animationOut='fadeOut'
+                    style={{ margin: 0 }}
+                >
+                    <View style={{ flex: 1 }}>
+                        <RecipeDetailsScreen
+                            recipe={recipe}
+                            urlData={urlData}
+                            closeModal={closeDetailsModal}
+                        />
+                    </View>
+                </Modal>
+                {urlData.image ?
+                    <Card.Cover source={{ uri: urlData.image }} style={styles.image}/>
+                    : <Image source={require('../assets/placeholder-img.png')} style={styles.image} />}
+                <Card.Title title={urlData.title ? urlData.title : recipe.url} titleStyle={styles.title} titleNumberOfLines={3}/>
+            </Card>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     containter: {
-        height: 200,
-        width: 150,
+        height: width > 600 ? 400 : 200,
+        width: width > 600 ? 300 : 150,
         marginBottom: 10,
         marginTop: 10,
     },

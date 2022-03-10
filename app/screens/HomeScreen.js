@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     modal: {
       backgroundColor: colorPack.backgroundColor,
       paddingTop: 20,
-      paddingBottom: height < 750 ? 10 : 35,
+      paddingBottom: height < 750 ? 10 : height > 1000 ? 100 : 35,
       // height: height,
     },
     linearGradient: {

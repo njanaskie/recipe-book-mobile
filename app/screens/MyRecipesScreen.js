@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
                 height * .72
                 :
                 height * .74,
+        alignItems: 'center'
     }
 })

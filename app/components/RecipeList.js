@@ -37,8 +37,6 @@ export const RecipeList = () => {
                 renderItem={({ item }) => <RecipeListItem recipe={item} />}
                 keyExtractor={item => item.id}
                 numColumns={2}
-                columnWrapperStyle={{ justifyContent: 'space-between' }}
-                contentContainerStyle={styles.container}
                 onEndReached={pageState.hasMoreToLoad ? handleLoadMore : null}
                 onEndReachedThreshold={0.5}
                 ListFooterComponent={renderFooter}
@@ -56,9 +54,6 @@ export const RecipeList = () => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginHorizontal: width > 400 ? 40 : 30,
-    },
     message: {
       alignSelf: 'center',
     }
