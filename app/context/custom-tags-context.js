@@ -8,8 +8,12 @@ export const useCustomTagsContext = () => useContext(CustomTagsContext)
 const CustomTagsProvider = ({ children }) => {
     const [customTags, customTagsDispatch ] = useReducer(customTagsReducer, [])
 
+    const addCustomTag = async (customTag) => {
+        customTagsDispatch({ type: 'ADD_CUSTOM_TAG', customTag })
+    }
+
     return (
-        <CustomTagsContext.Provider value={{ customTags, customTagsDispatch }}>
+        <CustomTagsContext.Provider value={{ customTags, customTagsDispatch, addCustomTag }}>
             {children}
         </CustomTagsContext.Provider>
     )

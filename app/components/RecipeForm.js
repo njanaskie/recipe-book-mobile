@@ -38,7 +38,7 @@ export default RecipeForm = (props) => {
     }
     const [state, setState] = useState(initialFormState)
     const { ingredients } = useIngredientsContext()
-    const { customTags } = useCustomTagsContext()
+    const { customTags, addCustomTag } = useCustomTagsContext()
     const uid = user.uid
     const [isTagModalVisible, setIsTagModalVisible] = useState(false);
     const [isIngredientModalVisible, setIsIngredientTagModalVisible] = useState(false);
@@ -80,6 +80,13 @@ export default RecipeForm = (props) => {
             setState({ ...state, error: 'Please provide recipe URL' })
         } else {
             props.onSubmit(recipe)
+            if (recipe.customTags){
+                recipe.customTags.map((customTag) => {
+                    if (!customTags.includes(customTag)){
+                        addCustomTag(customTag)
+                    }
+                })
+            }
             setState(initialFormState)
             props.toggleFormModal()
         }
