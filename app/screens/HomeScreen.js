@@ -52,7 +52,9 @@ export default function HomeScreen() {
     return (
       <LinearGradient colors={[colorPack.mint, colorPack.backgroundColor, colorPack.mint]} style={styles.linearGradient}>
         <SafeAreaView style={styles.container}>
-          <BannerAd />
+          <View style={{ zIndex: 1 }}>
+            <BannerAd />
+          </View>
           <Title style={styles.buttonTitle}>Save a recipe!</Title>
           <View style={styles.buttonContainer}>
             <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
